@@ -2,13 +2,15 @@
 import { MODULE_ID } from "./config.mjs";
 import { api } from "./api.mjs";
 import { PmiBuilder } from "./apps/builder.mjs";
+import { registerBuiltinChangeTypes, loadBuiltinProperties } from "./registry/load.mjs";
+import { isPmiItem } from "./util.mjs";
 
 Hooks.once("init", () => {
-  const module = game.modules.get(MODULE_ID);
-  module.api = Object.freeze({ ...api, openBuilder: () => PmiBuilder.open() });
+  registerBuiltinChangeTypes();
+  game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
 });
 
-Hooks.once("ready", () => {
+Hooks.once("ready", async () => {
   if (game.system.id !== "dnd5e") {
     ui.notifications.error(game.i18n.localize("PMI.Errors.WrongSystem"));
     return;
@@ -16,6 +18,13 @@ Hooks.once("ready", () => {
   if (!game.modules.get("lib-wrapper")?.active && game.user.isGM) {
     ui.notifications.warn(game.i18n.localize("PMI.Errors.NoLibWrapper"));
   }
+  const { added, errors } = await loadBuiltinProperties();
+  if (errors.length) {
+    console.warn(`${MODULE_ID} | Property problems:\n${errors.join("\n")}`);
+    if (game.user.isGM) ui.notifications.warn(game.i18n.localize("PMI.Errors.PropertyLoad"));
+  }
+  console.log(`${MODULE_ID} | Loaded ${added} properties`);
+  // Other modules and world scripts can register their own properties and change types here.
   Hooks.callAll(`${MODULE_ID}.ready`, game.modules.get(MODULE_ID).api);
 });
 
@@ -31,4 +40,15 @@ Hooks.on("renderItemDirectory", (app, html) => {
   button.innerHTML = `<i class="fa-solid fa-wand-sparkles"></i> ${game.i18n.localize("PMI.Builder.Open")}`;
   button.addEventListener("click", () => PmiBuilder.open());
   actions.append(button);
+});
+
+// GM-only context menu entry on PMI items: open a copy of the recipe in the builder.
+Hooks.on("getItemDirectoryEntryContext", (html, options) => {
+  const itemOf = (li) => game.items.get(li?.dataset?.documentId ?? li?.[0]?.dataset?.documentId ?? li?.data?.("documentId"));
+  options.push({
+    name: "PMI.Builder.OpenFromItem",
+    icon: '<i class="fa-solid fa-wand-sparkles"></i>',
+    condition: (li) => game.user.isGM && isPmiItem(itemOf(li)),
+    callback: (li) => PmiBuilder.open(itemOf(li)),
+  });
 });

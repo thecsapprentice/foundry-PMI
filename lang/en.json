@@ -3,15 +3,54 @@
     "Builder": {
       "Title": "Magic Item Builder",
       "Open": "Magic Item Builder",
+      "OpenFromItem": "Open in Magic Item Builder",
       "GMOnly": "Only a GM can use the Magic Item Builder.",
+      "NotPmi": "That item wasn't made by the Magic Item Builder.",
+      "Base": "Base item",
+      "ChooseBaseOption": "Choose a weapon, armor or shield…",
+      "DropHint": "Or drop any mundane weapon, armor or shield here from the sidebar or a compendium.",
+      "ChooseBase": "Choose a base item first.",
+      "BaseMissing": "That base item can't be found.",
+      "BaseUnsupported": "Only weapons, armor and shields can be used as a base so far.",
+      "BaseMagical": "That item is already magical. Choose a mundane base item.",
       "Rarity": "Rarity",
       "Seed": "Seed",
-      "NewSeed": "New seed",
-      "Placeholder": "Drafting properties is coming next. Nothing is created in your world from this window yet."
+      "NewSeed": "New seed and roll",
+      "Roll": "Roll",
+      "Budget": "Budget",
+      "Properties": "Properties",
+      "OverBudget": "Over budget for this rarity. You can still create it.",
+      "Cost": "cost",
+      "Lock": "Lock (keep when rolling)",
+      "Reroll": "Replace with a different property",
+      "RerollParams": "Reroll this property's details",
+      "Remove": "Remove",
+      "Add": "Add",
+      "NoPicks": "No properties yet. Roll, or add them yourself.",
+      "NoAlternative": "No other property fits here.",
+      "CreateHint": "The item is created hidden from players in the Procedural Magic Items folder.",
+      "Create": "Create item",
+      "HasErrors": "Fix the problems shown before creating this item.",
+      "Invalid": "The generated item failed dnd5e validation, so nothing was created: {message}",
+      "Created": "Created {name}. Only GMs can see it until you share it."
+    },
+    "Folder": { "Name": "Procedural Magic Items" },
+    "Slot": { "enhancement": "Enhancement", "prefix": "Prefix", "suffix": "Suffix" },
+    "Reason": {
+      "category": "Doesn't apply to this base item.",
+      "rarityLow": "Needs a higher rarity.",
+      "rarityHigh": "Needs a lower rarity.",
+      "duplicate": "Already on this item.",
+      "slotFull": "No room left in this slot.",
+      "exclusive": "Conflicts with another property.",
+      "maxProperties": "Too many properties for this rarity.",
+      "budget": "Over budget.",
+      "unknown": "Unknown property (its module may be disabled)."
     },
     "Errors": {
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
-      "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work."
+      "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work.",
+      "PropertyLoad": "Procedural Magic Items: some property definitions couldn't be loaded. See the console (F12)."
     }
   }
 }

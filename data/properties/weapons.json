@@ -1,0 +1,71 @@
+{
+  "$comment": "Weapon properties. See README → Property files for the format.",
+  "properties": [
+    {
+      "id": "weapon-plus-1", "slot": "enhancement", "label": "+1 Weapon", "name": "+1",
+      "cost": 3, "weight": 8, "exclusive": "enhancement", "appliesTo": ["weapon"], "minRarity": "uncommon",
+      "changes": [{ "type": "magicalBonus", "value": 1 }],
+      "text": "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    },
+    {
+      "id": "weapon-plus-2", "slot": "enhancement", "label": "+2 Weapon", "name": "+2",
+      "cost": 6, "weight": 6, "exclusive": "enhancement", "appliesTo": ["weapon"], "minRarity": "rare",
+      "changes": [{ "type": "magicalBonus", "value": 2 }],
+      "text": "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    },
+    {
+      "id": "weapon-plus-3", "slot": "enhancement", "label": "+3 Weapon", "name": "+3",
+      "cost": 10, "weight": 4, "exclusive": "enhancement", "appliesTo": ["weapon"], "minRarity": "veryRare",
+      "changes": [{ "type": "magicalBonus", "value": 3 }],
+      "text": "You have a +3 bonus to attack and damage rolls made with this magic weapon."
+    },
+    {
+      "id": "elemental", "slot": "prefix", "label": "Elemental ({element.label})", "name": "{element.name}",
+      "cost": 3, "weight": 10, "exclusive": "element", "attunement": true, "appliesTo": ["weapon"], "minRarity": "uncommon",
+      "params": {
+        "element": { "pick": [
+          { "value": "fire", "name": "Flaming", "label": "Fire" },
+          { "value": "cold", "name": "Frost", "label": "Cold" },
+          { "value": "lightning", "name": "Shocking", "label": "Lightning" },
+          { "value": "acid", "name": "Corrosive", "label": "Acid" },
+          { "value": "thunder", "name": "Thundering", "label": "Thunder" }
+        ] },
+        "die": { "byRarity": { "uncommon": "1d4", "rare": "1d6", "veryRare": "2d6" } }
+      },
+      "changes": [{ "type": "activityDamage", "formula": "@die", "types": ["@element"] }],
+      "text": "A creature hit by this weapon takes an extra [[/damage @die @element]] damage."
+    },
+    {
+      "id": "keen", "slot": "prefix", "label": "Keen", "name": "Keen",
+      "cost": 2, "weight": 6, "appliesTo": ["weapon"], "minRarity": "uncommon",
+      "params": { "threshold": { "byRarity": { "uncommon": 19, "legendary": 18 } } },
+      "changes": [{ "type": "attackCritical", "threshold": "@threshold" }],
+      "text": "Attacks with this weapon score a critical hit on a roll of @threshold or higher."
+    },
+    {
+      "id": "vicious", "slot": "prefix", "label": "Vicious", "name": "Vicious",
+      "cost": 2, "weight": 6, "appliesTo": ["weapon"], "minRarity": "rare",
+      "params": { "bonus": { "byRarity": { "rare": "2d6", "veryRare": "3d6", "legendary": "4d6" } } },
+      "changes": [{ "type": "attackCritical", "bonus": "@bonus" }],
+      "text": "When you score a critical hit with this weapon, the target takes an extra @bonus damage of the weapon's type."
+    },
+    {
+      "id": "of-warning", "slot": "suffix", "label": "of Warning", "name": "of Warning",
+      "cost": 3, "weight": 4, "attunement": true, "appliesTo": ["weapon", "armor", "shield"], "minRarity": "uncommon",
+      "changes": [{ "type": "effect", "changes": [{ "key": "flags.dnd5e.initiativeAdv", "mode": "override", "value": true }] }],
+      "text": "While this item is on your person, you have advantage on initiative rolls."
+    },
+    {
+      "id": "of-thunder", "slot": "suffix", "label": "of Thunder", "name": "of Thunder",
+      "cost": 3, "weight": 4, "exclusive": "charges", "appliesTo": ["weapon"], "minRarity": "rare",
+      "params": { "damage": { "byRarity": { "rare": "2d8", "veryRare": "3d8", "legendary": "4d8" } } },
+      "changes": [
+        { "type": "uses", "max": 3, "recovery": [{ "period": "dawn", "formula": "1d3" }] },
+        { "type": "saveActivity", "name": "Thunderclap", "ability": ["con"], "dc": "@dc", "charges": 1,
+          "range": { "value": null, "units": "self" }, "target": { "template": { "type": "radius", "size": 10 }, "type": "creature" },
+          "damage": [{ "formula": "@damage", "types": ["thunder"] }], "onSave": "half" }
+      ],
+      "text": "This weapon has 3 charges and regains [[/r 1d3]] expended charges daily at dawn. As an action, you can expend 1 charge to release a thunderclap: each creature within 10 feet of you must make a [[/save con @dc]] saving throw, taking [[/damage @damage thunder]] damage on a failed save, or half as much on a successful one."
+    }
+  ]
+}

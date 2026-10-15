@@ -36,6 +36,16 @@ export function newSeed(random = Math.random) {
   return `${part()}-${part()}`;
 }
 
+const ID_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+/** A 16-character Foundry-style id derived from a string, so recompiling a recipe keeps ids stable. */
+export function stableId(str) {
+  const next = mulberry32(xmur3(`id:${str}`)());
+  let out = "";
+  for (let i = 0; i < 16; i++) out += ID_ALPHABET[Math.floor(next() * ID_ALPHABET.length)];
+  return out;
+}
+
 export class Rng {
   /** @param {string} seed */
   constructor(seed) {

@@ -1,14 +1,81 @@
-<section class="pmi-builder-body">
-  <div class="form-group">
-    <label>{{localize "PMI.Builder.Rarity"}}</label>
-    <select name="rarity">
-      {{#each rarities}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
-    </select>
-  </div>
-  <div class="form-group">
-    <label>{{localize "PMI.Builder.Seed"}}</label>
-    <code class="pmi-seed">{{recipe.seed}}</code>
-    <button type="button" data-action="newSeed" data-tooltip="PMI.Builder.NewSeed"><i class="fa-solid fa-dice"></i></button>
-  </div>
-  <p class="hint">{{localize "PMI.Builder.Placeholder"}}</p>
-</section>
+<div class="pmi-scroll">
+  <section class="pmi-section pmi-setup">
+    <div class="form-group">
+      <label>{{localize "PMI.Builder.Base"}}</label>
+      <select name="base">
+        <option value="">{{localize "PMI.Builder.ChooseBaseOption"}}</option>
+        {{#each bases}}<option value="{{uuid}}" {{#if selected}}selected{{/if}}>{{name}} ({{group}})</option>{{/each}}
+      </select>
+    </div>
+    <p class="hint">{{localize "PMI.Builder.DropHint"}}</p>
+    <div class="form-group">
+      <label>{{localize "PMI.Builder.Rarity"}}</label>
+      <select name="rarity">
+        {{#each rarities}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{localize "PMI.Builder.Seed"}}</label>
+      <code class="pmi-seed">{{recipe.seed}}</code>
+      <button type="button" data-action="newSeed" data-tooltip="PMI.Builder.NewSeed"><i class="fa-solid fa-dice"></i></button>
+      <button type="button" data-action="roll" class="pmi-roll"><i class="fa-solid fa-wand-sparkles"></i> {{localize "PMI.Builder.Roll"}}</button>
+    </div>
+  </section>
+
+  <section class="pmi-section">
+    <header class="pmi-budget {{#if tally.over}}over{{/if}}">
+      <span>{{localize "PMI.Builder.Budget"}}: {{tally.spent}} / {{tally.budget}}</span>
+      <span>{{localize "PMI.Builder.Properties"}}: {{tally.count}} / {{tally.maxProperties}}</span>
+      <div class="pmi-meter"><div style="width: {{tally.percent}}%"></div></div>
+    </header>
+    {{#if tally.over}}<p class="pmi-warn"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "PMI.Builder.OverBudget"}}</p>{{/if}}
+    <ol class="pmi-picks">
+      {{#each picks}}
+      <li class="pmi-pick {{#if locked}}locked{{/if}} {{#if problem}}problem{{/if}}">
+        <div class="pmi-pick-main">
+          <strong>{{label}}</strong>
+          <span class="pmi-pick-meta">{{slot}} · {{localize "PMI.Builder.Cost"}} {{cost}}{{#if params}} · {{params}}{{/if}}</span>
+          {{#if problem}}<span class="pmi-warn">{{problem}}</span>{{/if}}
+        </div>
+        <div class="pmi-pick-controls">
+          <button type="button" data-action="lock" data-index="{{index}}" data-tooltip="PMI.Builder.Lock"><i class="fa-solid {{#if locked}}fa-lock{{else}}fa-lock-open{{/if}}"></i></button>
+          <button type="button" data-action="reroll" data-index="{{index}}" data-tooltip="PMI.Builder.Reroll"><i class="fa-solid fa-rotate"></i></button>
+          {{#if hasParams}}<button type="button" data-action="rerollParams" data-index="{{index}}" data-tooltip="PMI.Builder.RerollParams"><i class="fa-solid fa-dice-d6"></i></button>{{/if}}
+          <button type="button" data-action="remove" data-index="{{index}}" data-tooltip="PMI.Builder.Remove"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </li>
+      {{else}}
+      <li class="pmi-empty">{{localize "PMI.Builder.NoPicks"}}</li>
+      {{/each}}
+    </ol>
+    {{#if addable.length}}
+    <div class="form-group pmi-add">
+      <select name="addProperty">
+        {{#each addable}}<option value="{{id}}">{{label}}{{#if over}} ⚠{{/if}}</option>{{/each}}
+      </select>
+      <button type="button" data-action="add"><i class="fa-solid fa-plus"></i> {{localize "PMI.Builder.Add"}}</button>
+    </div>
+    {{/if}}
+  </section>
+
+  <section class="pmi-section pmi-preview">
+    {{#if preview}}
+    <header class="pmi-preview-head">
+      <img src="{{preview.img}}" alt="">
+      <h3>{{preview.name}}</h3>
+    </header>
+    <div class="pmi-description">{{{preview.description}}}</div>
+    {{else if baseName}}
+    {{else}}
+    <p class="hint">{{localize "PMI.Builder.ChooseBase"}}</p>
+    {{/if}}
+    {{#each errors}}<p class="pmi-error"><i class="fa-solid fa-circle-xmark"></i> {{this}}</p>{{/each}}
+    {{#each warnings}}<p class="pmi-warn"><i class="fa-solid fa-triangle-exclamation"></i> {{this}}</p>{{/each}}
+  </section>
+</div>
+<footer class="pmi-footer">
+  <p class="hint">{{localize "PMI.Builder.CreateHint"}}</p>
+  <button type="button" data-action="create" {{#unless canCreate}}disabled{{/unless}}>
+    <i class="fa-solid {{#if busy}}fa-spinner fa-spin{{else}}fa-hammer{{/if}}"></i> {{localize "PMI.Builder.Create"}}
+  </button>
+</footer>

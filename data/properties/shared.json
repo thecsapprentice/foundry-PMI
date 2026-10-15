@@ -1,0 +1,45 @@
+{
+  "$comment": "Properties for any weapon, armor or shield.",
+  "properties": [
+    {
+      "id": "of-the-beast", "slot": "suffix", "label": "of the {ability.name} ({ability.label} saves)", "name": "of the {ability.name}",
+      "cost": 2, "weight": 6, "appliesTo": ["weapon", "armor", "shield"], "minRarity": "uncommon",
+      "params": {
+        "ability": { "pick": [
+          { "value": "str", "name": "Bear", "label": "Strength" },
+          { "value": "dex", "name": "Cat", "label": "Dexterity" },
+          { "value": "con", "name": "Ox", "label": "Constitution" },
+          { "value": "int", "name": "Fox", "label": "Intelligence" },
+          { "value": "wis", "name": "Owl", "label": "Wisdom" },
+          { "value": "cha", "name": "Eagle", "label": "Charisma" }
+        ] },
+        "bonus": { "byRarity": { "uncommon": 1, "veryRare": 2 } }
+      },
+      "changes": [{ "type": "effect", "changes": [{ "key": "system.abilities.@ability.bonuses.save", "mode": "add", "value": "+@bonus" }] }],
+      "text": "While you carry this item, you have a +@bonus bonus to {ability.label} saving throws."
+    },
+    {
+      "id": "of-swiftness", "slot": "suffix", "label": "of Swiftness", "name": "of Swiftness",
+      "cost": 2, "weight": 5, "appliesTo": ["weapon", "armor", "shield"], "minRarity": "uncommon",
+      "params": { "speed": { "byRarity": { "uncommon": 5, "rare": 10 } } },
+      "changes": [{ "type": "effect", "changes": [{ "key": "system.attributes.movement.walk", "mode": "add", "value": "@speed" }] }],
+      "text": "While you carry this item, your walking speed increases by @speed feet."
+    },
+    {
+      "id": "of-the-night", "slot": "suffix", "label": "of the Night", "name": "of the Night",
+      "cost": 1, "weight": 5, "appliesTo": ["weapon", "armor", "shield"], "minRarity": "uncommon",
+      "params": { "range": { "byRarity": { "uncommon": 60, "veryRare": 120 } } },
+      "changes": [{ "type": "effect", "changes": [{ "key": "system.attributes.senses.darkvision", "mode": "upgrade", "value": "@range" }] }],
+      "text": "While you carry this item, you have darkvision out to a range of @range feet."
+    },
+    {
+      "id": "of-protection", "slot": "suffix", "label": "of Protection", "name": "of Protection",
+      "cost": 4, "weight": 3, "attunement": true, "appliesTo": ["weapon", "armor", "shield"], "minRarity": "rare",
+      "changes": [{ "type": "effect", "changes": [
+        { "key": "system.attributes.ac.bonus", "mode": "add", "value": "+1" },
+        { "key": "system.bonuses.abilities.save", "mode": "add", "value": "+1" }
+      ] }],
+      "text": "While attuned to this item, you gain a +1 bonus to AC and saving throws."
+    }
+  ]
+}

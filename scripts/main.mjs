@@ -11,6 +11,7 @@ Hooks.once("init", () => {
   registerSettings({
     onBasePacksChange: () => PmiBuilder.invalidateBases(),
     onSpellPacksChange: () => PmiBuilder.invalidateSpells(),
+    openBuilder: () => PmiBuilder.open(),
   });
   registerBuiltinChangeTypes();
   game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
@@ -33,7 +34,11 @@ Hooks.once("ready", async () => {
       ui.notifications.warn(game.i18n.localize("PMI.Errors.StaleStyles"), { permanent: true });
     }
   }
-  registerTriggers();
+  try {
+    registerTriggers();
+  } catch (err) {
+    console.error(`${MODULE_ID} | Couldn't start automatic triggers; items still work, triggers won't fire automatically`, err);
+  }
   const { added, errors } = await loadBuiltinProperties();
   if (errors.length) {
     console.warn(`${MODULE_ID} | Property problems:\n${errors.join("\n")}`);
@@ -44,18 +49,26 @@ Hooks.once("ready", async () => {
   Hooks.callAll(`${MODULE_ID}.ready`, game.modules.get(MODULE_ID).api);
 });
 
-// A GM-only "Magic Item Builder" button at the top of the Items sidebar.
+// A GM-only "Magic Item Builder" button at the top of the Items sidebar. Other modules sometimes reshape
+// the sidebar header, so try the known layouts in turn; the module settings have a button too.
+const HEADER_SPOTS = [".header-actions", ".directory-header .action-buttons", ".directory-header"];
+let noSpotNoted = false;
 Hooks.on("renderItemDirectory", (app, html) => {
   if (!game.user.isGM) return;
-  const root = html instanceof HTMLElement ? html : html[0];
-  const actions = root?.querySelector(".header-actions");
-  if (!actions || actions.querySelector(".pmi-open-builder")) return;
+  const root = html instanceof HTMLElement ? html : html?.[0];
+  if (!root || root.querySelector(".pmi-open-builder")) return;
+  const spot = HEADER_SPOTS.map((sel) => root.querySelector(sel)).find(Boolean);
+  if (!spot) {
+    if (!noSpotNoted) console.warn(`${MODULE_ID} | Couldn't find the Items sidebar header for the builder button. Use Configure Settings → Procedural Magic Items → Open Magic Item Builder.`);
+    noSpotNoted = true;
+    return;
+  }
   const button = document.createElement("button");
   button.type = "button";
   button.className = "pmi-open-builder";
   button.innerHTML = `<i class="fa-solid fa-wand-sparkles"></i> ${game.i18n.localize("PMI.Builder.Open")}`;
   button.addEventListener("click", () => PmiBuilder.open());
-  actions.append(button);
+  spot.append(button);
 });
 
 // GM-only context menu entry on PMI items: open a copy of the recipe in the builder.

@@ -10,7 +10,7 @@ import { substitute, plain, spellSpecs } from "../generator/params.mjs";
 import { compile } from "../compiler/index.mjs";
 import { getChangeType, getProperty, listProperties, getBase, listBases, getNames } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
-import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
+import { BASE_INDEX_FIELDS, loadSpellPool, isBase } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -137,7 +137,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const pack of basePacks()) {
       const index = await pack.getIndex({ fields: BASE_INDEX_FIELDS });
       for (const e of index) {
-        if (!categorize(e).length || !isMundane(e)) continue;
+        if (!isBase(e)) continue;
         out.push({ uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}`, name: e.name, group: pack.metadata.label, kind: kindOf(categorize(e)) });
       }
     }

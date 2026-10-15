@@ -14,11 +14,25 @@ import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS, WORN_TYPE
  * @param {object} base  Item source data ({type, system}).
  * @returns {string[]}
  */
+/**
+ * An item's properties as a plain list, whatever form the data is in: a list (dnd5e 4.x source), a Set
+ * (prepared documents), or an older-style object like { mgc: true } (unmigrated compendium indexes).
+ * Anything else gives an empty list.
+ */
+export function propertyList(props) {
+  if (Array.isArray(props)) return props.filter((p) => typeof p === "string");
+  if (props instanceof Set) return [...props].filter((p) => typeof p === "string");
+  if (props && typeof props === "object") return Object.entries(props).filter(([, on]) => on).map(([k]) => k);
+  return [];
+}
+
 export function categorize(base) {
-  const type = base?.system?.type?.value ?? "";
-  const baseItem = base?.system?.type?.baseItem ?? "";
-  const props = base?.system?.properties ?? [];
-  const has = (p) => (Array.isArray(props) ? props.includes(p) : !!props.has?.(p));
+  // An entry with no system data (a broken or placeholder compendium entry) is never a usable base.
+  if (!base?.system || typeof base.system !== "object") return [];
+  const type = String(base?.system?.type?.value ?? "");
+  const baseItem = String(base?.system?.type?.baseItem ?? "");
+  const props = propertyList(base?.system?.properties);
+  const has = (p) => props.includes(p);
   if (base?.type === "weapon") {
     const out = ["weapon"];
     if (baseItem === "quarterstaff" && has("foc")) out.unshift("staff");
@@ -27,7 +41,7 @@ export function categorize(base) {
     if (type.startsWith("simple")) out.push("weapon.simple");
     if (type.startsWith("martial")) out.push("weapon.martial");
     if (baseItem) out.push(`weapon.${baseItem}`);
-    for (const p of Array.isArray(props) ? props : [...(props ?? [])]) if (p !== "mgc" && p !== "foc") out.push(`weapon.prop.${p}`);
+    for (const p of props) if (p !== "mgc" && p !== "foc") out.push(`weapon.prop.${p}`);
     return out;
   }
   if (base?.type === "equipment" && ARMOR_TYPES.includes(type)) {
@@ -55,9 +69,7 @@ export function appliesTo(def, categories) {
 
 /** Is an item already magical? The builder offers only mundane bases. */
 export function isMundane(base) {
-  const props = base?.system?.properties ?? [];
-  const has = Array.isArray(props) ? props.includes("mgc") : props.has?.("mgc");
-  return !has && !(base?.system?.magicalBonus > 0) && !(base?.system?.armor?.magicalBonus > 0)
+  return !propertyList(base?.system?.properties).includes("mgc") && !(base?.system?.magicalBonus > 0) && !(base?.system?.armor?.magicalBonus > 0)
     && !["uncommon", "rare", "veryRare", "legendary", "artifact"].includes(base?.system?.rarity);
 }
 

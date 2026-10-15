@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json
 
 ## Usage
 
-1. As a GM, open the **Items** sidebar and click **Magic Item Builder**.
+1. As a GM, open the **Items** sidebar and click **Magic Item Builder** (or use **Configure Settings → Procedural Magic Items → Open Magic Item Builder**, for example if another module changes the sidebar).
 2. Click a kind button (*Any*, *Weapon*, *Armor*, *Shield*, *Wondrous*, *Staff*, *Wand*, *Rod*) for a random base of that kind, choose a specific one from the list, or drop one onto the window from the sidebar or a compendium.
 3. Pick a rarity (or click the dice for a random one, weighted toward lower rarities) and click **Roll** in the sidebar. Roll rerolls every unlocked property. Properties appear as cards. Each can be locked (kept on the next roll), replaced, have its details rerolled (for example a different element), or removed. You can also add properties by hand; the budget bar warns if you overspend, but doesn't stop you.
 4. Check the preview in the sidebar, then click **Create item**. It's enabled once the item has at least one property. The item appears in the *Procedural Magic Items* folder, visible only to GMs until you share it.

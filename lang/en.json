@@ -129,7 +129,12 @@
         "None": "No compendiums with spells were found."
       },
       "World": "World",
-      "Save": "Save"
+      "Save": "Save",
+      "OpenBuilder": {
+        "Name": "Magic Item Builder",
+        "Label": "Open Magic Item Builder",
+        "Hint": "Opens the builder. The same as the button at the top of the Items sidebar."
+      }
     },
     "Triggers": {
       "ChargesRestored": "{name} drinks in the moment of death and regains {count} charge(s)."

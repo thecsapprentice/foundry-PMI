@@ -13,6 +13,7 @@ SETTING	settings.mjs	await game.settings.set(MODULE_ID, this.constructor.SETTING
 SETTING	settings.mjs	game.settings.register(MODULE_ID, "basePacks", {
 SETTING	settings.mjs	game.settings.register(MODULE_ID, "spellPacks", {
 SETTING	settings.mjs	game.settings.registerMenu(MODULE_ID, "basePacksMenu", {
+SETTING	settings.mjs	game.settings.registerMenu(MODULE_ID, "openBuilder", {
 SETTING	settings.mjs	game.settings.registerMenu(MODULE_ID, "spellPacksMenu", {
 UPDATE	runtime/triggers.mjs	await item.update({ "system.uses.spent": spent });
 WRAP/HOOK	main.mjs	Hooks.on("getItemDirectoryEntryContext", (html, options) => {

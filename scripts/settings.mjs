@@ -1,6 +1,6 @@
 // Module settings, and the GM-only forms for choosing base-item and spell compendiums.
 import { MODULE_ID, DEFAULT_BASE_PACKS, DEFAULT_SPELL_PACKS } from "./config.mjs";
-import { categorize, isMundane } from "./generator/categories.mjs";
+import { categorize, isMundane, propertyList } from "./generator/categories.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -10,15 +10,52 @@ export const BASE_INDEX_FIELDS = ["system.type", "system.rarity", "system.proper
 /** Index fields needed to summarise a spell for the spell filters. */
 export const SPELL_INDEX_FIELDS = ["system.level", "system.school", "system.properties", "system.activation.type"];
 
-const isBase = (e) => categorize(e).length > 0 && isMundane(e);
-const isSpell = (e) => e.type === "spell" && Number.isInteger(e.system?.level);
+/**
+ * Compendium index entries are raw, unmigrated data, so one odd entry from an old module mustn't break the
+ * whole list: anything that can't be read is skipped (and noted once in the console).
+ */
+let skippedNoted = false;
+function safely(test) {
+  return (e) => {
+    try {
+      return test(e);
+    } catch (err) {
+      if (!skippedNoted) {
+        skippedNoted = true;
+        console.warn(`${MODULE_ID} | Skipped a compendium entry PMI couldn't read ("${e?.name}"); others may be skipped too.`, err);
+      }
+      return false;
+    }
+  };
+}
+export const isBase = safely((e) => categorize(e).length > 0 && isMundane(e));
+const isSpell = safely((e) => e.type === "spell" && Number.isInteger(e.system?.level));
 
 /**
  * @param {object} handlers
  * @param {() => void} handlers.onBasePacksChange   Called when a GM saves new base sources.
  * @param {() => void} handlers.onSpellPacksChange  Called when a GM saves new spell sources.
  */
-export function registerSettings({ onBasePacksChange, onSpellPacksChange } = {}) {
+/** Settings-menu entry that opens the builder (a second way in, whatever the sidebar looks like). */
+let openBuilderFn = null;
+export class PmiBuilderLauncher {
+  render() {
+    openBuilderFn?.();
+    return this;
+  }
+  close() { return this; }
+}
+
+export function registerSettings({ onBasePacksChange, onSpellPacksChange, openBuilder } = {}) {
+  openBuilderFn = openBuilder;
+  game.settings.registerMenu(MODULE_ID, "openBuilder", {
+    name: "PMI.Settings.OpenBuilder.Name",
+    label: "PMI.Settings.OpenBuilder.Label",
+    hint: "PMI.Settings.OpenBuilder.Hint",
+    icon: "fa-solid fa-wand-sparkles",
+    type: PmiBuilderLauncher,
+    restricted: true,
+  });
   game.settings.register(MODULE_ID, "basePacks", {
     scope: "world",
     config: false,
@@ -161,8 +198,8 @@ export async function loadSpellPool() {
     for (const e of index) {
       if (!isSpell(e)) continue;
       const uuid = e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}`;
-      const props = e.system.properties ?? [];
-      const has = (p) => (Array.isArray(props) ? props.includes(p) : !!props.has?.(p));
+      const props = propertyList(e.system.properties);
+      const has = (p) => props.includes(p);
       let classes = [];
       try {
         classes = [...(lists?.forSpell?.(uuid) ?? [])].filter((l) => l.metadata?.type === "class").map((l) => l.metadata.identifier);

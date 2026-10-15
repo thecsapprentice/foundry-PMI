@@ -104,3 +104,33 @@ const made = writes.find((w) => w.op === "Item.create")?.data;
 check("with the spell present, the wand is created", Object.values(made?.system.activities ?? {}).some((a) => a.type === "cast"));
 check("a rare wand gets a true name, with its full name in the description", made?.name !== "Wand of Vanished" && made.system.description.value.includes("<strong>Wand of Vanished</strong>"));
 check("the wand is hidden from players", made?.ownership?.default === 0);
+
+// The crash from a campaign world: a compendium with old-format and broken entries.
+const { addPack: addPack2 } = await import("./foundry-mock.mjs");
+addPack2("oldmod.items", [
+  { _id: "old1", name: "Old Dagger", type: "weapon", system: { type: { value: "simpleM", baseItem: "dagger" }, properties: { fin: true, lgt: true } } },
+  { _id: "old2", name: "Broken", type: "weapon", system: { type: { value: "simpleM" }, properties: 42 } },
+  { _id: "old3", name: "No system", type: "weapon" },
+], { packageName: "oldmod", packageType: "module" });
+addPack2("oldmod.spells", [
+  { _id: "osp1", name: "Old Spell", type: "spell", system: { level: 2, school: "evo", properties: { concentration: true } } },
+  { _id: "osp2", name: "No props", type: "spell", system: { level: 1 } },
+], { packageName: "oldmod", packageType: "module" });
+const warnOrig = console.warn; console.warn = () => {};
+let formCtx = null, formErr = null;
+try { formCtx = await new PmiBaseSourcesConfig()._prepareContext(); } catch (err) { formErr = err; }
+check("the base sources form opens despite old-format entries", !formErr, formErr?.message);
+check("old-format bases are counted", formCtx?.packs.find((p) => p.id === "oldmod.items")?.count === 2, JSON.stringify(formCtx?.packs.map((p) => [p.id, p.count])));
+await game.settings.set("foundry-pmi", "spellPacks", ["oldmod.spells"]);
+let pool2 = null, poolErr = null;
+try { pool2 = await loadSpellPool(); } catch (err) { poolErr = err; }
+console.warn = warnOrig;
+check("the spell list loads despite old-format entries", !poolErr && pool2.length === 2, poolErr?.message);
+check("old-format spell properties are read", pool2?.find((s) => s.name === "Old Spell")?.concentration === true);
+
+// A second way into the builder from the module settings.
+const { PmiBuilderLauncher } = await import("../scripts/settings.mjs");
+let opened = 0;
+registerSettings({ openBuilder: () => opened++ });
+new PmiBuilderLauncher().render(true);
+check("the settings launcher opens the builder", opened === 1);

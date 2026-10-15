@@ -130,3 +130,19 @@ let threw = false;
 try { resolveParam({ pick: [{ value: "x", label: "Find [nope]" }], fill: {} }, "rare", new Rng("f2")); } catch { threw = true; }
 check("an unknown placeholder fails loudly", threw);
 check("plain strings are untouched by fills", resolveParam({ pick: ["a"], fill: { x: ["y"] } }, "rare", new Rng("f3")) === "a");
+
+// Old or odd compendium data (unmigrated index entries) never throws.
+const { propertyList, isMundane: isMundane2 } = await import("../scripts/generator/categories.mjs");
+check("properties: list", JSON.stringify(propertyList(["fin", "mgc"])) === '["fin","mgc"]');
+check("properties: Set", JSON.stringify(propertyList(new Set(["fin"]))) === '["fin"]');
+check("properties: old object form", JSON.stringify(propertyList({ fin: true, mgc: false, thr: 1 })) === '["fin","thr"]');
+check("properties: junk gives nothing", [null, undefined, 5, "fin", true].every((v) => propertyList(v).length === 0));
+const oldDagger = { type: "weapon", system: { type: { value: "simpleM", baseItem: "dagger" }, properties: { fin: true, lgt: true, mgc: false } } };
+check("old-format weapon is categorised", categorize(oldDagger).includes("weapon.prop.fin") && isMundane2(oldDagger));
+check("old-format magic weapon isn't mundane", !isMundane2({ type: "weapon", system: { properties: { mgc: true } } }));
+let survived = true;
+for (const e of [{}, { type: "weapon" }, { type: "weapon", system: null }, { type: "weapon", system: { type: null, properties: 7 } },
+  { type: "equipment", system: { type: { value: 3 }, identifier: null } }]) {
+  try { categorize(e); isMundane2(e); } catch { survived = false; }
+}
+check("malformed entries never throw", survived);

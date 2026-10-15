@@ -21,15 +21,15 @@ https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json
 ## Usage
 
 1. As a GM, open the **Items** sidebar and click **Magic Item Builder**.
-2. Choose a mundane weapon, armor, shield, wand, staff or rod from the list, use the **Random** buttons, or drop one onto the window from the sidebar or a compendium.
-3. Pick a rarity (or click the dice for a random one, weighted toward lower rarities) and click **Roll**. Roll rerolls every unlocked property. Each property can be locked (kept on the next roll), replaced, have its details rerolled (for example a different element), or removed. You can also add properties by hand; the budget bar warns if you overspend, but doesn't stop you.
-4. Check the preview, then click **Create item**. The item appears in the *Procedural Magic Items* folder, visible only to GMs until you share it.
+2. Click a kind button (*Any*, *Weapon*, *Armor*, *Shield*, *Staff*, *Wand*, *Rod*) for a random base of that kind, choose a specific one from the list, or drop one onto the window from the sidebar or a compendium.
+3. Pick a rarity (or click the dice for a random one, weighted toward lower rarities) and click **Roll** in the sidebar. Roll rerolls every unlocked property. Properties appear as cards. Each can be locked (kept on the next roll), replaced, have its details rerolled (for example a different element), or removed. You can also add properties by hand; the budget bar warns if you overspend, but doesn't stop you.
+4. Check the preview in the sidebar, then click **Create item**. It's enabled once the item has at least one property. The item appears in the *Procedural Magic Items* folder, visible only to GMs until you share it.
 
 **Wands, staves and rods** get spells they can cast from charges, using dnd5e's own Cast activity: the spell is cast at a fixed save DC and attack bonus set by the item's rarity, without components, and each extra charge raises its level. The item's charge pool follows the DMG: wands hold 7 charges and regain 1d6 + 1 at dawn, staves 10 and regain 1d6 + 4. A wand spends 1 charge per spell; a staff or rod spends charges equal to the spell's level. Staves are also quarterstaffs, so they can roll weapon properties too.
 
 **Choosing spell sources.** Spells come from the dnd5e system's spell compendiums by default. To use another book's spells, such as the Player's Handbook, go to **Configure Settings → Procedural Magic Items → Spell sources**. Items you've already created keep their spells.
 
-**Choosing base item sources.** By default the builder lists bases from the dnd5e system's item compendiums. To change that, go to **Configure Settings → Procedural Magic Items → Base item sources** and tick the compendiums you want. Only compendiums with mundane weapons, armor or shields are listed.
+**Choosing base item sources.** By default the builder lists bases from the dnd5e system's item compendiums. To change that, go to **Configure Settings → Procedural Magic Items → Base item sources** and tick the compendiums you want. Only compendiums with mundane weapons, armor, shields, wands, staves or rods are listed.
 
 To make a variation of an item you created, right-click it in the Items sidebar and choose **Open in Magic Item Builder**. Creating from there makes a new item; the original is never changed.
 

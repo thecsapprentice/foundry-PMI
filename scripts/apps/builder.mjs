@@ -14,17 +14,29 @@ import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
+/** Icons for the base-kind buttons. Each button also shows its name, so it reads even without the icon. */
+const KIND_ICONS = {
+  any: "fa-solid fa-dice",
+  weapon: "fa-solid fa-sword",
+  armor: "fa-solid fa-helmet-battle",
+  shield: "fa-solid fa-shield-halved",
+  staff: "fa-solid fa-staff",
+  wand: "fa-solid fa-wand-magic-sparkles",
+  rod: "fa-solid fa-wand",
+};
+
 export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "pmi-builder",
     classes: ["pmi-builder"],
     tag: "div",
     window: { title: "PMI.Builder.Title", icon: "fa-solid fa-wand-sparkles", resizable: true },
-    position: { width: 640, height: 720 },
+    position: { width: 900, height: 640 },
     actions: {
       roll: PmiBuilder.#onRoll,
       randomBase: PmiBuilder.#onRandomBase,
       randomRarity: PmiBuilder.#onRandomRarity,
+      setRarity: PmiBuilder.#onSetRarity,
       lock: PmiBuilder.#onLock,
       reroll: PmiBuilder.#onReroll,
       rerollParams: PmiBuilder.#onRerollParams,
@@ -36,7 +48,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   };
 
   static PARTS = {
-    body: { template: `modules/${MODULE_ID}/templates/builder.hbs`, scrollable: [".pmi-scroll"] },
+    // Both columns keep their scroll position when the window re-renders.
+    body: { template: `modules/${MODULE_ID}/templates/builder.hbs`, scrollable: [".pmi-main", ".pmi-preview"] },
   };
 
   static #instance = null;
@@ -156,14 +169,20 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
 
     const picks = this.recipe.picks.map((pick, index) => {
       const def = getProperty(pick.id);
+      const label = def ? this.#label(def, pick) : pick.id;
       return {
         index,
         locked: pick.locked,
-        label: def ? this.#label(def, pick) : pick.id,
+        label,
         slot: def ? L(`PMI.Slot.${def.slot}`) : "?",
+        slotKey: def?.slot ?? "unknown",
         cost: def?.cost ?? 0,
         hasParams: !!def && Object.keys(def.params ?? {}).length > 0,
-        params: Object.entries(pick.params ?? {}).map(([k, v]) => `${k}: ${v?.label ?? plain(v)}`).join(", "),
+        // Details not already shown in the card's title (a spell's name is, so it isn't repeated).
+        params: Object.entries(pick.params ?? {})
+          .map(([k, v]) => [k, String(v?.label ?? plain(v))])
+          .filter(([, text]) => !label.includes(text))
+          .map(([k, text]) => `${k}: ${text}`).join(", "),
         problem: invalid.has(index) ? L(`PMI.Reason.${invalid.get(index)}`) : null,
       };
     });
@@ -177,8 +196,10 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       .map(({ d }) => ({ id: d.id, label: `${String(d.label ?? d.name ?? d.id).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
       : [];
 
-    const compiled = this.#compile();
+    // Nothing to preview or create until the item has at least one property.
+    const compiled = this.recipe.picks.length ? this.#compile() : { data: null, errors: [], warnings: [] };
     const preview = compiled.data ? {
+      rarityLabel: L(CONFIG.DND5E?.itemRarity?.[this.recipe.rarity] ?? this.recipe.rarity),
       name: compiled.data.name,
       img: compiled.data.img,
       attunement: compiled.data.system.attunement === "required",
@@ -192,8 +213,11 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
       baseKinds: ["any", "weapon", "armor", "shield", "staff", "wand", "rod"].map((kind) => ({
         kind,
+        icon: KIND_ICONS[kind],
         label: L(`PMI.Builder.Kind.${kind}`),
-        disabled: kind !== "any" && !bases.some((b) => b.kind === kind),
+        tooltip: L(`PMI.Builder.RandomKind.${kind}`),
+        active: kind !== "any" && kind === kindOf(cats),
+        disabled: kind !== "any" ? !bases.some((b) => b.kind === kind) : bases.length === 0,
       })),
       noBases: bases.length === 0,
       baseName: this.#base?.name ?? null,
@@ -212,10 +236,6 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   _onRender(context, options) {
     super._onRender(context, options);
     const el = this.element;
-    el.querySelector("select[name=rarity]")?.addEventListener("change", (ev) => {
-      this.recipe.rarity = ev.currentTarget.value;
-      this.render();
-    });
     el.querySelector("select[name=base]")?.addEventListener("change", async (ev) => {
       await this.#setBase(ev.currentTarget.value || null, { quiet: false });
       this.render();
@@ -261,6 +281,13 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       return;
     }
     if (await this.#setBase(entry.uuid, { quiet: false })) this.render();
+  }
+
+  static #onSetRarity(event, target) {
+    const rarity = target.dataset.rarity;
+    if (!RARITIES.includes(rarity) || rarity === this.recipe.rarity) return;
+    this.recipe.rarity = rarity;
+    this.render();
   }
 
   static #onRandomRarity() {
@@ -325,7 +352,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Create the item: validate, then create it hidden from players in PMI's folder. */
   static async #onCreate() {
-    if (this.#busy || !game.user.isGM) return;
+    if (this.#busy || !game.user.isGM || !this.recipe.picks.length) return;
     const { data, errors } = this.#compile();
     if (!data || errors.length) { ui.notifications.error(game.i18n.localize("PMI.Builder.HasErrors")); return; }
     this.#busy = true;

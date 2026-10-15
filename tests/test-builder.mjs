@@ -27,6 +27,17 @@ check("rolling without a base warns", notes.at(-1)[1] === "PMI.Builder.ChooseBas
 await A.create.call(app);
 check("creating without a base writes nothing", writes.length === 0);
 
+// A base but no properties: nothing to create.
+await PmiBuilder.open(new MockItem({ name: "x", flags: { "foundry-pmi": { recipe: newRecipe({ seed: "e", rarity: "rare", baseUuid: "Compendium.dnd5e.items.Item.longsword" }) } } }));
+await A.create.call(app);
+check("an item with no properties can't be created", writes.length === 0);
+
+// Rarity buttons.
+A.setRarity.call(app, null, { dataset: { rarity: "legendary" } });
+check("rarity button sets the rarity", app.recipe.rarity === "legendary");
+A.setRarity.call(app, null, { dataset: { rarity: "mythic" } });
+check("an unknown rarity is ignored", app.recipe.rarity === "legendary");
+
 // Open from a PMI item: loads a copy of its recipe and its base.
 let recipe = addPick(addPick(newRecipe({ seed: "test-seed", rarity: "rare", baseUuid: "Compendium.dnd5e.items.Item.longsword" }), getProperty("elemental")), getProperty("weapon-plus-1"));
 const pmiItem = new MockItem({ name: "x", flags: { "foundry-pmi": { recipe } } });

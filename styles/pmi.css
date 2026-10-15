@@ -1,40 +1,247 @@
-.pmi-builder .window-content { display: flex; flex-direction: column; padding: 0; }
-.pmi-builder .pmi-builder-root { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.pmi-builder .pmi-scroll { flex: 1; overflow-y: auto; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
-.pmi-builder .pmi-section { display: flex; flex-direction: column; gap: 0.4rem; }
-.pmi-builder .pmi-seed { margin: 0; font-size: var(--font-size-11); opacity: 0.6; text-align: right; }
-.pmi-builder .form-group button { flex: 0 0 auto; }
-.pmi-builder .pmi-roll { width: 100%; font-weight: bold; }
-.pmi-builder .pmi-icon-button { flex: 0 0 2rem; width: 2rem; padding: 0; text-align: center; }
-.pmi-builder .pmi-random-row { display: flex; align-items: center; gap: 0.25rem; }
-.pmi-builder .pmi-random-row button { flex: 1; }
-.pmi-builder .pmi-random-label { flex: 0 0 auto; margin-right: 0.25rem; white-space: nowrap; }
+/* Procedural Magic Items: builder and settings forms.
+   Quiet surfaces in Foundry's own palette; the one accent is the item's rarity colour,
+   which runs through the rarity control, the budget bar and the preview's item name. */
+
+.pmi-builder {
+  --pmi-ink: var(--color-text-dark-primary, #191813);
+  --pmi-ink-soft: var(--color-text-dark-secondary, #4b4a44);
+  --pmi-line: var(--color-border-light-tertiary, #b5b3a4);
+  --pmi-line-soft: rgba(0, 0, 0, 0.12);
+  --pmi-surface: rgba(255, 255, 255, 0.35);
+  --pmi-warn: #8a5300;
+  --pmi-error: #a1261d;
+  --pmi-r-common: #5f5f5a;
+  --pmi-r-uncommon: #1f7a3a;
+  --pmi-r-rare: #2160a8;
+  --pmi-r-veryRare: #7a3fb0;
+  --pmi-r-legendary: #b45f12;
+  --pmi-r-artifact: #a8322d;
+}
+
+/* ---------- window: let the layout, not the content, decide the size ---------- */
+.pmi-builder .window-content {
+  /* The window body is the size container, so the layout inside can switch to one column. */
+  container: pmi / inline-size;
+  padding: 0;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+}
+
+.pmi-layout {
+  --pmi-rarity: var(--pmi-r-uncommon);
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
+  color: var(--pmi-ink);
+}
+.pmi-layout.rarity-common    { --pmi-rarity: var(--pmi-r-common); }
+.pmi-layout.rarity-uncommon  { --pmi-rarity: var(--pmi-r-uncommon); }
+.pmi-layout.rarity-rare      { --pmi-rarity: var(--pmi-r-rare); }
+.pmi-layout.rarity-veryRare  { --pmi-rarity: var(--pmi-r-veryRare); }
+.pmi-layout.rarity-legendary { --pmi-rarity: var(--pmi-r-legendary); }
+.pmi-layout.rarity-artifact  { --pmi-rarity: var(--pmi-r-artifact); }
+
+.pmi-main {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.6rem 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.pmi-side {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--pmi-line);
+  background: var(--pmi-surface);
+}
+
+/* Narrow window: one column, and the whole layout scrolls. */
+@container pmi (max-width: 640px) {
+  .pmi-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: max-content max-content; align-content: start; overflow-y: auto; }
+  .pmi-main, .pmi-side, .pmi-preview { min-height: auto; overflow: visible; }
+  .pmi-side { border-left: none; border-top: 1px solid var(--pmi-line); }
+}
+
+/* ---------- shared bits ---------- */
+.pmi-block { display: flex; flex-direction: column; gap: 0.4rem; }
+.pmi-heading {
+  margin: 0;
+  border: none;
+  font-size: var(--font-size-14, 14px);
+  font-weight: bold;
+  color: var(--pmi-ink-soft);
+}
+.pmi-hint { margin: 0; font-size: var(--font-size-12, 12px); color: var(--pmi-ink-soft); }
+.pmi-warn { margin: 0; color: var(--pmi-warn); }
+.pmi-error { margin: 0; color: var(--pmi-error); }
+.pmi-builder button { margin: 0; line-height: 1.2; }
+.pmi-builder button:focus-visible { outline: 2px solid var(--pmi-rarity); outline-offset: 1px; box-shadow: none; }
+
+/* ---------- base kind: square icon buttons ---------- */
+.pmi-kinds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 54px);
+  gap: 0.3rem;
+}
+.pmi-kind {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border: 1px solid var(--pmi-line);
+  border-radius: 6px;
+  background: var(--pmi-surface);
+  font-size: var(--font-size-11, 11px);
+}
+.pmi-kind i { font-size: 1.2rem; margin: 0; }
+.pmi-kind.active { border-color: var(--pmi-ink); box-shadow: inset 0 0 0 1px var(--pmi-ink); }
+.pmi-kind:disabled { opacity: 0.4; }
+
+.pmi-base-row { display: flex; align-items: center; gap: 0.4rem; min-width: 0; }
+.pmi-base-row select { flex: 1; min-width: 0; }
+.pmi-base-img { width: 28px; height: 28px; flex: 0 0 28px; border: none; border-radius: 4px; }
+
+/* ---------- rarity: segmented control ---------- */
+.pmi-rarities { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.pmi-rarity {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--pmi-line);
+  border-left: 4px solid var(--pmi-swatch, var(--pmi-line));
+  border-radius: 4px;
+  background: var(--pmi-surface);
+  font-size: var(--font-size-12, 12px);
+  white-space: nowrap;
+}
+.pmi-rarity.rarity-common    { --pmi-swatch: var(--pmi-r-common); }
+.pmi-rarity.rarity-uncommon  { --pmi-swatch: var(--pmi-r-uncommon); }
+.pmi-rarity.rarity-rare      { --pmi-swatch: var(--pmi-r-rare); }
+.pmi-rarity.rarity-veryRare  { --pmi-swatch: var(--pmi-r-veryRare); }
+.pmi-rarity.rarity-legendary { --pmi-swatch: var(--pmi-r-legendary); }
+.pmi-rarity.rarity-artifact  { --pmi-swatch: var(--pmi-r-artifact); }
+.pmi-rarity.active { background: var(--pmi-swatch); border-color: var(--pmi-swatch); color: #fff; font-weight: bold; }
+.pmi-rarity-random { flex: 0 0 2.2rem; padding: 0.25rem 0; border-left-width: 1px; }
+.pmi-rarity-random i { margin: 0; }
+
+/* ---------- budget ---------- */
+.pmi-budget {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+}
+.pmi-budget-text { justify-self: end; font-size: var(--font-size-12, 12px); color: var(--pmi-ink-soft); }
+.pmi-meter { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--pmi-line-soft); overflow: hidden; }
+.pmi-meter > div { height: 100%; background: var(--pmi-rarity); transition: width 150ms ease-out; }
+.pmi-budget.over .pmi-meter > div { background: var(--pmi-warn); }
+@media (prefers-reduced-motion: reduce) { .pmi-meter > div { transition: none; } }
+
+/* ---------- property cards ---------- */
+.pmi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.45rem;
+}
+.pmi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.45rem 0.5rem 0.35rem;
+  border: 1px solid var(--pmi-line);
+  border-radius: 6px;
+  background: var(--pmi-surface);
+}
+.pmi-card.locked { border-color: var(--pmi-ink); box-shadow: inset 0 0 0 1px var(--pmi-ink); }
+.pmi-card.problem { border-color: var(--pmi-warn); border-style: dashed; }
+.pmi-card-head { display: flex; justify-content: space-between; align-items: center; gap: 0.3rem; }
+.pmi-card-slot { font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); }
+.pmi-card-cost {
+  min-width: 1.4rem;
+  padding: 0 0.3rem;
+  border-radius: 9px;
+  background: var(--pmi-line-soft);
+  font-size: var(--font-size-11, 11px);
+  font-weight: bold;
+  text-align: center;
+}
+.pmi-card-name { margin: 0; border: none; font-size: var(--font-size-14, 14px); font-weight: bold; overflow-wrap: anywhere; }
+.pmi-card-name i { font-size: 0.8em; color: var(--pmi-ink-soft); }
+.pmi-card-params { margin: 0; font-size: var(--font-size-12, 12px); color: var(--pmi-ink-soft); overflow-wrap: anywhere; }
+.pmi-card-problem { margin: 0; font-size: var(--font-size-12, 12px); color: var(--pmi-warn); }
+.pmi-card-controls {
+  margin-top: auto;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--pmi-line-soft);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.2rem;
+}
+.pmi-card-controls button { height: 1.7rem; padding: 0; }
+.pmi-card-controls button i { margin: 0; }
+.pmi-card-controls button:disabled { opacity: 0.35; }
+
+.pmi-card-add { border-style: dashed; background: transparent; justify-content: center; }
+.pmi-card-add select { width: 100%; min-width: 0; }
+
+/* ---------- sidebar: preview + actions ---------- */
+.pmi-preview {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pmi-preview-head { display: flex; align-items: flex-start; gap: 0.5rem; }
+.pmi-preview-head img { width: 48px; height: 48px; flex: 0 0 48px; border: none; border-radius: 4px; }
+.pmi-item-name {
+  margin: 0;
+  border: none;
+  font-size: var(--font-size-18, 18px);
+  line-height: 1.15;
+  color: var(--pmi-rarity);
+  overflow-wrap: anywhere;
+}
+.pmi-item-sub { margin: 0.15rem 0 0; font-size: var(--font-size-12, 12px); font-style: italic; color: var(--pmi-ink-soft); }
+.pmi-description { font-size: var(--font-size-13, 13px); }
+.pmi-description ul { margin: 0.25rem 0; padding-left: 1.1rem; }
+.pmi-description li p { margin: 0 0 0.3rem; }
+.pmi-preview-empty { margin: auto 0; text-align: center; color: var(--pmi-ink-soft); }
+.pmi-preview-empty i { font-size: 2rem; opacity: 0.4; }
+
+.pmi-actions {
+  flex: 0 0 auto;
+  padding: 0.6rem 0.75rem;
+  border-top: 1px solid var(--pmi-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pmi-actions button { height: 2.1rem; }
+.pmi-create { background: var(--pmi-rarity); border-color: var(--pmi-rarity); color: #fff; font-weight: bold; }
+.pmi-create:disabled { background: var(--pmi-line-soft); border-color: var(--pmi-line); color: var(--pmi-ink-soft); }
+.pmi-seed { margin: 0; font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); opacity: 0.7; text-align: right; }
+
+/* ---------- Items sidebar button ---------- */
+#items .header-actions .pmi-open-builder { flex: 1 0 100%; }
+
+/* ---------- settings: compendium source forms ---------- */
 .pmi-sources .pmi-sources-body { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem; }
 .pmi-sources .pmi-pack-list { list-style: none; margin: 0; padding: 0; max-height: 400px; overflow-y: auto; }
 .pmi-sources .pmi-pack-list label { display: flex; align-items: center; gap: 0.5rem; padding: 0.15rem 0; }
 .pmi-sources .pmi-pack-label { flex: 1; }
-.pmi-sources .pmi-pack-meta { font-size: var(--font-size-11); opacity: 0.7; }
-.pmi-builder .pmi-budget { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem; font-weight: bold; }
-.pmi-builder .pmi-meter { flex: 1 0 100%; height: 6px; border-radius: 3px; background: rgba(0, 0, 0, 0.15); overflow: hidden; }
-.pmi-builder .pmi-meter > div { height: 100%; background: #6b3fa0; }
-.pmi-builder .pmi-budget.over .pmi-meter > div { background: #b33; }
-.pmi-builder .pmi-picks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
-.pmi-builder .pmi-pick { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.4rem; border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; }
-.pmi-builder .pmi-pick.locked { border-color: #6b3fa0; }
-.pmi-builder .pmi-pick.problem { border-color: #b33; }
-.pmi-builder .pmi-pick-main { flex: 1; display: flex; flex-direction: column; }
-.pmi-builder .pmi-pick-meta { font-size: var(--font-size-11); opacity: 0.8; }
-.pmi-builder .pmi-pick-controls { display: flex; gap: 0.2rem; }
-.pmi-builder .pmi-pick-controls button { width: 1.8rem; height: 1.8rem; padding: 0; line-height: 1; }
-.pmi-builder .pmi-empty { opacity: 0.7; font-style: italic; }
-.pmi-builder .pmi-add select { flex: 1; }
-.pmi-builder .pmi-preview-head { display: flex; align-items: center; gap: 0.5rem; }
-.pmi-builder .pmi-preview-head img { width: 36px; height: 36px; border: none; }
-.pmi-builder .pmi-preview-head h3 { margin: 0; border: none; }
-.pmi-builder .pmi-description { font-size: var(--font-size-13); }
-.pmi-builder .pmi-warn { color: #a65f00; margin: 0; }
-.pmi-builder .pmi-error { color: #b33; margin: 0; }
-.pmi-builder .pmi-footer { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-top: 1px solid rgba(0, 0, 0, 0.15); }
-.pmi-builder .pmi-footer .hint { flex: 1; margin: 0; }
-.pmi-builder .pmi-footer button { flex: 0 0 auto; min-width: 8rem; }
-#items .header-actions .pmi-open-builder { flex: 1 0 100%; }
+.pmi-sources .pmi-pack-meta { font-size: var(--font-size-11, 11px); opacity: 0.7; }

@@ -19,7 +19,7 @@
       "Budget": "Budget",
       "Properties": "Properties",
       "OverBudget": "Over budget for this rarity. You can still create it.",
-      "Cost": "cost",
+      "Cost": "Cost against the rarity's budget",
       "Lock": "Lock (keep when rolling)",
       "Reroll": "Replace with a different property",
       "RerollParams": "Reroll this property's details",
@@ -27,12 +27,11 @@
       "Add": "Add",
       "NoPicks": "No properties yet. Roll, or add them yourself.",
       "NoAlternative": "No other property fits here.",
-      "CreateHint": "The item is created hidden from players in the Procedural Magic Items folder.",
+      "CreateHint": "Created hidden from players, in the Procedural Magic Items folder.",
       "Create": "Create item",
       "HasErrors": "Fix the problems shown before creating this item.",
       "Invalid": "The generated item failed dnd5e validation, so nothing was created: {message}",
       "Created": "Created {name}. Only GMs can see it until you share it.",
-      "Random": "Random:",
       "RandomRarity": "Random rarity",
       "Kind": {
         "any": "Any",
@@ -53,7 +52,25 @@
         "rod": "No rods are available from the chosen sources."
       },
       "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here.",
-      "SpellMissing": "Can't find these spells, so nothing was created: {names}. Check the spell sources in the module settings, or reroll those properties."
+      "SpellMissing": "Can't find these spells, so nothing was created: {names}. Check the spell sources in the module settings, or reroll those properties.",
+      "RandomBase": "Random base item by kind",
+      "RandomKind": {
+        "any": "Random base item of any kind",
+        "weapon": "Random weapon",
+        "armor": "Random armor",
+        "shield": "Random shield",
+        "staff": "Random staff",
+        "wand": "Random wand",
+        "rod": "Random rod"
+      },
+      "BudgetUsed": "Budget",
+      "PropertiesWord": "properties",
+      "AddProperty": "Add a property",
+      "NothingToAdd": "No other property fits this item.",
+      "Locked": "Locked",
+      "Unlock": "Unlock",
+      "RequiresAttunement": "requires attunement",
+      "PreviewEmpty": "Roll, or add properties, to see the item here."
     },
     "Folder": {
       "Name": "Procedural Magic Items"

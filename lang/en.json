@@ -7,11 +7,11 @@
       "GMOnly": "Only a GM can use the Magic Item Builder.",
       "NotPmi": "That item wasn't made by the Magic Item Builder.",
       "Base": "Base item",
-      "ChooseBaseOption": "Choose a weapon, armor or shield…",
-      "DropHint": "Or drop any mundane weapon, armor or shield here from the sidebar or a compendium.",
+      "ChooseBaseOption": "Choose a weapon, armor, shield, wand, staff or rod…",
+      "DropHint": "Or drop any mundane weapon, armor, shield, wand, staff or rod here from the sidebar or a compendium.",
       "ChooseBase": "Choose a base item first.",
       "BaseMissing": "That base item can't be found.",
-      "BaseUnsupported": "Only weapons, armor and shields can be used as a base so far.",
+      "BaseUnsupported": "Only weapons, armor, shields, wands, staves and rods can be used as a base so far.",
       "BaseMagical": "That item is already magical. Choose a mundane base item.",
       "Rarity": "Rarity",
       "Seed": "Seed",
@@ -38,15 +38,22 @@
         "any": "Any",
         "weapon": "Weapon",
         "armor": "Armor",
-        "shield": "Shield"
+        "shield": "Shield",
+        "staff": "Staff",
+        "wand": "Wand",
+        "rod": "Rod"
       },
       "NoBaseOfKind": {
         "any": "No base items are available. Check the base item sources in the module settings.",
         "weapon": "No weapons are available from the chosen sources.",
         "armor": "No armor is available from the chosen sources.",
-        "shield": "No shields are available from the chosen sources."
+        "shield": "No shields are available from the chosen sources.",
+        "staff": "No staves are available from the chosen sources.",
+        "wand": "No wands are available from the chosen sources.",
+        "rod": "No rods are available from the chosen sources."
       },
-      "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here."
+      "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here.",
+      "SpellMissing": "Can't find these spells, so nothing was created: {names}. Check the spell sources in the module settings, or reroll those properties."
     },
     "Folder": {
       "Name": "Procedural Magic Items"
@@ -54,7 +61,8 @@
     "Slot": {
       "enhancement": "Enhancement",
       "prefix": "Prefix",
-      "suffix": "Suffix"
+      "suffix": "Suffix",
+      "spell": "Spell"
     },
     "Reason": {
       "category": "Doesn't apply to this base item.",
@@ -65,7 +73,9 @@
       "exclusive": "Conflicts with another property.",
       "maxProperties": "Too many properties for this rarity.",
       "budget": "Over budget.",
-      "unknown": "Unknown property (its module may be disabled)."
+      "unknown": "Unknown property (its module may be disabled).",
+      "noSpells": "No matching spell in the chosen spell sources.",
+      "requires": "Needs a spell on the item first."
     },
     "Errors": {
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
@@ -76,11 +86,17 @@
       "BasePacks": {
         "Name": "Base item sources",
         "Label": "Choose compendiums",
-        "Hint": "Which compendiums the Magic Item Builder lists base weapons, armor and shields from. Only compendiums with mundane weapons, armor or shields are shown; the number is how many each has. You can still drop any item onto the builder.",
-        "World": "World",
-        "None": "No compendiums with mundane weapons, armor or shields were found.",
-        "Save": "Save"
-      }
+        "Hint": "Which compendiums the Magic Item Builder lists base items from. Only compendiums with mundane weapons, armor, shields, wands, staves or rods are shown; the number is how many each has. You can still drop any item onto the builder.",
+        "None": "No compendiums with mundane weapons, armor, shields, wands, staves or rods were found."
+      },
+      "SpellPacks": {
+        "Name": "Spell sources",
+        "Label": "Choose compendiums",
+        "Hint": "Which compendiums wand, staff and rod properties pick spells from. The number is how many spells each has. Items you've already created keep their spells.",
+        "None": "No compendiums with spells were found."
+      },
+      "World": "World",
+      "Save": "Save"
     }
   }
 }

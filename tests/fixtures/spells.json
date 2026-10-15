@@ -1,0 +1,4289 @@
+[
+{
+"uuid": "Compendium.dnd5e.spells.Item.7p9IuWrSWFgfyQo2",
+"name": "Alarm",
+"level": 1,
+"school": "abj",
+"classes": [
+"ranger",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.hDOENzjuj5WpLq7B",
+"name": "Animal Friendship",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.95K2aUhAGV9qXjnf",
+"name": "Bane",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8dzaICjGy6mTUaUr",
+"name": "Bless",
+"level": 1,
+"school": "enc",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.5SuJewoa1CRWaj1F",
+"name": "Burning Hands",
+"level": 1,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.eS7XnnApoxRxYXPs",
+"name": "Charm Person",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"druid",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.LWTUqKkUQdMAmOe0",
+"name": "Color Spray",
+"level": 1,
+"school": "ill",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.arzCrMRgcNiQuh43",
+"name": "Command",
+"level": 1,
+"school": "enc",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.4dSvfvTy2ZIJ3K4k",
+"name": "Comprehend Languages",
+"level": 1,
+"school": "div",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.a3XtAO5n2GrqiAh5",
+"name": "Create or Destroy Water",
+"level": 1,
+"school": "trs",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.uUWb1wZgtMou0TVP",
+"name": "Cure Wounds",
+"level": 1,
+"school": "evo",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Mzh95utKDPIrjiH8",
+"name": "Detect Evil and Good",
+"level": 1,
+"school": "div",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ghXTfe7sgCbgf1Q8",
+"name": "Detect Magic",
+"level": 1,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.2skfDtglk1mGrb3l",
+"name": "Detect Poison and Disease",
+"level": 1,
+"school": "div",
+"classes": [
+"cleric",
+"druid",
+"paladin",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.A3q2gTNqG6fvNGrv",
+"name": "Disguise Self",
+"level": 1,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8MICCMeOXT3aJUy9",
+"name": "Divine Favor",
+"level": 1,
+"school": "evo",
+"classes": [
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.gMrWeG8fMDPRFiVe",
+"name": "Entangle",
+"level": 1,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.zPGohqJRir6MyQ3U",
+"name": "Expeditious Retreat",
+"level": 1,
+"school": "trs",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.nqBDWkVOfcGZt4YU",
+"name": "Faerie Fire",
+"level": 1,
+"school": "evo",
+"classes": [
+"bard",
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7e3QXF10hLNDEdr6",
+"name": "False Life",
+"level": 1,
+"school": "nec",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pub0OWVEB71XQx1n",
+"name": "Feather Fall",
+"level": 1,
+"school": "trs",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "reaction"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JGT5bNqu9REL7Fuz",
+"name": "Find Familiar",
+"level": 1,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.bnjXlk13ZRJuf5d0",
+"name": "Floating Disk",
+"level": 1,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.IBJmWjzbQGu7M4UX",
+"name": "Fog Cloud",
+"level": 1,
+"school": "con",
+"classes": [
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Qf6CAZkc7ms4ZY3e",
+"name": "Goodberry",
+"level": 1,
+"school": "trs",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.etgcR9wqmrhyZ0tx",
+"name": "Grease",
+"level": 1,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7buEm5KhI5lP8m1z",
+"name": "Guiding Bolt",
+"level": 1,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.o8Dh7fblk1d16tnO",
+"name": "Healing Word",
+"level": 1,
+"school": "evo",
+"classes": [
+"bard",
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.22dPoeXfaaAv4K3h",
+"name": "Hellish Rebuke",
+"level": 1,
+"school": "evo",
+"classes": [
+"warlock"
+],
+"concentration": false,
+"ritual": false,
+"activation": "reaction"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ge3Saet9zPTDyaoL",
+"name": "Heroism",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.BQk5Row4NymMnUQl",
+"name": "Hideous Laughter",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.0xmXiPiuYws1OGcX",
+"name": "Hunter's Mark",
+"level": 1,
+"school": "div",
+"classes": [
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.3OZnNhunvRtPOQmH",
+"name": "Identify",
+"level": 1,
+"school": "div",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.82jM6qD9axLJsTrH",
+"name": "Illusory Script",
+"level": 1,
+"school": "ill",
+"classes": [
+"bard",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ksaaTxIbKx2sJfia",
+"name": "Inflict Wounds",
+"level": 1,
+"school": "nec",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ZrTc23tToJ0JpH2h",
+"name": "Jump",
+"level": 1,
+"school": "trs",
+"classes": [
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.B0pnIcc52O6G8hi8",
+"name": "Longstrider",
+"level": 1,
+"school": "trs",
+"classes": [
+"bard",
+"druid",
+"ranger",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.CKZTpZlxj7hjjo2H",
+"name": "Mage Armor",
+"level": 1,
+"school": "abj",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.41JIhpDyM9Anm7cs",
+"name": "Magic Missile",
+"level": 1,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.xmDBqZhRVrtLP8h2",
+"name": "Protection from Evil and Good",
+"level": 1,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Kn7K5PtYUJAKZTTp",
+"name": "Purify Food and Drink",
+"level": 1,
+"school": "trs",
+"classes": [
+"cleric",
+"druid",
+"paladin"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.gvdA9nPuWLck4tBl",
+"name": "Sanctuary",
+"level": 1,
+"school": "abj",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.jZ6JNykRtdQ90MOo",
+"name": "Shield of Faith",
+"level": 1,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.z1mx84ONwkXKUZd7",
+"name": "Shield",
+"level": 1,
+"school": "abj",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "reaction"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.BrBZdCCrJRIVg7YX",
+"name": "Silent Image",
+"level": 1,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.KhwiSi9fwVfUPtku",
+"name": "Sleep",
+"level": 1,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.aL1F8fvYLtNzUbKu",
+"name": "Speak with Animals",
+"level": 1,
+"school": "div",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.WTbOQBsarsL1LuXJ",
+"name": "Thunderwave",
+"level": 1,
+"school": "evo",
+"classes": [
+"bard",
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ccduLIvutyNqvkgv",
+"name": "Unseen Servant",
+"level": 1,
+"school": "con",
+"classes": [
+"bard",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.4H6YgYdKgnX6ZQ8M",
+"name": "Acid Arrow",
+"level": 2,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Opwh2PdX4runSBlm",
+"name": "Aid",
+"level": 2,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8RTDOt80u8aBv9qx",
+"name": "Alter Self",
+"level": 2,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.X8w9EzYLGc4vQ1H2",
+"name": "Animal Messenger",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8cse7rit0oswRPUP",
+"name": "Arcane Lock",
+"level": 2,
+"school": "abj",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.RvEqsD89Zvd5yex4",
+"name": "Arcanist's Magic Aura",
+"level": 2,
+"school": "ill",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.4v2H3hHb3Ph9XLNd",
+"name": "Augury",
+"level": 2,
+"school": "div",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JPwIEfgUPVebr5AH",
+"name": "Barkskin",
+"level": 2,
+"school": "trs",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.zwGsAv6kmwzYGhh3",
+"name": "Blindness/Deafness",
+"level": 2,
+"school": "nec",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.UDUnlfPsOAbq2RSE",
+"name": "Blur",
+"level": 2,
+"school": "ill",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7UwUjJ6owIQkEPrs",
+"name": "Branding Smite",
+"level": 2,
+"school": "evo",
+"classes": [
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.3MYDjS6k9IYL0aTj",
+"name": "Calm Emotions",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MK6gpQMeDFo0cP9f",
+"name": "Continual Flame",
+"level": 2,
+"school": "evo",
+"classes": [
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.S7VbUetIfVT7B6Eq",
+"name": "Darkness",
+"level": 2,
+"school": "evo",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.hJ6ZiA3fpoY8v9cp",
+"name": "Darkvision",
+"level": 2,
+"school": "trs",
+"classes": [
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ppWAAEul0QHtm4er",
+"name": "Detect Thoughts",
+"level": 2,
+"school": "div",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.9eOZDBImVKxbeOyZ",
+"name": "Enhance Ability",
+"level": 2,
+"school": "trs",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"sorcerer"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.WahI41a3goVUg0x1",
+"name": "Enlarge/Reduce",
+"level": 2,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.30ZgXtijJVCxQk5N",
+"name": "Enthrall",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"warlock"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.5eh2HFbS13078Y3H",
+"name": "Find Steed",
+"level": 2,
+"school": "con",
+"classes": [
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.KrM3oHVv13RAALrS",
+"name": "Find Traps",
+"level": 2,
+"school": "div",
+"classes": [
+"cleric",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Advtckpz1B733bu9",
+"name": "Flame Blade",
+"level": 2,
+"school": "evo",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.FjYE214HTERCRZNm",
+"name": "Flaming Sphere",
+"level": 2,
+"school": "con",
+"classes": [
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.n4JDcFKe5ikzYmAc",
+"name": "Gentle Repose",
+"level": 2,
+"school": "nec",
+"classes": [
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.FSMy6VAjDnXY9vWz",
+"name": "Gust of Wind",
+"level": 2,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.2yHXEcrRbadZDr5M",
+"name": "Heat Metal",
+"level": 2,
+"school": "trs",
+"classes": [
+"bard",
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.3Lo9boi7P2ro6QV4",
+"name": "Hold Person",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1N8dDMMgZ1h1YJ3B",
+"name": "Invisibility",
+"level": 2,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1nhIxh0DsJsntCfj",
+"name": "Knock",
+"level": 2,
+"school": "trs",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.F0GsG0SJzsIOacwV",
+"name": "Lesser Restoration",
+"level": 2,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MRxldJd6C4bsBo3O",
+"name": "Levitate",
+"level": 2,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Iv2qqSAT7OkXKPFx",
+"name": "Locate Animals or Plants",
+"level": 2,
+"school": "div",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.SleYkHovQ8NagmeV",
+"name": "Locate Object",
+"level": 2,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"ranger",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7v06rdmUakoTk1LQ",
+"name": "Magic Mouth",
+"level": 2,
+"school": "ill",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Sgjrf8qqv97CCWM4",
+"name": "Magic Weapon",
+"level": 2,
+"school": "trs",
+"classes": [
+"paladin",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.X4c8xCkmF8U9HUMz",
+"name": "Mirror Image",
+"level": 2,
+"school": "ill",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.wqfAVANuQonNBgnL",
+"name": "Misty Step",
+"level": 2,
+"school": "con",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.bV3yun6MIuFj71Er",
+"name": "Moonbeam",
+"level": 2,
+"school": "evo",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pRMvmknwLf2tdMTj",
+"name": "Pass without Trace",
+"level": 2,
+"school": "abj",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MOEmz9N0j0QPkKEE",
+"name": "Prayer of Healing",
+"level": 2,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MAxM77CDUu8dgIRQ",
+"name": "Protection from Poison",
+"level": 2,
+"school": "abj",
+"classes": [
+"cleric",
+"druid",
+"paladin",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ODhLKBxLnvvLOnw1",
+"name": "Ray of Enfeeblement",
+"level": 2,
+"school": "nec",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ap4dmtshjEbwU3Ts",
+"name": "Rope Trick",
+"level": 2,
+"school": "trs",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7u2obDvuvtZBkTfq",
+"name": "Scorching Ray",
+"level": 2,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.DQzlB5Y3k791W5bH",
+"name": "See Invisibility",
+"level": 2,
+"school": "div",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.wJKpSvSTbSkTjqyb",
+"name": "Shatter",
+"level": 2,
+"school": "evo",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.5VhqFROQYjr1P9lp",
+"name": "Silence",
+"level": 2,
+"school": "ill",
+"classes": [
+"bard",
+"cleric",
+"ranger"
+],
+"concentration": true,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.KJRVzeMQXPj8Gtyx",
+"name": "Spider Climb",
+"level": 2,
+"school": "trs",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.9gYGkrL6qFTsE6fw",
+"name": "Spike Growth",
+"level": 2,
+"school": "trs",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JbxsYXxSOTZbf9I0",
+"name": "Spiritual Weapon",
+"level": 2,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.zMAWdyc8UVb37BK4",
+"name": "Suggestion",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JVhKeanAXZH62DrF",
+"name": "Warding Bond",
+"level": 2,
+"school": "abj",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.UJJu9c2UvCzVljiP",
+"name": "Web",
+"level": 2,
+"school": "con",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.CylBa7jR8DSbo8Z3",
+"name": "Zone of Truth",
+"level": 2,
+"school": "enc",
+"classes": [
+"bard",
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.oyE5nVppa5mde5gT",
+"name": "Animate Dead",
+"level": 3,
+"school": "nec",
+"classes": [
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ZU9d6woBdUP8pIPt",
+"name": "Beacon of Hope",
+"level": 3,
+"school": "abj",
+"classes": [
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL",
+"name": "Bestow Curse",
+"level": 3,
+"school": "nec",
+"classes": [
+"bard",
+"cleric",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.GSvLWcdCZLQkilXT",
+"name": "Blink",
+"level": 3,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ehvmg9U9fcMEhE4z",
+"name": "Call Lightning",
+"level": 3,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.cg50KpBkBdPK6vPL",
+"name": "Clairvoyance",
+"level": 3,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1Drt0SHxbEAHxprN",
+"name": "Conjure Animals",
+"level": 3,
+"school": "con",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Ek45cBpVXvJdv1Qy",
+"name": "Counterspell",
+"level": 3,
+"school": "abj",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "reaction"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.BV0mpbHh29IbbIj5",
+"name": "Create Food and Water",
+"level": 3,
+"school": "con",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.BP3GCwa66IAw1yTG",
+"name": "Daylight",
+"level": 3,
+"school": "evo",
+"classes": [
+"cleric",
+"druid",
+"paladin",
+"ranger",
+"sorcerer"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.15Fa6q1nH27XfbR8",
+"name": "Dispel Magic",
+"level": 3,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XXUDGFELgoskdOD0",
+"name": "Fear",
+"level": 3,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ztgcdrWPshKRpFd0",
+"name": "Fireball",
+"level": 3,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.yfbK8gZqESlaoY5t",
+"name": "Fly",
+"level": 3,
+"school": "trs",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.2IWiZAJtOGDoKjiz",
+"name": "Gaseous Form",
+"level": 3,
+"school": "trs",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pB7XVYwdGNcUG935",
+"name": "Glyph of Warding",
+"level": 3,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Szvk5FEVQW3uhJi5",
+"name": "Haste",
+"level": 3,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.6g3WLOZ2u0EbaLAd",
+"name": "Hypnotic Pattern",
+"level": 3,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.IyikgTEOTv701jgQ",
+"name": "Lightning Bolt",
+"level": 3,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.y8A4HfTwd93ypdEz",
+"name": "Magic Circle",
+"level": 3,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.nslx2nT3p4lNkmdp",
+"name": "Major Image",
+"level": 3,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.34ddoYIrnOZ2GFYi",
+"name": "Mass Healing Word",
+"level": 3,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.64uo4fHriHLjRUrX",
+"name": "Meld into Stone",
+"level": 3,
+"school": "trs",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.aU62xVUBYkAQWIHv",
+"name": "Nondetection",
+"level": 3,
+"school": "abj",
+"classes": [
+"bard",
+"ranger",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.wpx42mtoZ5BmXRs1",
+"name": "Phantom Steed",
+"level": 3,
+"school": "ill",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.YWtwzp6ZnQJMEmVW",
+"name": "Plant Growth",
+"level": 3,
+"school": "trs",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.j8NtLXOOJ3GAKF8I",
+"name": "Protection from Energy",
+"level": 3,
+"school": "abj",
+"classes": [
+"cleric",
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl",
+"name": "Remove Curse",
+"level": 3,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.LmRHHMtplpxr9fX6",
+"name": "Revivify",
+"level": 3,
+"school": "nec",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.GtGjNjPBgUHxGYAD",
+"name": "Sending",
+"level": 3,
+"school": "evo",
+"classes": [
+"bard",
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dhqBY4TvVjxVmOZd",
+"name": "Sleet Storm",
+"level": 3,
+"school": "con",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.yqUDoxk4x0NWG5Bz",
+"name": "Slow",
+"level": 3,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.I2LUSF5ogc7Bj62e",
+"name": "Speak with Dead",
+"level": 3,
+"school": "nec",
+"classes": [
+"bard",
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.2VXGS206tuChoeXy",
+"name": "Speak with Plants",
+"level": 3,
+"school": "trs",
+"classes": [
+"bard",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.uCud2s4TjMfjiXUb",
+"name": "Spirit Guardians",
+"level": 3,
+"school": "con",
+"classes": [
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.TwlD4PLcltv7Xh7j",
+"name": "Stinking Cloud",
+"level": 3,
+"school": "con",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.NXWWWgHtWb7Nv21F",
+"name": "Tiny Hut",
+"level": 3,
+"school": "evo",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.gopnZvS0c2jD5FP8",
+"name": "Tongues",
+"level": 3,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.UfHQhA54M4323gVO",
+"name": "Vampiric Touch",
+"level": 3,
+"school": "nec",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.13uVuBQP6VaiSPvC",
+"name": "Water Breathing",
+"level": 3,
+"school": "trs",
+"classes": [
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.YBda6nLKjxdT1LbS",
+"name": "Water Walk",
+"level": 3,
+"school": "trs",
+"classes": [
+"cleric",
+"druid",
+"ranger",
+"sorcerer"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ew6GA8dJy2spQmFW",
+"name": "Wind Wall",
+"level": 3,
+"school": "evo",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ImlCJQwR1VL40Qem",
+"name": "Arcane Eye",
+"level": 4,
+"school": "div",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pxpb2eOB6bv4phAf",
+"name": "Banishment",
+"level": 4,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.DGONTFbk5eORs5qv",
+"name": "Black Tentacles",
+"level": 4,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pybg5MNc3lkerH4Y",
+"name": "Blight",
+"level": 4,
+"school": "nec",
+"classes": [
+"druid",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.P6f1PPKPd9BCb742",
+"name": "Compulsion",
+"level": 4,
+"school": "enc",
+"classes": [
+"bard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.9hQXdMSmerkTsHDe",
+"name": "Confusion",
+"level": 4,
+"school": "enc",
+"classes": [
+"bard",
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.KgEw3sDr39C6g8nY",
+"name": "Conjure Minor Elementals",
+"level": 4,
+"school": "con",
+"classes": [
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dEfSELiY1eO3cpX9",
+"name": "Conjure Woodland Beings",
+"level": 4,
+"school": "con",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7fFHlBk3UNX8gPKL",
+"name": "Control Water",
+"level": 4,
+"school": "trs",
+"classes": [
+"cleric",
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.VtCXMdyM6mAdIJZb",
+"name": "Death Ward",
+"level": 4,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.A4RsPuSvB9wFtz1j",
+"name": "Dimension Door",
+"level": 4,
+"school": "con",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XqzXSKNR75ZdYTA9",
+"name": "Divination",
+"level": 4,
+"school": "div",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.LrPvWHBPmiMQQsKB",
+"name": "Dominate Beast",
+"level": 4,
+"school": "enc",
+"classes": [
+"druid",
+"sorcerer"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7Fw7Bf1k3xxDVr5L",
+"name": "Fabricate",
+"level": 4,
+"school": "trs",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.SAj03P2WBDiWu7zu",
+"name": "Faithful Hound",
+"level": 4,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.avD5XUtkBPQQR97c",
+"name": "Fire Shield",
+"level": 4,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.da0a1t2FqaTjRZGT",
+"name": "Freedom of Movement",
+"level": 4,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.czXrVRx6XYRWsHAi",
+"name": "Giant Insect",
+"level": 4,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.tEpDmYZNGc9f5OhJ",
+"name": "Greater Invisibility",
+"level": 4,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.TgHsuhNasPbhu8MO",
+"name": "Guardian of Faith",
+"level": 4,
+"school": "con",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.sTIkQK7KuQNOyY0C",
+"name": "Hallucinatory Terrain",
+"level": 4,
+"school": "ill",
+"classes": [
+"bard",
+"druid",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.WN2LWEljYU6QqnRH",
+"name": "Ice Storm",
+"level": 4,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.gXtzz9t1DTzJeLr4",
+"name": "Locate Creature",
+"level": 4,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"ranger",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.BYNvBJzHcF5VJhXw",
+"name": "Phantasmal Killer",
+"level": 4,
+"school": "ill",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.04nMsTWkIFvkbXlY",
+"name": "Polymorph",
+"level": 4,
+"school": "trs",
+"classes": [
+"bard",
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.NJgxf7pmSsBArIG7",
+"name": "Private Sanctum",
+"level": 4,
+"school": "abj",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1ADstb0Xec6HHRcU",
+"name": "Resilient Sphere",
+"level": 4,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8sgwRh8NUNkn9Vi0",
+"name": "Secret Chest",
+"level": 4,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.QvGcdRUSNRKEQJlK",
+"name": "Stone Shape",
+"level": 4,
+"school": "trs",
+"classes": [
+"cleric",
+"druid",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ReMbjfeOKoSj3O79",
+"name": "Stoneskin",
+"level": 4,
+"school": "abj",
+"classes": [
+"druid",
+"ranger",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.X3DrXgxjwI2dvkD6",
+"name": "Wall of Fire",
+"level": 4,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ATo0Eb63TDtnu6iA",
+"name": "Animate Objects",
+"level": 5,
+"school": "trs",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.wXzkqpeFP8eWgJzK",
+"name": "Antilife Shell",
+"level": 5,
+"school": "abj",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.a2KJHCIbY5Mi4Dmn",
+"name": "Arcane Hand",
+"level": 5,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MCEpGpvovcXagwQS",
+"name": "Awaken",
+"level": 5,
+"school": "trs",
+"classes": [
+"bard",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.LkvI11Uue774QBKZ",
+"name": "Cloudkill",
+"level": 5,
+"school": "con",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dp6xny4v8PDoIGjh",
+"name": "Commune with Nature",
+"level": 5,
+"school": "div",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.d54VDyFulD9xxY7J",
+"name": "Commune",
+"level": 5,
+"school": "div",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.RpKjTlYASrfqUPVA",
+"name": "Cone of Cold",
+"level": 5,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1LkZvINag7KqBmDR",
+"name": "Conjure Elemental",
+"level": 5,
+"school": "con",
+"classes": [
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dSTu1MaPhBqPITwM",
+"name": "Contact Other Plane",
+"level": 5,
+"school": "div",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.CjIq8Ed7bu3vVwT1",
+"name": "Contagion",
+"level": 5,
+"school": "nec",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.lnaGnxMzpYnbw1uU",
+"name": "Creation",
+"level": 5,
+"school": "ill",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.TkJ8Wtg1L7TZtspm",
+"name": "Dispel Evil and Good",
+"level": 5,
+"school": "abj",
+"classes": [
+"cleric",
+"paladin"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.91Sw6vOIaO7U8DvM",
+"name": "Dominate Person",
+"level": 5,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.kSPRpeIx3w3nihrF",
+"name": "Dream",
+"level": 5,
+"school": "ill",
+"classes": [
+"bard",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.5e1xTohkzqFqbYH4",
+"name": "Flame Strike",
+"level": 5,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JQyigMNPiDnGI18b",
+"name": "Geas",
+"level": 5,
+"school": "enc",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"paladin",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.WzvJ7G3cqvIubsLk",
+"name": "Greater Restoration",
+"level": 5,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.SLxA9QhrggTz0taU",
+"name": "Hallow",
+"level": 5,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.l9Ju5KE7bbn3WpTm",
+"name": "Hold Monster",
+"level": 5,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.OVikYmSdHliAG2YD",
+"name": "Insect Plague",
+"level": 5,
+"school": "con",
+"classes": [
+"cleric",
+"druid",
+"sorcerer"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.W4Qx5z0id6da0vqg",
+"name": "Legend Lore",
+"level": 5,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Pyzmm8R7rVsNAPsd",
+"name": "Mass Cure Wounds",
+"level": 5,
+"school": "evo",
+"classes": [
+"bard",
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MBMaQLwoy05qzMJ3",
+"name": "Mislead",
+"level": 5,
+"school": "ill",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.r3243JU4AyQJyfX4",
+"name": "Modify Memory",
+"level": 5,
+"school": "enc",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.d9MwcXi7Il3HROXd",
+"name": "Passwall",
+"level": 5,
+"school": "trs",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.42O2aNBW7vK90gTL",
+"name": "Planar Binding",
+"level": 5,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.AGFMPAmuzwWO6Dfz",
+"name": "Raise Dead",
+"level": 5,
+"school": "nec",
+"classes": [
+"bard",
+"cleric",
+"paladin"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.zMEo5DKK8uxsuWnq",
+"name": "Reincarnate",
+"level": 5,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.fVbCxFRaORalHB20",
+"name": "Scrying",
+"level": 5,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.mbFw57uyfLkyiw5k",
+"name": "Seeming",
+"level": 5,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.HQfd7jJyULIoGxrZ",
+"name": "Telekinesis",
+"level": 5,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.uAwtVZkiSTyP6ORB",
+"name": "Telepathic Bond",
+"level": 5,
+"school": "div",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8aWtP5hcrmcEesBW",
+"name": "Teleportation Circle",
+"level": 5,
+"school": "con",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.DUBgwHPakcLDkB6W",
+"name": "Tree Stride",
+"level": 5,
+"school": "con",
+"classes": [
+"druid",
+"ranger"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.o9ZCvuD2B1OTcubb",
+"name": "Wall of Force",
+"level": 5,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.NmoRmM1mhuM3pqnY",
+"name": "Wall of Stone",
+"level": 5,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dLJhxDfeyOsc3zsY",
+"name": "Blade Barrier",
+"level": 6,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.QbTxN5dWIbYZ4jLU",
+"name": "Chain Lightning",
+"level": 6,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.KeunEkg1JYbOCOhV",
+"name": "Circle of Death",
+"level": 6,
+"school": "nec",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.yN3XZZujhR4aVvPa",
+"name": "Conjure Fey",
+"level": 6,
+"school": "con",
+"classes": [
+"druid",
+"warlock"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.4smlOvpF5AQHcyg1",
+"name": "Contingency",
+"level": 6,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.E4NXux0RHvME1XgP",
+"name": "Create Undead",
+"level": 6,
+"school": "nec",
+"classes": [
+"cleric",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.HBHbOGKNVVprSlwn",
+"name": "Disintegrate",
+"level": 6,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ZRqu3Xh9FmlBCZGy",
+"name": "Eyebite",
+"level": 6,
+"school": "nec",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.cYI4RNNjI5GAmLhy",
+"name": "Find the Path",
+"level": 6,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY",
+"name": "Flesh to Stone",
+"level": 6,
+"school": "trs",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.64D1gNZ4hx7SWG2x",
+"name": "Forbiddance",
+"level": 6,
+"school": "abj",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MImfWCzEPRMYD3Xp",
+"name": "Freezing Sphere",
+"level": 6,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.WmQpxfjZwF3MGUby",
+"name": "Globe of Invulnerability",
+"level": 6,
+"school": "abj",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.yw0tYQkOMCgKZ8Ur",
+"name": "Guards and Wards",
+"level": 6,
+"school": "abj",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.tMH6Ivn4GmE1naMj",
+"name": "Harm",
+"level": 6,
+"school": "nec",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.qcYitWoSMTnKkzM1",
+"name": "Heal",
+"level": 6,
+"school": "evo",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.mgFqi0ev8f7Ut19y",
+"name": "Heroes' Feast",
+"level": 6,
+"school": "con",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.SgrEKiC6dAtvy6Pz",
+"name": "Instant Summons",
+"level": 6,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": true,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.TfRzwEgBHHkCc6Ql",
+"name": "Irresistible Dance",
+"level": 6,
+"school": "enc",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ej6wyY4G1gOcb1U6",
+"name": "Magic Jar",
+"level": 6,
+"school": "nec",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.5OGFdJw35QXp6mh6",
+"name": "Mass Suggestion",
+"level": 6,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.yI0XWIgI0IGGsR3R",
+"name": "Move Earth",
+"level": 6,
+"school": "trs",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.fkREcytuZ8sngWtC",
+"name": "Planar Ally",
+"level": 6,
+"school": "con",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.bA2sk9eMKBeY7EPD",
+"name": "Programmed Illusion",
+"level": 6,
+"school": "ill",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.2RC0EyvBLPH88PZF",
+"name": "Sunbeam",
+"level": 6,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.s7nXgot5gGZVcMrv",
+"name": "Transport via Plants",
+"level": 6,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XzkJpE6XpZfKjODD",
+"name": "True Seeing",
+"level": 6,
+"school": "div",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.fzZnVKLmBMo2f5up",
+"name": "Wall of Ice",
+"level": 6,
+"school": "evo",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.AQsBc94ES7W7s7iG",
+"name": "Wall of Thorns",
+"level": 6,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8PJAsHmbu6UgDHC0",
+"name": "Wind Walk",
+"level": 6,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.76C0FdcxlU8F9Rl2",
+"name": "Word of Recall",
+"level": 6,
+"school": "con",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.LTDNWoFVJNLjiiNa",
+"name": "Arcane Sword",
+"level": 7,
+"school": "evo",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XT7nzJmVGgv73uaf",
+"name": "Conjure Celestial",
+"level": 7,
+"school": "con",
+"classes": [
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.AoTTjapz1FsGOIZz",
+"name": "Delayed Blast Fireball",
+"level": 7,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.T1vpZLam7LezjToj",
+"name": "Divine Word",
+"level": 7,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.PQuEgKyCdovOvhqN",
+"name": "Etherealness",
+"level": 7,
+"school": "trs",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.HPvZm8YJO91k6Qdg",
+"name": "Finger of Death",
+"level": 7,
+"school": "nec",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.J3uILDYS7MiOfmTJ",
+"name": "Fire Storm",
+"level": 7,
+"school": "evo",
+"classes": [
+"cleric",
+"druid",
+"sorcerer"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Y7uWUO4yqUN0JKl0",
+"name": "Forcecage",
+"level": 7,
+"school": "evo",
+"classes": [
+"bard",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pn4SnsFDvYDiE6rC",
+"name": "Magnificent Mansion",
+"level": 7,
+"school": "con",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.f38w5rd9SgdmWc6F",
+"name": "Mirage Arcane",
+"level": 7,
+"school": "ill",
+"classes": [
+"bard",
+"druid",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.J6Jpw5XzB5aTeqnz",
+"name": "Plane Shift",
+"level": 7,
+"school": "con",
+"classes": [
+"cleric",
+"druid",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.eGMhwmuleAM46C6L",
+"name": "Prismatic Spray",
+"level": 7,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ePhRKHXRE7l1sEoQ",
+"name": "Project Image",
+"level": 7,
+"school": "ill",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.9kGrFXnLiRg3Xnbo",
+"name": "Regenerate",
+"level": 7,
+"school": "trs",
+"classes": [
+"bard",
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.jhhT9PsHy5A7EojO",
+"name": "Resurrection",
+"level": 7,
+"school": "nec",
+"classes": [
+"bard",
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ERCv7yuRkQ0YjGx6",
+"name": "Reverse Gravity",
+"level": 7,
+"school": "trs",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.wvLbtemkH8gyBpdc",
+"name": "Sequester",
+"level": 7,
+"school": "trs",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.jccbeBIfLrqEZnDP",
+"name": "Simulacrum",
+"level": 7,
+"school": "ill",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.B2kbmgbA2WQR00kx",
+"name": "Symbol",
+"level": 7,
+"school": "abj",
+"classes": [
+"bard",
+"cleric",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.L4J89JXqbKs6puEV",
+"name": "Teleport",
+"level": 7,
+"school": "con",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ohqAIBg6de989CIo",
+"name": "Animal Shapes",
+"level": 8,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Eon0jzGzQRNluTPQ",
+"name": "Antimagic Field",
+"level": 8,
+"school": "abj",
+"classes": [
+"cleric",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.GJ2WYm3SQFR0winH",
+"name": "Antipathy/Sympathy",
+"level": 8,
+"school": "enc",
+"classes": [
+"druid",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.h830iyqParFleNqR",
+"name": "Clone",
+"level": 8,
+"school": "nec",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ZPd73HtKF3At11jh",
+"name": "Control Weather",
+"level": 8,
+"school": "trs",
+"classes": [
+"cleric",
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.xNM9CzQQr2CieM4B",
+"name": "Demiplane",
+"level": 8,
+"school": "con",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.eEpy1ONlXumKS1mp",
+"name": "Dominate Monster",
+"level": 8,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.x5JNBSyIBBZsjcGT",
+"name": "Earthquake",
+"level": 8,
+"school": "evo",
+"classes": [
+"cleric",
+"druid",
+"sorcerer"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.hYCrN82dMJFuJODB",
+"name": "Feeblemind",
+"level": 8,
+"school": "enc",
+"classes": [
+"bard",
+"druid",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.1RzxKZzkQOoioxPj",
+"name": "Glibness",
+"level": 8,
+"school": "trs",
+"classes": [
+"bard",
+"warlock"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.j8S49Rea8b1640Zi",
+"name": "Holy Aura",
+"level": 8,
+"school": "abj",
+"classes": [
+"cleric"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.pV04y1iXoWiom6bp",
+"name": "Incendiary Cloud",
+"level": 8,
+"school": "con",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.clwv2PWOcT822hlr",
+"name": "Maze",
+"level": 8,
+"school": "con",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.bllEWfm9xfEKynhv",
+"name": "Mind Blank",
+"level": 8,
+"school": "abj",
+"classes": [
+"bard",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.35j2QIMmIk6aEdxj",
+"name": "Power Word Stun",
+"level": 8,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.hzK7FQya0BDjSmLE",
+"name": "Sunburst",
+"level": 8,
+"school": "evo",
+"classes": [
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.TIoadMIsUKD4edXi",
+"name": "Astral Projection",
+"level": 9,
+"school": "nec",
+"classes": [
+"cleric",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.6HEEhLdJz32TL4Js",
+"name": "Foresight",
+"level": 9,
+"school": "div",
+"classes": [
+"bard",
+"druid",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XbwGq5kDJNvAxNXV",
+"name": "Gate",
+"level": 9,
+"school": "con",
+"classes": [
+"cleric",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ZVnL9L8v1KC9TBF4",
+"name": "Imprisonment",
+"level": 9,
+"school": "abj",
+"classes": [
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Y6oItIuhOJZ0i0FC",
+"name": "Mass Heal",
+"level": 9,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.mF52ldF79Cr7wfQo",
+"name": "Meteor Swarm",
+"level": 9,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dmvaMLFWFtv0qx0S",
+"name": "Power Word Kill",
+"level": 9,
+"school": "enc",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.jmfu8zj4zjjzUbeh",
+"name": "Prismatic Wall",
+"level": 9,
+"school": "abj",
+"classes": [
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.N2UEFq8X5LRsLcOZ",
+"name": "Shapechange",
+"level": 9,
+"school": "trs",
+"classes": [
+"druid",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.7KjExw0kmuqERa7C",
+"name": "Storm of Vengeance",
+"level": 9,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JYuRBwxpoFhXduvD",
+"name": "Time Stop",
+"level": 9,
+"school": "trs",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.QbQZKoXOgHWN06aa",
+"name": "True Polymorph",
+"level": 9,
+"school": "trs",
+"classes": [
+"bard",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.qLeEXZDbW5y4bmLY",
+"name": "True Resurrection",
+"level": 9,
+"school": "nec",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "hour"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Wl2vtJ4hCt2tpWfR",
+"name": "Weird",
+"level": 9,
+"school": "ill",
+"classes": [
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.3okM6Gn63zzEULkz",
+"name": "Wish",
+"level": 9,
+"school": "con",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.JLTQyqXEaJDrTXyW",
+"name": "Acid Splash",
+"level": 0,
+"school": "con",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.vrN18tbTw7io5MWd",
+"name": "Chill Touch",
+"level": 0,
+"school": "nec",
+"classes": [
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.CAxSzHWizrafT033",
+"name": "Dancing Lights",
+"level": 0,
+"school": "evo",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.SbSvZKkJASyk8jKo",
+"name": "Druidcraft",
+"level": 0,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Z9p1vezIn95jw1Yw",
+"name": "Eldritch Blast",
+"level": 0,
+"school": "evo",
+"classes": [
+"warlock"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.EOmsUcFQJTfG2oio",
+"name": "Fire Bolt",
+"level": 0,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.P7mF2MxSuVJwHRRY",
+"name": "Guidance",
+"level": 0,
+"school": "div",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Bnn9Nzajixvow9xi",
+"name": "Light",
+"level": 0,
+"school": "evo",
+"classes": [
+"bard",
+"cleric",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.Utk1OQRwYkMkFRD3",
+"name": "Mage Hand",
+"level": 0,
+"school": "con",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.kjmjY0zlE6IEiQVL",
+"name": "Mending",
+"level": 0,
+"school": "trs",
+"classes": [
+"bard",
+"cleric",
+"druid",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "minute"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.icZokbgV1jIMpNCv",
+"name": "Message",
+"level": 0,
+"school": "trs",
+"classes": [
+"bard",
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.oIzA2MEHwxhtQneU",
+"name": "Minor Illusion",
+"level": 0,
+"school": "ill",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.g2u9PYfqWQAyg9OI",
+"name": "Poison Spray",
+"level": 0,
+"school": "con",
+"classes": [
+"druid",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.udsLtG0BugXHR2JQ",
+"name": "Prestidigitation",
+"level": 0,
+"school": "trs",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.eCPQuQkIabFKTl9u",
+"name": "Produce Flame",
+"level": 0,
+"school": "con",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.ctW81uiX56xZR2c5",
+"name": "Ray of Frost",
+"level": 0,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.dl8YwvMboBqX2OC4",
+"name": "Resistance",
+"level": 0,
+"school": "abj",
+"classes": [
+"cleric",
+"druid"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.n9pJzTDsAwQxJVRl",
+"name": "Sacred Flame",
+"level": 0,
+"school": "evo",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.VzgFzcmocr1X1cp4",
+"name": "Shillelagh",
+"level": 0,
+"school": "trs",
+"classes": [
+"druid"
+],
+"concentration": false,
+"ritual": false,
+"activation": "bonus"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.XvbiNhNqXXIFisIy",
+"name": "Shocking Grasp",
+"level": 0,
+"school": "evo",
+"classes": [
+"sorcerer",
+"wizard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.8zT7njvqbpXs4Cel",
+"name": "Spare the Dying",
+"level": 0,
+"school": "nec",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.MUO1uYN7JR1hm4dR",
+"name": "Thaumaturgy",
+"level": 0,
+"school": "trs",
+"classes": [
+"cleric"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.mGGlcLdggHwcL7MG",
+"name": "True Strike",
+"level": 0,
+"school": "div",
+"classes": [
+"bard",
+"sorcerer",
+"warlock",
+"wizard"
+],
+"concentration": true,
+"ritual": false,
+"activation": "action"
+},
+{
+"uuid": "Compendium.dnd5e.spells.Item.cdrYKaFi98YWaBMw",
+"name": "Vicious Mockery",
+"level": 0,
+"school": "enc",
+"classes": [
+"bard"
+],
+"concentration": false,
+"ritual": false,
+"activation": "action"
+}
+]

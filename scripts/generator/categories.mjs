@@ -1,11 +1,13 @@
 // What kind of thing a base item is, as category strings properties can target. Pure.
-import { ARMOR_TYPES, SHIELD_TYPES } from "../config.mjs";
+import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS } from "../config.mjs";
 
 /**
  * Categories for a base item's source data, e.g.
  *   Longsword  → ["weapon", "weapon.melee", "weapon.martial", "weapon.longsword"]
  *   Chain Mail → ["armor", "armor.heavy", "armor.chainmail"]
  *   Shield     → ["shield"]
+ *   Staff      → ["staff", "weapon", "weapon.melee", …]   (a quarterstaff that is a spellcasting focus)
+ *   Wand       → ["wand"]          Rod → ["rod"]
  * Returns an empty array for anything the generator doesn't support yet.
  * @param {object} base  Item source data ({type, system}).
  * @returns {string[]}
@@ -13,8 +15,11 @@ import { ARMOR_TYPES, SHIELD_TYPES } from "../config.mjs";
 export function categorize(base) {
   const type = base?.system?.type?.value ?? "";
   const baseItem = base?.system?.type?.baseItem ?? "";
+  const props = base?.system?.properties ?? [];
+  const has = (p) => (Array.isArray(props) ? props.includes(p) : !!props.has?.(p));
   if (base?.type === "weapon") {
     const out = ["weapon"];
+    if (baseItem === "quarterstaff" && has("foc")) out.unshift("staff");
     if (type.endsWith("M")) out.push("weapon.melee");
     if (type.endsWith("R")) out.push("weapon.ranged");
     if (type.startsWith("simple")) out.push("weapon.simple");
@@ -28,6 +33,8 @@ export function categorize(base) {
     return out;
   }
   if (base?.type === "equipment" && SHIELD_TYPES.includes(type)) return ["shield"];
+  if (base?.type === "equipment" && WAND_TYPES.includes(type)) return ["wand"];
+  if (base?.type === "equipment" && ROD_TYPES.includes(type)) return ["rod"];
   return [];
 }
 
@@ -42,4 +49,9 @@ export function isMundane(base) {
   const has = Array.isArray(props) ? props.includes("mgc") : props.has?.("mgc");
   return !has && !(base?.system?.magicalBonus > 0) && !(base?.system?.armor?.magicalBonus > 0)
     && !["uncommon", "rare", "veryRare", "legendary", "artifact"].includes(base?.system?.rarity);
+}
+
+/** The single kind a base item counts as for the random buttons and charge pools ("staff" before "weapon"). */
+export function kindOf(categories) {
+  return BASE_KINDS.find((k) => categories.includes(k)) ?? null;
 }

@@ -7,7 +7,10 @@ import { isPmiItem } from "./util.mjs";
 import { registerSettings } from "./settings.mjs";
 
 Hooks.once("init", () => {
-  registerSettings(() => PmiBuilder.invalidateBases());
+  registerSettings({
+    onBasePacksChange: () => PmiBuilder.invalidateBases(),
+    onSpellPacksChange: () => PmiBuilder.invalidateSpells(),
+  });
   registerBuiltinChangeTypes();
   game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
 });

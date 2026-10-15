@@ -22,11 +22,15 @@ export const RARITY_RULES = {
 };
 
 /** Property slots, in the order names are built, with how many of each one item may have. */
-export const SLOTS = ["enhancement", "prefix", "suffix"];
-export const SLOT_LIMITS = { enhancement: 1, prefix: 2, suffix: 1 };
+export const SLOTS = ["enhancement", "prefix", "suffix", "spell"];
+export const SLOT_LIMITS = { enhancement: 1, prefix: 2, suffix: 1, spell: 3 };
 
 /** Item types the generator supports so far. */
 export const SUPPORTED_ITEM_TYPES = ["weapon", "equipment"];
+
+/** Equipment `system.type.value`s that count as wands and rods. Staves are quarterstaffs that are spellcasting foci. */
+export const WAND_TYPES = ["wand"];
+export const ROD_TYPES = ["rod"];
 
 /** Equipment `system.type.value`s that count as armor or shields. */
 export const ARMOR_TYPES = ["light", "medium", "heavy"];
@@ -41,5 +45,19 @@ export const RARITY_WEIGHTS = { uncommon: 40, rare: 30, veryRare: 20, legendary:
 /** Base-item compendiums used until a GM picks their own in the module settings. */
 export const DEFAULT_BASE_PACKS = ["dnd5e.items", "dnd5e.equipment24"];
 
-/** Kinds of base item the random-base buttons can ask for ("any" means all of them). */
-export const BASE_KINDS = ["weapon", "armor", "shield"];
+/** Spell compendiums used until a GM picks their own in the module settings. */
+export const DEFAULT_SPELL_PACKS = ["dnd5e.spells", "dnd5e.spells24"];
+
+/** Kinds of base item, most specific first (a staff is also a weapon). The random-base buttons use these. */
+export const BASE_KINDS = ["staff", "wand", "rod", "shield", "armor", "weapon"];
+
+/**
+ * The charge pool a spell property creates when the item has none yet, by base kind (DMG-style:
+ * wands 7 charges regaining 1d6+1 at dawn, staves 10 regaining 1d6+4).
+ */
+export const CHARGE_POOLS = {
+  wand: { max: 7, formula: "1d6 + 1" },
+  staff: { max: 10, formula: "1d6 + 4" },
+  rod: { max: 5, formula: "1d4 + 1" },
+  default: { max: 3, formula: "1d3" },
+};

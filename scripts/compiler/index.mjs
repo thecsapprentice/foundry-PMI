@@ -2,6 +2,8 @@
 import { MODULE_ID, RARITY_RULES, SLOTS } from "../config.mjs";
 import { stableId } from "../generator/rng.mjs";
 import { substitute } from "../generator/params.mjs";
+import { categorize, kindOf } from "../generator/categories.mjs";
+import { CHANGE_ORDER, castCharges } from "./translators.mjs";
 import { buildName } from "./naming.mjs";
 import { buildDescription } from "./description.mjs";
 
@@ -36,13 +38,21 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
     .map((pick, index) => ({ pick, index, def: getDef(pick.id) }))
     .sort((a, b) => SLOTS.indexOf(a.def?.slot) - SLOTS.indexOf(b.def?.slot) || a.index - b.index);
 
+  const kind = kindOf(categorize(base));
   const resolved = [];
   for (const { pick, def } of ordered) {
     if (!def) { errors.push(`Unknown property "${pick.id}"`); continue; }
-    const vars = { ...pick.params, dc: rules.saveDC, rarity: recipe.rarity };
+    // Item-wide variables: the rarity's save DC and the matching spell attack bonus (DC − 8).
+    const vars = { ...pick.params, dc: rules.saveDC, attack: rules.saveDC - 8, rarity: recipe.rarity };
     const missing = new Set();
     const changes = substitute(def.changes ?? [], vars, missing);
     if (missing.size) { errors.push(`${def.id}: unknown variables ${[...missing].map((m) => `@${m}`).join(", ")}`); continue; }
+    // For description text: how many charges this property's spell costs.
+    const cast = changes.find((c) => c.type === "castSpell");
+    if (cast) {
+      try { vars.charges = castCharges(cast, kind, cast.level); } catch (err) { errors.push(`${def.id}: ${err.message}`); continue; }
+      vars.chargeWord = vars.charges === 1 ? "charge" : "charges";
+    }
     const textMissing = new Set();
     const label = substitute(def.label ?? def.name ?? def.id, vars, textMissing);
     const text = substitute(def.text ?? "", vars, textMissing);
@@ -51,24 +61,27 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
     resolved.push({ pick, def, changes, label: localize(label), text, nameFragment });
   }
 
-  for (const r of resolved) {
+  // Run every change in CHANGE_ORDER (charge pools first), keeping slot order within each step.
+  const steps = resolved.flatMap((r) => r.changes.map((change, i) => ({ r, change, i })))
+    .map((x, n) => ({ ...x, n }))
+    .sort((a, b) => (CHANGE_ORDER[a.change.type] ?? 1) - (CHANGE_ORDER[b.change.type] ?? 1) || a.n - b.n);
+  for (const { r, change } of steps) {
     const ctx = {
       pick: r.pick,
       def: r.def,
+      kind,
       rarity: recipe.rarity,
       label: r.label,
       img: data.img,
       id: (suffix) => stableId(`${recipe.seed}/${r.pick.seed}/${r.def.id}/${suffix}`),
       warn: (m) => warnings.push(`${r.def.id}: ${m}`),
     };
-    for (const change of r.changes) {
-      const translate = getTranslator(change.type);
-      if (!translate) { errors.push(`${r.def.id}: unknown change type "${change.type}"`); continue; }
-      try {
-        translate(data, change, ctx);
-      } catch (err) {
-        errors.push(`${r.def.id}: ${err.message}`);
-      }
+    const translate = getTranslator(change.type);
+    if (!translate) { errors.push(`${r.def.id}: unknown change type "${change.type}"`); continue; }
+    try {
+      translate(data, change, ctx);
+    } catch (err) {
+      errors.push(`${r.def.id}: ${err.message}`);
     }
   }
   if (errors.length) return { data: null, errors, warnings };

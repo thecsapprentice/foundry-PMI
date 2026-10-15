@@ -2,15 +2,15 @@
 import { MODULE_ID, RARITIES, SLOTS } from "../config.mjs";
 import { newSeed, Rng } from "../generator/rng.mjs";
 import { randomBase, randomRarity } from "../generator/random.mjs";
-import { categorize, isMundane, appliesTo } from "../generator/categories.mjs";
+import { categorize, isMundane, appliesTo, kindOf } from "../generator/categories.mjs";
 import {
   newRecipe, roll, rerollPick, rerollParams, addPick, removePick, toggleLock, tally, invalidPicks, blockReason,
 } from "../generator/roller.mjs";
-import { substitute, plain } from "../generator/params.mjs";
+import { substitute, plain, spellSpecs } from "../generator/params.mjs";
 import { compile } from "../compiler/index.mjs";
 import { getChangeType, getProperty, listProperties } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
-import { BASE_INDEX_FIELDS } from "../settings.mjs";
+import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -47,6 +47,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Source data of the chosen base item (a copy), and its index entries for the picker. */
   #base = null;
   #baseIndex = null;
+  #spellPool = null;
   #busy = false;
   #dropBound = false;
 
@@ -82,6 +83,14 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     if (app.rendered) app.render();
   }
 
+  /** Forget the cached spell list (the GM changed which compendiums to use). */
+  static invalidateSpells() {
+    const app = PmiBuilder.#instance;
+    if (!app) return;
+    app.#spellPool = null;
+    if (app.rendered) app.render();
+  }
+
   /* ---------------------------------------- data ---------------------------------------- */
 
   get #properties() {
@@ -99,11 +108,15 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       const index = await pack.getIndex({ fields: BASE_INDEX_FIELDS });
       for (const e of index) {
         if (!categorize(e).length || !isMundane(e)) continue;
-        out.push({ uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}`, name: e.name, group: pack.metadata.label, kind: categorize(e)[0] });
+        out.push({ uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}`, name: e.name, group: pack.metadata.label, kind: kindOf(categorize(e)) });
       }
     }
     out.sort((a, b) => a.kind.localeCompare(b.kind) || a.name.localeCompare(b.name));
     return (this.#baseIndex = out);
+  }
+
+  async #loadSpells() {
+    return (this.#spellPool ??= await loadSpellPool());
   }
 
   /** Load a base item by UUID. Only mundane weapons, armor and shields are accepted. */
@@ -135,6 +148,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _prepareContext() {
     const L = (k) => game.i18n.localize(k);
+    const spells = await this.#loadSpells();
     const props = this.#properties;
     const cats = this.#categories;
     const t = tally(this.recipe, getProperty);
@@ -157,7 +171,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     // Properties the DM can add by hand: those that fit the base and rarity, budget aside.
     const addable = this.#base ? props
       .filter((d) => appliesTo(d, cats))
-      .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true }) }))
+      .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells }) }))
       .filter((x) => !x.reason)
       .sort((a, b) => SLOTS.indexOf(a.d.slot) - SLOTS.indexOf(b.d.slot) || a.d.id.localeCompare(b.d.id))
       .map(({ d }) => ({ id: d.id, label: `${String(d.label ?? d.name ?? d.id).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
@@ -176,7 +190,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       recipe: this.recipe,
       rarities: RARITIES.map((key) => ({ key, label: L(CONFIG.DND5E?.itemRarity?.[key] ?? key), selected: key === this.recipe.rarity })),
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
-      baseKinds: ["any", "weapon", "armor", "shield"].map((kind) => ({
+      baseKinds: ["any", "weapon", "armor", "shield", "staff", "wand", "rod"].map((kind) => ({
         kind,
         label: L(`PMI.Builder.Kind.${kind}`),
         disabled: kind !== "any" && !bases.some((b) => b.kind === kind),
@@ -228,11 +242,12 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   #ctx() {
-    return { properties: this.#properties, categories: this.#categories };
+    return { properties: this.#properties, categories: this.#categories, spells: this.#spellPool ?? [] };
   }
 
-  static #onRoll() {
+  static async #onRoll() {
     if (!this.#needBase()) return;
+    await this.#loadSpells();
     this.recipe = roll({ ...this.recipe, rerolls: (this.recipe.rerolls ?? 0) + 1 }, this.#ctx());
     this.render();
   }
@@ -258,14 +273,16 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
-  static #onReroll(event, target) {
+  static async #onReroll(event, target) {
+    await this.#loadSpells();
     const next = rerollPick(this.recipe, Number(target.dataset.index), this.#ctx());
     if (!next) { ui.notifications.info(game.i18n.localize("PMI.Builder.NoAlternative")); return; }
     this.recipe = next;
     this.render();
   }
 
-  static #onRerollParams(event, target) {
+  static async #onRerollParams(event, target) {
+    await this.#loadSpells();
     const next = rerollParams(this.recipe, Number(target.dataset.index), this.#ctx());
     if (next) { this.recipe = next; this.render(); }
   }
@@ -275,13 +292,29 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
-  static #onAdd() {
+  static async #onAdd() {
     if (!this.#needBase()) return;
     const id = this.element.querySelector("select[name=addProperty]")?.value;
     const def = id && getProperty(id);
     if (!def) return;
-    this.recipe = addPick(this.recipe, def);
+    try {
+      this.recipe = addPick(this.recipe, def, { spells: await this.#loadSpells() });
+    } catch (err) {
+      ui.notifications.warn(err.message);
+      return;
+    }
     this.render();
+  }
+
+  /** Every spell the recipe uses must still exist (a compendium may have been removed). Returns missing names. */
+  async #missingSpells() {
+    const missing = [];
+    for (const pick of this.recipe.picks) {
+      for (const v of Object.values(pick.params ?? {})) {
+        if (v && typeof v === "object" && v.uuid && !(await fromUuid(v.uuid))) missing.push(v.name ?? v.uuid);
+      }
+    }
+    return missing;
   }
 
   static #onClearBase() {
@@ -298,6 +331,12 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#busy = true;
     this.render();
     try {
+      // Fail safe: don't create an item whose spells can't be found.
+      const missing = await this.#missingSpells();
+      if (missing.length) {
+        ui.notifications.error(game.i18n.format("PMI.Builder.SpellMissing", { names: missing.join(", ") }));
+        return;
+      }
       // Rule 14: validate before writing. Constructing the document runs dnd5e's data model validation.
       try {
         new Item.implementation(foundry.utils.deepClone(data));

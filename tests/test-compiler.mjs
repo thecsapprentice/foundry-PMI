@@ -3,14 +3,15 @@ import { damagePart } from "../scripts/compiler/damage.mjs";
 import { categorize } from "../scripts/generator/categories.mjs";
 import { newRecipe, addPick, roll } from "../scripts/generator/roller.mjs";
 import { RARITIES } from "../scripts/config.mjs";
-import { loadAll, fixture } from "./load-node.mjs";
+import { loadAll, fixture, spellPool } from "./load-node.mjs";
 import { check } from "./check.mjs";
 
 const { properties, getDef, getTranslator } = loadAll();
 const opts = { getDef, getTranslator };
+const spells = spellPool();
 const build = (base, rarity, ids, seed = "test-seed") => {
   let r = newRecipe({ seed, rarity, baseUuid: `Compendium.dnd5e.items.Item.${base}` });
-  for (const id of ids) r = addPick(r, getDef(id));
+  for (const id of ids) r = addPick(r, getDef(id), { spells });
   return compile(r, fixture(base), opts);
 };
 
@@ -19,15 +20,17 @@ check("damagePart dice + bonus", damagePart("1d8+3").bonus === "3");
 check("damagePart custom formula", damagePart("1d4 + @prof").custom.enabled === true);
 
 // Every property compiles on every base it applies to, at every rarity it allows.
-const bases = ["longsword", "dagger", "shortbow", "greataxe", "chain-mail", "leather-armor", "shield"];
+const bases = ["longsword", "dagger", "shortbow", "greataxe", "chain-mail", "leather-armor", "shield", "wand", "staff", "rod"];
 let all = true, why = "";
 for (const def of properties) {
   for (const base of bases) {
     if (!def.appliesTo.some((c) => categorize(fixture(base)).includes(c))) continue;
     for (const rarity of RARITIES.slice(RARITIES.indexOf(def.minRarity ?? "common"), RARITIES.indexOf(def.maxRarity ?? "artifact") + 1)) {
-      const { data, errors, warnings } = build(base, rarity, [def.id]);
+      // Properties that need another slot filled (Abundant needs a spell) get a level-1 spell first.
+      const ids = def.requiresSlot ? ["spell-1", def.id] : [def.id];
+      const { data, errors, warnings } = build(base, rarity, ids);
       if (!data || errors.length || warnings.length) { all = false; why = `${def.id} on ${base} at ${rarity}: ${[...errors, ...warnings].join("; ")}`; }
-      if (data && /@\w|\{\w+(\.\w+)?\}/.test(JSON.stringify(data).replace(/@UUID|@Embed|@scale|@item|@prof|@mod/g, ""))) { all = false; why = `${def.id} on ${base}: unsubstituted variable left in data`; }
+      if (data && /@\w|\{\w+(\.\w+)?\}/.test(JSON.stringify(data).replace(/@UUID\[[^\]]*\]\{[^}]*\}/g, "").replace(/@UUID|@Embed|@scale|@item|@prof|@mod/g, ""))) { all = false; why = `${def.id} on ${base}: unsubstituted variable left in data`; }
     }
   }
 }
@@ -36,11 +39,11 @@ check("every property compiles everywhere it applies", all, why);
 // Random rolls compile.
 let rolled = true, rwhy = "";
 for (const base of bases) for (const rarity of ["uncommon", "rare", "veryRare", "legendary"]) for (let i = 0; i < 25; i++) {
-  const r = roll(newRecipe({ seed: `c${i}`, rarity }), { properties, categories: categorize(fixture(base)) });
+  const r = roll(newRecipe({ seed: `c${i}`, rarity }), { properties, categories: categorize(fixture(base)), spells });
   const { errors } = compile(r, fixture(base), opts);
   if (errors.length) { rolled = false; rwhy = `${base} ${rarity} c${i}: ${errors.join("; ")}`; }
 }
-check("700 random rolls compile without errors", rolled, rwhy);
+check("1,000 random rolls compile without errors", rolled, rwhy);
 
 // A specific item, checked field by field.
 const { data } = build("longsword", "rare", ["elemental", "weapon-plus-1", "of-the-beast"], "fixed-seed");
@@ -102,3 +105,46 @@ const evil = compile({ ...newRecipe({ seed: "k", rarity: "rare" }), picks: [{ id
   getTranslator,
 });
 check("effect keys outside the allowlist are refused", evil.data === null && /not allowed/.test(evil.errors[0]));
+
+// Wands, staves and rods.
+const fireball = spells.find((sp) => sp.name === "Fireball");
+const pinned = (base, rarity, picks) => compile({ ...newRecipe({ seed: "w", rarity, baseUuid: "x" }), picks }, fixture(base), opts);
+const spellPick = (id, sp) => ({ id, seed: `s-${sp.name}`, locked: false, params: { spell: { value: sp.uuid, uuid: sp.uuid, name: sp.name, label: sp.name, level: sp.level, school: sp.school } } });
+
+const wand = pinned("wand", "rare", [spellPick("spell-3", fireball)]).data;
+const cast = Object.values(wand.system.activities).find((a) => a.type === "cast");
+check("wand is named after its spell", wand.name === "Wand of Fireball", wand.name);
+check("wand gets the DMG wand charge pool", wand.system.uses.max === "7" && wand.system.uses.recovery[0].formula === "1d6 + 1" && wand.system.uses.recovery[0].period === "dawn");
+check("cast activity links the spell", cast?.spell.uuid === fireball.uuid && cast.spell.level === 3);
+check("wand spends 1 charge per cast", cast?.consumption.targets[0].type === "itemUses" && cast.consumption.targets[0].value === "1");
+check("extra charges upcast", cast?.consumption.scaling.allowed === true && cast.consumption.targets[0].scaling.mode === "amount" && cast.consumption.scaling.max === "6");
+check("fixed DC and attack from rarity", cast?.spell.challenge.override === true && cast.spell.challenge.save === 15 && cast.spell.challenge.attack === 7);
+check("no components needed", JSON.stringify(cast?.spell.properties) === '["vocal","somatic","material"]');
+check("cast activity has no effects field", cast && !("effects" in cast));
+check("spell description links the spell", wand.system.description.value.includes(`@UUID[${fireball.uuid}]{Fireball}`), wand.system.description.value);
+check("description states the charge cost", /expend 1 charge to cast/.test(wand.system.description.value));
+check("3rd-level spell needs attunement", wand.system.attunement === "required");
+
+const mm = spells.find((sp) => sp.name === "Magic Missile");
+const web = spells.find((sp) => sp.name === "Web");
+const staffData = pinned("staff", "veryRare", [spellPick("spell-1", mm), spellPick("spell-3", fireball), spellPick("spell-2", web)]).data;
+const casts = Object.values(staffData.system.activities).filter((a) => a.type === "cast");
+check("staff gets one cast activity per spell", casts.length === 3);
+check("staff spells share the staff's pool", staffData.system.uses.max === "10" && staffData.system.uses.recovery[0].formula === "1d6 + 4");
+check("staff spends charges equal to spell level", casts.map((c) => c.consumption.targets[0].value).sort().join() === "1,2,3");
+check("staff keeps its quarterstaff attack", Object.values(staffData.system.activities).some((a) => a.type === "attack"));
+check("staff is named after its first spell", staffData.name === "Staff of Magic Missile", staffData.name);
+check("cast activity ids are distinct", new Set(casts.map((c) => c._id)).size === 3);
+
+const ab = pinned("rod", "rare", [spellPick("spell-1", mm), { id: "abundant", seed: "a", locked: false, params: { extra: 3 } }]).data;
+check("Abundant adds to the pool even when listed after the spell", ab.system.uses.max === "8");
+const ab2 = pinned("rod", "rare", [{ id: "abundant", seed: "a", locked: false, params: { extra: 3 } }, spellPick("spell-1", mm)]).data;
+check("Abundant adds to the pool when listed before the spell", ab2.system.uses.max === "8");
+const abNone = pinned("rod", "rare", [{ id: "abundant", seed: "a", locked: false, params: { extra: 3 } }]);
+check("Abundant alone fails safely", abNone.data === null && /no charges/.test(abNone.errors[0]));
+
+const thunderStaff = pinned("staff", "rare", [{ id: "of-thunder", seed: "t", locked: false, params: { damage: "2d8" } }, spellPick("spell-1", mm)]).data;
+check("a weapon charge property and spells share one pool", thunderStaff.system.uses.max === "3" && Object.values(thunderStaff.system.activities).filter((a) => a.type === "cast").length === 1);
+
+const badSpell = pinned("wand", "rare", [{ ...spellPick("spell-3", fireball), params: { spell: { value: "not-a-uuid", uuid: "not-a-uuid", name: "X", level: 3 } } }]);
+check("a malformed spell UUID fails safely", badSpell.data === null && /UUID/.test(badSpell.errors[0]));

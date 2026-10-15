@@ -1,5 +1,5 @@
 <div class="pmi-sources-body">
-  <p class="hint">{{localize "PMI.Settings.BasePacks.Hint"}}</p>
+  <p class="hint">{{hint}}</p>
   <ul class="pmi-pack-list">
     {{#each packs}}
     <li>
@@ -10,10 +10,10 @@
       </label>
     </li>
     {{else}}
-    <li class="hint">{{localize "PMI.Settings.BasePacks.None"}}</li>
+    <li class="hint">{{none}}</li>
     {{/each}}
   </ul>
   <footer class="form-footer">
-    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "PMI.Settings.BasePacks.Save"}}</button>
+    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "PMI.Settings.Save"}}</button>
   </footer>
 </div>

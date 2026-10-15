@@ -19,3 +19,6 @@ export function loadAll() {
 }
 
 export const fixture = (name) => JSON.parse(fs.readFileSync(`${ROOT}tests/fixtures/${name}.json`, "utf8"));
+
+/** Spell summaries built from the SRD's spells and class spell lists (see tests/fixtures/spells.json). */
+export const spellPool = () => fixture("spells");

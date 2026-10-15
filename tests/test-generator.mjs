@@ -1,8 +1,10 @@
 import { Rng } from "../scripts/generator/rng.mjs";
 import { resolveParam, substitute } from "../scripts/generator/params.mjs";
 import { categorize, isMundane } from "../scripts/generator/categories.mjs";
-import { newRecipe, roll, rerollPick, rerollParams, toggleLock, tally, invalidPicks, addPick } from "../scripts/generator/roller.mjs";
-import { loadAll, fixture } from "./load-node.mjs";
+import { newRecipe, roll, rerollPick, rerollParams, toggleLock, tally, invalidPicks, addPick, blockReason } from "../scripts/generator/roller.mjs";
+import { loadAll, fixture, spellPool } from "./load-node.mjs";
+import { spellCandidates } from "../scripts/generator/params.mjs";
+import { kindOf } from "../scripts/generator/categories.mjs";
 import { check } from "./check.mjs";
 
 const rng = new Rng("params");
@@ -71,3 +73,34 @@ check("rerollParams keeps the property", cur.picks[0].id === "elemental");
 
 const tooLow = addPick(newRecipe({ seed: "x", rarity: "uncommon" }), getDef("weapon-plus-3"));
 check("invalidPicks reports a property below its rarity", invalidPicks(tooLow, { properties, categories: cats })[0]?.reason === "rarityLow");
+
+// Spells.
+const spells = spellPool();
+check("wand, staff and rod are recognised", kindOf(categorize(fixture("wand"))) === "wand" && kindOf(categorize(fixture("staff"))) === "staff" && kindOf(categorize(fixture("rod"))) === "rod");
+check("a staff is also a weapon", categorize(fixture("staff")).includes("weapon"));
+check("a plain quarterstaff isn't a staff", !categorize({ type: "weapon", system: { type: { value: "simpleM", baseItem: "quarterstaff" }, properties: ["ver"] } }).includes("staff"));
+const evo3 = spellCandidates({ minLevel: 3, maxLevel: 3, school: "evo", classes: ["wizard"] }, "rare", spells);
+check("spell filters: level, school, class", evo3.length > 0 && evo3.every((sp) => sp.level === 3 && sp.school === "evo" && sp.classes.includes("wizard")));
+check("spell filter: no concentration", spellCandidates({ minLevel: 1, maxLevel: 9, concentration: false }, "rare", spells).every((sp) => !sp.concentration));
+check("spell filter: level by rarity", spellCandidates({ minLevel: { byRarity: { rare: 3 } }, maxLevel: { byRarity: { rare: 3 } } }, "rare", spells).every((sp) => sp.level === 3));
+check("spell filter: excluded UUIDs", !spellCandidates({ minLevel: 3, maxLevel: 3 }, "rare", spells, new Set([evo3[0].uuid])).some((sp) => sp.uuid === evo3[0].uuid));
+
+const staffCats = categorize(fixture("staff"));
+let distinct = true, staffRolls = 0, spellsSeen = 0;
+for (let i = 0; i < 60; i++) {
+  const r = roll(newRecipe({ seed: `st${i}`, rarity: "legendary" }), { properties, categories: staffCats, spells });
+  const uuids = r.picks.flatMap((p) => Object.values(p.params).filter((v) => v?.uuid).map((v) => v.uuid));
+  if (new Set(uuids).size !== uuids.length) distinct = false;
+  if (uuids.length) staffRolls++;
+  spellsSeen += uuids.length;
+}
+check("rolled staves get spells", staffRolls > 30, `${staffRolls}/60`);
+check("an item never gets the same spell twice", distinct);
+const noPool = roll(newRecipe({ seed: "np", rarity: "rare" }), { properties, categories: categorize(fixture("wand")) });
+check("without a spell pool, spell properties are skipped", noPool.picks.every((p) => !getDef(p.id).slot.startsWith("spell")));
+const tinyPool = spells.filter((sp) => sp.level === 1 && sp.activation === "action").slice(0, 1);
+const one = addPick(newRecipe({ seed: "tp", rarity: "rare" }), getDef("spell-1"), { spells: tinyPool });
+check("rerolling with only one possible spell keeps it", rerollParams(one, 0, { properties, spells: tinyPool })?.picks[0].params.spell.uuid === tinyPool[0].uuid);
+check("a second level-1 spell property is blocked when the pool is used up", blockReason(getDef("spell-1"), one, categorize(fixture("wand")), getDef, { spells: tinyPool }) !== null);
+check("Abundant needs a spell on the item", blockReason(getDef("abundant"), newRecipe({ seed: "x", rarity: "rare" }), categorize(fixture("wand")), getDef, { spells }) === "requires");
+check("Abundant is allowed once there's a spell", blockReason(getDef("abundant"), one, categorize(fixture("wand")), getDef, { spells }) === null);

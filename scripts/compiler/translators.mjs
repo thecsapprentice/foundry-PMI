@@ -4,7 +4,7 @@
 // ctx: { pick, def, rarity, label, id(suffix) → stable id, img, warn(msg) }
 // Translators throw an Error when a change can't be applied; the compiler reports it and the builder
 // refuses to create the item (fail safe).
-import { EFFECT_MODES, MODULE_ID } from "../config.mjs";
+import { EFFECT_MODES, MODULE_ID, CHARGE_POOLS } from "../config.mjs";
 import { damagePart } from "./damage.mjs";
 
 const ABILITY = "(str|dex|con|int|wis|cha)";
@@ -50,6 +50,26 @@ function attackActivities(data) {
   const acts = Object.values(data.system.activities ?? {}).filter((a) => a.type === "attack");
   if (!acts.length) throw new Error("the base item has no attack activity");
   return acts;
+}
+
+/** Order change types run in: charge pools first, then things that spend them, then changes to the pool. */
+export const CHANGE_ORDER = { uses: 0, usesBonus: 2 };
+
+/**
+ * Charges a castSpell change spends: `chargesByKind[kind]`, else `charges`, else 1. "level" means the spell's level.
+ * Shared by the translator and the compiler (for description text).
+ */
+export function castCharges(change, kind, level) {
+  let c = change.chargesByKind?.[kind] ?? change.chargesByKind?.default ?? change.charges ?? 1;
+  if (c === "level") c = Math.max(1, Number(level) || 1);
+  c = Number(c);
+  if (!Number.isInteger(c) || c < 0) throw new Error(`castSpell charges must be a whole number, got ${c}`);
+  return c;
+}
+
+function ensurePool(data, pool) {
+  if (data.system.uses?.max) return;
+  data.system.uses = { max: String(pool.max), spent: 0, recovery: [{ period: "dawn", type: "formula", formula: String(pool.formula) }] };
 }
 
 export const BUILTIN_TRANSLATORS = {
@@ -148,6 +168,65 @@ export const BUILTIN_TRANSLATORS = {
         formula: r.formula ? String(r.formula) : "",
       })),
     };
+  },
+
+  /**
+   * A Cast activity for a compendium spell, spending the item's charges:
+   *   { spell: uuid, level, charges | chargesByKind: { wand: 1, default: "level" }, upcast, dc, attack, pool }
+   * Creates the item's charge pool (CHARGE_POOLS by base kind, or `pool`) if it has none yet.
+   * The spell is cast at a fixed DC and attack bonus (the DMG convention for wands and staves)
+   * and needs no components.
+   */
+  castSpell(data, change, ctx) {
+    const uuid = String(change.spell ?? "");
+    if (!/^Compendium\.[\w-]+\.[\w-]+\.Item\.[A-Za-z0-9]{16}$|^Item\.[A-Za-z0-9]{16}$/.test(uuid)) throw new Error(`castSpell needs a spell UUID, got "${uuid}"`);
+    const level = Number(change.level);
+    if (!Number.isInteger(level) || level < 0 || level > 9) throw new Error(`castSpell needs a spell level 0–9, got ${change.level}`);
+    const charges = castCharges(change, ctx.kind, level);
+    ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
+    const dc = change.dc != null ? Number(change.dc) : null;
+    const attack = change.attack != null ? Number(change.attack) : null;
+    const id = ctx.id("cast");
+    data.system.activities ??= {};
+    data.system.activities[id] = {
+      _id: id,
+      type: "cast",
+      ...(change.name ? { name: change.name } : {}),
+      sort: 100000 + Object.keys(data.system.activities).length,
+      activation: { type: "action", value: null, condition: "", override: false },
+      consumption: {
+        targets: charges ? [{ type: "itemUses", target: "", value: String(charges), scaling: { mode: change.upcast ? "amount" : "", formula: "" } }] : [],
+        scaling: { allowed: !!change.upcast && level > 0, max: change.upcast && level > 0 ? String(9 - level) : "" },
+        spellSlot: true,
+      },
+      description: { chatFlavor: "" },
+      duration: { concentration: false, value: "", units: "", special: "", override: false },
+      range: { value: "", units: "", special: "", override: false },
+      target: {
+        template: { count: "", contiguous: false, type: "", size: "", width: "", height: "", units: "" },
+        affects: { count: "", type: "", choice: false, special: "" },
+        prompt: true,
+        override: false,
+      },
+      uses: { spent: 0, recovery: [] },
+      spell: {
+        ability: "",
+        challenge: { attack, save: dc, override: dc != null || attack != null },
+        level,
+        properties: ["vocal", "somatic", "material"], // components the item ignores: all of them
+        spellbook: true,
+        uuid,
+      },
+    };
+  },
+
+  /** { max } → more charges on the item's pool. Runs after pools are created; fails if the item has none. */
+  usesBonus(data, change) {
+    const add = Number(change.max);
+    if (!Number.isInteger(add) || add <= 0) throw new Error(`usesBonus needs a positive whole number, got ${change.max}`);
+    const cur = data.system.uses?.max;
+    if (!cur) throw new Error("the item has no charges to add to");
+    data.system.uses.max = /^\d+$/.test(cur) ? String(Number(cur) + add) : `${cur} + ${add}`;
   },
 
   /**

@@ -1,6 +1,7 @@
 // The DM-guided builder. Drafts live only in this window until the DM clicks Create.
 import { MODULE_ID, RARITIES, SLOTS } from "../config.mjs";
-import { newSeed } from "../generator/rng.mjs";
+import { newSeed, Rng } from "../generator/rng.mjs";
+import { randomBase, randomRarity } from "../generator/random.mjs";
 import { categorize, isMundane, appliesTo } from "../generator/categories.mjs";
 import {
   newRecipe, roll, rerollPick, rerollParams, addPick, removePick, toggleLock, tally, invalidPicks, blockReason,
@@ -9,6 +10,7 @@ import { substitute, plain } from "../generator/params.mjs";
 import { compile } from "../compiler/index.mjs";
 import { getChangeType, getProperty, listProperties } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
+import { BASE_INDEX_FIELDS } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -21,7 +23,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     position: { width: 640, height: 720 },
     actions: {
       roll: PmiBuilder.#onRoll,
-      newSeed: PmiBuilder.#onNewSeed,
+      randomBase: PmiBuilder.#onRandomBase,
+      randomRarity: PmiBuilder.#onRandomRarity,
       lock: PmiBuilder.#onLock,
       reroll: PmiBuilder.#onReroll,
       rerollParams: PmiBuilder.#onRerollParams,
@@ -71,6 +74,14 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     return app;
   }
 
+  /** Forget the cached base-item list (the GM changed which compendiums to use). */
+  static invalidateBases() {
+    const app = PmiBuilder.#instance;
+    if (!app) return;
+    app.#baseIndex = null;
+    if (app.rendered) app.render();
+  }
+
   /* ---------------------------------------- data ---------------------------------------- */
 
   get #properties() {
@@ -83,10 +94,9 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async #loadBaseIndex() {
     if (this.#baseIndex) return this.#baseIndex;
-    const fields = ["system.type", "system.rarity", "system.properties", "system.magicalBonus", "system.armor.magicalBonus"];
     const out = [];
     for (const pack of basePacks()) {
-      const index = await pack.getIndex({ fields });
+      const index = await pack.getIndex({ fields: BASE_INDEX_FIELDS });
       for (const e of index) {
         if (!categorize(e).length || !isMundane(e)) continue;
         out.push({ uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}`, name: e.name, group: pack.metadata.label, kind: categorize(e)[0] });
@@ -166,6 +176,12 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       recipe: this.recipe,
       rarities: RARITIES.map((key) => ({ key, label: L(CONFIG.DND5E?.itemRarity?.[key] ?? key), selected: key === this.recipe.rarity })),
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
+      baseKinds: ["any", "weapon", "armor", "shield"].map((kind) => ({
+        kind,
+        label: L(`PMI.Builder.Kind.${kind}`),
+        disabled: kind !== "any" && !bases.some((b) => b.kind === kind),
+      })),
+      noBases: bases.length === 0,
       baseName: this.#base?.name ?? null,
       baseImg: this.#base?.img ?? null,
       picks,
@@ -221,9 +237,19 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
-  static #onNewSeed() {
-    this.recipe = { ...this.recipe, seed: newSeed(), rerolls: 0 };
-    if (this.#base) this.recipe = roll(this.recipe, this.#ctx());
+  /** Pick a random base item of the kind on the button ("any", "weapon", "armor", "shield"). */
+  static async #onRandomBase(event, target) {
+    const kind = target.dataset.kind ?? "any";
+    const entry = randomBase(await this.#loadBaseIndex(), kind, new Rng(newSeed()), this.recipe.baseUuid);
+    if (!entry) {
+      ui.notifications.warn(game.i18n.localize(`PMI.Builder.NoBaseOfKind.${kind}`));
+      return;
+    }
+    if (await this.#setBase(entry.uuid, { quiet: false })) this.render();
+  }
+
+  static #onRandomRarity() {
+    this.recipe.rarity = randomRarity(new Rng(newSeed()), this.recipe.rarity);
     this.render();
   }
 

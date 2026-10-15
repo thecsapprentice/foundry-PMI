@@ -8,19 +8,23 @@
         {{#each bases}}<option value="{{uuid}}" {{#if selected}}selected{{/if}}>{{name}} ({{group}})</option>{{/each}}
       </select>
     </div>
+    <div class="pmi-random-row">
+      <span class="pmi-random-label"><i class="fa-solid fa-dice"></i> {{localize "PMI.Builder.Random"}}</span>
+      {{#each baseKinds}}
+      <button type="button" data-action="randomBase" data-kind="{{kind}}" {{#if disabled}}disabled{{/if}}>{{label}}</button>
+      {{/each}}
+    </div>
+    {{#if noBases}}<p class="pmi-warn"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "PMI.Builder.NoBases"}}</p>{{/if}}
     <p class="hint">{{localize "PMI.Builder.DropHint"}}</p>
     <div class="form-group">
       <label>{{localize "PMI.Builder.Rarity"}}</label>
       <select name="rarity">
         {{#each rarities}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
       </select>
+      <button type="button" class="pmi-icon-button" data-action="randomRarity" data-tooltip="PMI.Builder.RandomRarity"><i class="fa-solid fa-dice"></i></button>
     </div>
-    <div class="form-group">
-      <label>{{localize "PMI.Builder.Seed"}}</label>
-      <code class="pmi-seed">{{recipe.seed}}</code>
-      <button type="button" data-action="newSeed" data-tooltip="PMI.Builder.NewSeed"><i class="fa-solid fa-dice"></i></button>
-      <button type="button" data-action="roll" class="pmi-roll"><i class="fa-solid fa-wand-sparkles"></i> {{localize "PMI.Builder.Roll"}}</button>
-    </div>
+    <button type="button" data-action="roll" class="pmi-roll"><i class="fa-solid fa-wand-sparkles"></i> {{localize "PMI.Builder.Roll"}}</button>
+    <p class="hint pmi-seed">{{localize "PMI.Builder.Seed"}}: {{recipe.seed}}</p>
   </section>
 
   <section class="pmi-section">

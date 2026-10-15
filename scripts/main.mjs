@@ -4,8 +4,10 @@ import { api } from "./api.mjs";
 import { PmiBuilder } from "./apps/builder.mjs";
 import { registerBuiltinChangeTypes, loadBuiltinProperties } from "./registry/load.mjs";
 import { isPmiItem } from "./util.mjs";
+import { registerSettings } from "./settings.mjs";
 
 Hooks.once("init", () => {
+  registerSettings(() => PmiBuilder.invalidateBases());
   registerBuiltinChangeTypes();
   game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
 });

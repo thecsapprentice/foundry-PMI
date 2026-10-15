@@ -34,3 +34,12 @@ export const SHIELD_TYPES = ["shield"];
 
 /** Foundry's ACTIVE_EFFECT_MODES, by name, so property files can say "add" instead of 2. */
 export const EFFECT_MODES = { custom: 0, multiply: 1, add: 2, downgrade: 3, upgrade: 4, override: 5 };
+
+/** How often each rarity comes up on the builder's random-rarity button. Common and artifact are never random. */
+export const RARITY_WEIGHTS = { uncommon: 40, rare: 30, veryRare: 20, legendary: 10 };
+
+/** Base-item compendiums used until a GM picks their own in the module settings. */
+export const DEFAULT_BASE_PACKS = ["dnd5e.items", "dnd5e.equipment24"];
+
+/** Kinds of base item the random-base buttons can ask for ("any" means all of them). */
+export const BASE_KINDS = ["weapon", "armor", "shield"];

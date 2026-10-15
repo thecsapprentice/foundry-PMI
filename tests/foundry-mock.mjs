@@ -33,6 +33,26 @@ export const folders = [];
 
 export const uuids = new Map();
 
+/** Compendiums: id → { documentName, collection, metadata, index: [entries] }. */
+export const packs = new Map();
+export function addPack(id, entries, { label = id, packageName = id.split(".")[0], packageType = "system" } = {}) {
+  packs.set(id, {
+    documentName: "Item", collection: id, metadata: { label, packageName, packageType },
+    getIndex: async () => entries.map((e) => ({ ...e, uuid: `Compendium.${id}.Item.${e._id}` })),
+  });
+}
+
+export const settings = new Map();
+const settingsApi = {
+  register: (scope, key, cfg) => { settings.set(`${scope}.${key}`, { cfg, value: structuredClone(cfg.default) }); },
+  registerMenu: () => {},
+  get: (scope, key) => structuredClone(settings.get(`${scope}.${key}`)?.value),
+  set: async (scope, key, value) => {
+    writes.push({ op: "settings.set", key: `${scope}.${key}`, value: structuredClone(value) });
+    const s = settings.get(`${scope}.${key}`); s.value = structuredClone(value); s.cfg.onChange?.(value);
+  },
+};
+
 export function install({ isGM = true } = {}) {
   globalThis.foundry = {
     applications: { api: { ApplicationV2, HandlebarsApplicationMixin: (C) => C } },
@@ -42,7 +62,10 @@ export function install({ isGM = true } = {}) {
     user: { isGM },
     i18n: { localize: (k) => k, format: (k, d) => `${k} ${JSON.stringify(d)}` },
     folders,
-    packs: { get: () => null },
+    packs: Object.assign(packs, { filter: (fn) => [...packs.values()].filter(fn) }),
+    settings: settingsApi,
+    system: { id: "dnd5e", title: "D&D Fifth Edition" },
+    modules: { get: () => null },
     items: { get: () => null },
   };
   globalThis.ui = { notifications: { warn: (m) => notes.push(["warn", m]), info: (m) => notes.push(["info", m]), error: (m) => notes.push(["error", m]) } };

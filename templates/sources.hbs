@@ -1,0 +1,19 @@
+<div class="pmi-sources-body">
+  <p class="hint">{{localize "PMI.Settings.BasePacks.Hint"}}</p>
+  <ul class="pmi-pack-list">
+    {{#each packs}}
+    <li>
+      <label>
+        <input type="checkbox" name="pack" value="{{id}}" {{#if checked}}checked{{/if}}>
+        <span class="pmi-pack-label">{{label}}</span>
+        <span class="pmi-pack-meta">{{source}} · {{count}}</span>
+      </label>
+    </li>
+    {{else}}
+    <li class="hint">{{localize "PMI.Settings.BasePacks.None"}}</li>
+    {{/each}}
+  </ul>
+  <footer class="form-footer">
+    <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "PMI.Settings.BasePacks.Save"}}</button>
+  </footer>
+</div>

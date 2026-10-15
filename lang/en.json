@@ -15,7 +15,6 @@
       "BaseMagical": "That item is already magical. Choose a mundane base item.",
       "Rarity": "Rarity",
       "Seed": "Seed",
-      "NewSeed": "New seed and roll",
       "Roll": "Roll",
       "Budget": "Budget",
       "Properties": "Properties",
@@ -32,10 +31,31 @@
       "Create": "Create item",
       "HasErrors": "Fix the problems shown before creating this item.",
       "Invalid": "The generated item failed dnd5e validation, so nothing was created: {message}",
-      "Created": "Created {name}. Only GMs can see it until you share it."
+      "Created": "Created {name}. Only GMs can see it until you share it.",
+      "Random": "Random:",
+      "RandomRarity": "Random rarity",
+      "Kind": {
+        "any": "Any",
+        "weapon": "Weapon",
+        "armor": "Armor",
+        "shield": "Shield"
+      },
+      "NoBaseOfKind": {
+        "any": "No base items are available. Check the base item sources in the module settings.",
+        "weapon": "No weapons are available from the chosen sources.",
+        "armor": "No armor is available from the chosen sources.",
+        "shield": "No shields are available from the chosen sources."
+      },
+      "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here."
     },
-    "Folder": { "Name": "Procedural Magic Items" },
-    "Slot": { "enhancement": "Enhancement", "prefix": "Prefix", "suffix": "Suffix" },
+    "Folder": {
+      "Name": "Procedural Magic Items"
+    },
+    "Slot": {
+      "enhancement": "Enhancement",
+      "prefix": "Prefix",
+      "suffix": "Suffix"
+    },
     "Reason": {
       "category": "Doesn't apply to this base item.",
       "rarityLow": "Needs a higher rarity.",
@@ -51,6 +71,16 @@
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
       "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work.",
       "PropertyLoad": "Procedural Magic Items: some property definitions couldn't be loaded. See the console (F12)."
+    },
+    "Settings": {
+      "BasePacks": {
+        "Name": "Base item sources",
+        "Label": "Choose compendiums",
+        "Hint": "Which compendiums the Magic Item Builder lists base weapons, armor and shields from. Only compendiums with mundane weapons, armor or shields are shown; the number is how many each has. You can still drop any item onto the builder.",
+        "World": "World",
+        "None": "No compendiums with mundane weapons, armor or shields were found.",
+        "Save": "Save"
+      }
     }
   }
 }

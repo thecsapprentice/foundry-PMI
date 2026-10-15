@@ -1,5 +1,6 @@
 // Foundry-facing helpers shared by the builder and hooks.
 import { MODULE_ID } from "./config.mjs";
+import { chosenBasePackIds } from "./settings.mjs";
 
 /** CLAUDE.md rule 2: an item is PMI's only if it carries PMI's recipe. Never decided by name. */
 export function isPmiItem(item) {
@@ -29,7 +30,7 @@ export async function ensurePmiFolder() {
   });
 }
 
-/** Compendiums offered as sources of base items. */
+/** Compendiums offered as sources of base items: the GM's choice in the module settings. */
 export function basePacks() {
-  return ["dnd5e.items", "dnd5e.equipment24"].map((id) => game.packs.get(id)).filter((p) => p?.documentName === "Item");
+  return chosenBasePackIds().map((id) => game.packs.get(id)).filter((p) => p?.documentName === "Item");
 }

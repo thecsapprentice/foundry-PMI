@@ -1,9 +1,9 @@
 // Loads PMI's built-in property files and change types into the registries.
 // The only fetch in PMI: read-only, and only PMI's own files under modules/foundry-pmi/data/ (CLAUDE.md rule 8).
 import { MODULE_ID } from "../config.mjs";
-import { registerChangeType, registerProperties, registerBases } from "../api.mjs";
+import { registerChangeType, registerProperties, registerBases, registerNames } from "../api.mjs";
 import { BUILTIN_TRANSLATORS } from "../compiler/translators.mjs";
-import { PROPERTY_FILES, BASE_FILES } from "./files.mjs";
+import { PROPERTY_FILES, BASE_FILES, NAME_FILES } from "./files.mjs";
 
 export function registerBuiltinChangeTypes() {
   for (const [type, fn] of Object.entries(BUILTIN_TRANSLATORS)) registerChangeType(type, fn);
@@ -23,7 +23,7 @@ export async function loadBuiltinProperties() {
   const load = async (dir, file, key, register) => {
     try {
       const json = await readModuleJson(`${dir}/${file}`);
-      const r = register(MODULE_ID, json[key] ?? []);
+      const r = register(MODULE_ID, key ? (json[key] ?? []) : json);
       added += r.added.length;
       errors.push(...r.errors.map((e) => `${file}: ${e}`));
     } catch (err) {
@@ -31,6 +31,7 @@ export async function loadBuiltinProperties() {
     }
   };
   for (const file of BASE_FILES) await load("bases", file, "bases", registerBases);
+  for (const file of NAME_FILES) await load("names", file, null, registerNames);
   for (const file of PROPERTY_FILES) await load("properties", file, "properties", registerProperties);
   return { added, errors };
 }

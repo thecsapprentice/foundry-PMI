@@ -46,7 +46,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 1"
   },
   {
    "id": "spell-2",
@@ -93,7 +95,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 2"
   },
   {
    "id": "spell-3",
@@ -140,7 +144,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 3"
   },
   {
    "id": "spell-4",
@@ -187,7 +193,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 4"
   },
   {
    "id": "spell-5",
@@ -234,7 +242,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 5"
   },
   {
    "id": "spell-6",
@@ -281,7 +291,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 6"
   },
   {
    "id": "spell-7",
@@ -328,7 +340,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 7"
   },
   {
    "id": "spell-8",
@@ -375,7 +389,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 8"
   },
   {
    "id": "spell-9",
@@ -422,7 +438,9 @@
     }
    ],
    "text": "You can expend @charges @chargeWord to cast @UUID[@spell]{{spell.name}} (level {spell.level}) from this item, using spell save DC @dc and +@attack to hit, without components. Each extra charge you expend raises the spell's level by one.",
-   "providesCharges": true
+   "providesCharges": true,
+   "theme": "{spell.school}",
+   "menuLabel": "Spell, level 9"
   },
   {
    "id": "focus-plus-1",
@@ -555,7 +573,8 @@
     }
    ],
    "text": "This item holds @extra more charges than usual.",
-   "requiresCharges": true
+   "requiresCharges": true,
+   "themeWeight": -3
   },
   {
    "id": "spell-0",
@@ -595,7 +614,9 @@
      "attack": "@attack"
     }
    ],
-   "text": "You can cast the @UUID[@spell]{{spell.name}} cantrip from this item at will, using spell save DC @dc and +@attack to hit, without components."
+   "text": "You can cast the @UUID[@spell]{{spell.name}} cantrip from this item at will, using spell save DC @dc and +@attack to hit, without components.",
+   "theme": "{spell.school}",
+   "menuLabel": "Cantrip, at will"
   },
   {
    "id": "potent",
@@ -633,7 +654,9 @@
      ]
     }
    ],
-   "text": "While attuned to this item, your spell save DC increases by @bonus."
+   "text": "While attuned to this item, your spell save DC increases by @bonus.",
+   "theme": "word",
+   "themeWeight": -4
   }
  ]
 }

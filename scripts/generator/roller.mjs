@@ -22,7 +22,7 @@ export function weightFor(def, categories) {
 
 /** A fresh recipe. */
 export function newRecipe({ seed, rarity = "uncommon", baseUuid = null } = {}) {
-  return { version: RECIPE_VERSION, seed, rarity, baseUuid, rerolls: 0, picks: [] };
+  return { version: RECIPE_VERSION, seed, rarity, baseUuid, rerolls: 0, picks: [], naming: { mode: "auto", custom: "", rerolls: 0 } };
 }
 
 /** Totals for a recipe's picks. `getDef` looks up a property by id. */

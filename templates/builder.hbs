@@ -89,9 +89,24 @@
       {{#if preview}}
       <header class="pmi-preview-head">
         <img src="{{preview.img}}" alt="">
-        <div>
+        <div class="pmi-preview-title">
+          {{#if editingName}}
+          <input type="text" name="customName" class="pmi-name-input" value="{{preview.name}}" maxlength="80"
+                 aria-label="{{localize "PMI.Builder.EditName"}}">
+          {{else}}
           <h3 class="pmi-item-name">{{preview.name}}</h3>
+          {{/if}}
           <p class="pmi-item-sub">{{preview.rarityLabel}}{{#if preview.attunement}}, {{localize "PMI.Builder.RequiresAttunement"}}{{/if}}</p>
+          <p class="pmi-item-unid" data-tooltip="PMI.Builder.UnidentifiedHint"><i class="fa-solid fa-eye-slash" aria-hidden="true"></i> {{preview.unidentifiedName}}</p>
+        </div>
+        <div class="pmi-name-tools" role="group" aria-label="{{localize "PMI.Builder.NameTools"}}">
+          <button type="button" data-action="rerollName" data-tooltip="PMI.Builder.RerollName" aria-label="{{localize "PMI.Builder.RerollName"}}">
+            <i class="fa-solid fa-dice"></i></button>
+          <button type="button" data-action="toggleName" data-tooltip="{{preview.toggleTooltip}}" aria-label="{{preview.toggleTooltip}}"
+                  aria-pressed="{{#if preview.usesTrueName}}true{{else}}false{{/if}}" {{#unless preview.canToggle}}disabled{{/unless}}>
+            <i class="fa-solid fa-tag"></i></button>
+          <button type="button" data-action="editName" data-tooltip="PMI.Builder.EditName" aria-label="{{localize "PMI.Builder.EditName"}}">
+            <i class="fa-solid fa-pen"></i></button>
         </div>
       </header>
       <div class="pmi-description">{{{preview.description}}}</div>

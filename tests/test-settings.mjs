@@ -101,5 +101,6 @@ check("a missing spell stops creation", writes.length === 0 && notes.at(-1)[0] =
 uuids.set(gone.params.spell.uuid, new MockItem({ name: "Vanished", type: "spell" }));
 await A.create.call(app);
 const made = writes.find((w) => w.op === "Item.create")?.data;
-check("with the spell present, the wand is created", made?.name === "Wand of Vanished" && Object.values(made.system.activities).some((a) => a.type === "cast"));
+check("with the spell present, the wand is created", Object.values(made?.system.activities ?? {}).some((a) => a.type === "cast"));
+check("a rare wand gets a true name, with its full name in the description", made?.name !== "Wand of Vanished" && made.system.description.value.includes("<strong>Wand of Vanished</strong>"));
 check("the wand is hidden from players", made?.ownership?.default === 0);

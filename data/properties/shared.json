@@ -21,32 +21,38 @@
       {
        "value": "str",
        "name": "Bear",
-       "label": "Strength"
+       "label": "Strength",
+       "theme": "strength"
       },
       {
        "value": "dex",
        "name": "Cat",
-       "label": "Dexterity"
+       "label": "Dexterity",
+       "theme": "grace"
       },
       {
        "value": "con",
        "name": "Ox",
-       "label": "Constitution"
+       "label": "Constitution",
+       "theme": "endurance"
       },
       {
        "value": "int",
        "name": "Fox",
-       "label": "Intelligence"
+       "label": "Intelligence",
+       "theme": "mind"
       },
       {
        "value": "wis",
        "name": "Owl",
-       "label": "Wisdom"
+       "label": "Wisdom",
+       "theme": "wisdom"
       },
       {
        "value": "cha",
        "name": "Eagle",
-       "label": "Charisma"
+       "label": "Charisma",
+       "theme": "presence"
       }
      ]
     },
@@ -69,7 +75,9 @@
      ]
     }
    ],
-   "text": "While you carry this item, you have a +@bonus bonus to {ability.label} saving throws."
+   "text": "While you carry this item, you have a +@bonus bonus to {ability.label} saving throws.",
+   "theme": "{ability.theme}",
+   "menuLabel": "Save bonus (ability)"
   },
   {
    "id": "of-swiftness",
@@ -105,7 +113,8 @@
      ]
     }
    ],
-   "text": "While you carry this item, your walking speed increases by @speed feet."
+   "text": "While you carry this item, your walking speed increases by @speed feet.",
+   "theme": "swift"
   },
   {
    "id": "of-the-night",
@@ -141,7 +150,9 @@
      ]
     }
    ],
-   "text": "While you carry this item, you have darkvision out to a range of @range feet."
+   "text": "While you carry this item, you have darkvision out to a range of @range feet.",
+   "theme": "night",
+   "themeWeight": 1
   },
   {
    "id": "of-protection",
@@ -187,7 +198,8 @@
    "weightBy": {
     "ring": 2,
     "cloak": 2
-   }
+   },
+   "theme": "guard"
   },
   {
    "id": "save-advantage",
@@ -209,32 +221,38 @@
       {
        "value": "str",
        "name": "Unyielding",
-       "label": "Strength"
+       "label": "Strength",
+       "theme": "strength"
       },
       {
        "value": "dex",
        "name": "Evasive",
-       "label": "Dexterity"
+       "label": "Dexterity",
+       "theme": "grace"
       },
       {
        "value": "con",
        "name": "Enduring",
-       "label": "Constitution"
+       "label": "Constitution",
+       "theme": "endurance"
       },
       {
        "value": "int",
        "name": "Lucid",
-       "label": "Intelligence"
+       "label": "Intelligence",
+       "theme": "mind"
       },
       {
        "value": "wis",
        "name": "Steadfast",
-       "label": "Wisdom"
+       "label": "Wisdom",
+       "theme": "wisdom"
       },
       {
        "value": "cha",
        "name": "Defiant",
-       "label": "Charisma"
+       "label": "Charisma",
+       "theme": "presence"
       }
      ]
     }
@@ -251,7 +269,9 @@
      ]
     }
    ],
-   "text": "While you wear this item, you have advantage on {ability.label} saving throws."
+   "text": "While you wear this item, you have advantage on {ability.label} saving throws.",
+   "theme": "{ability.theme}",
+   "menuLabel": "Save advantage (ability)"
   },
   {
    "id": "vigilant",
@@ -291,7 +311,9 @@
      ]
     }
    ],
-   "text": "While you carry this item, you have a +@bonus bonus to initiative rolls."
+   "text": "While you carry this item, you have a +@bonus bonus to initiative rolls.",
+   "theme": "watch",
+   "themeWeight": -2
   },
   {
    "id": "hearty",
@@ -330,7 +352,8 @@
      ]
     }
    ],
-   "text": "While attuned to this item, your hit point maximum increases by @hp for each level you have."
+   "text": "While attuned to this item, your hit point maximum increases by @hp for each level you have.",
+   "theme": "life"
   },
   {
    "id": "fearless",
@@ -357,7 +380,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, you can't be frightened."
+   "text": "While you wear this item, you can't be frightened.",
+   "theme": "hero"
   },
   {
    "id": "clear-minded",
@@ -384,7 +408,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, you can't be charmed."
+   "text": "While you wear this item, you can't be charmed.",
+   "theme": "mind"
   },
   {
    "id": "of-vitality",
@@ -421,7 +446,9 @@
      "activation": "bonus"
     }
    ],
-   "text": "As a bonus action, you can regain [[/heal @heal]] hit points. Once used, this property can't be used again until the next dawn."
+   "text": "As a bonus action, you can regain [[/heal @heal]] hit points. Once used, this property can't be used again until the next dawn.",
+   "theme": "life",
+   "themeWeight": 1
   },
   {
    "id": "bulwark",
@@ -460,7 +487,8 @@
      "activation": "bonus"
     }
    ],
-   "text": "As a bonus action, you can gain [[/heal @thp temp]] temporary hit points. Once used, this property can't be used again until the next dawn."
+   "text": "As a bonus action, you can gain [[/heal @thp temp]] temporary hit points. Once used, this property can't be used again until the next dawn.",
+   "theme": "guard"
   }
  ]
 }

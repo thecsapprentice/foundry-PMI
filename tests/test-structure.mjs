@@ -69,3 +69,11 @@ if (fs.existsSync(mpath)) {
   const stamp = css.match(/--pmi-css-version:\s*"([^"]*)"/)?.[1];
   check("stylesheet version stamp matches module.json", stamp === m.version, `css ${stamp}, module ${m.version}`);
 }
+
+// Every property reads cleanly in the "Add a property" menu: a menuLabel, or a label without template gaps.
+{
+  const { loadAll } = await import("./load-node.mjs");
+  const { properties } = loadAll();
+  const bad = properties.filter((d) => !d.menuLabel && /\{|@/.test(String(d.label ?? "").replace(/\s*\(.*\)$/, "")));
+  check("properties with templated labels have a menuLabel", bad.length === 0, bad.map((d) => d.id).join(", "));
+}

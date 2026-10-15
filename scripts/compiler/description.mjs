@@ -8,9 +8,11 @@ const escape = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": 
  * @param {{ label: string, text: string }[]} resolved  Picks in slot order.
  * @param {string} baseDescription                     The base item's HTML description, kept below.
  * @param {boolean} attunement
+ * @param {string|null} [fullName]  The descriptive name, shown first when the item goes by a true name.
  */
-export function buildDescription(resolved, baseDescription = "", attunement = false) {
+export function buildDescription(resolved, baseDescription = "", attunement = false, fullName = null) {
   const lines = [];
+  if (fullName) lines.push(`<p class="pmi-full-name"><strong>${escape(fullName)}</strong></p>`);
   if (attunement) lines.push("<p><em>Requires attunement.</em></p>");
   const entries = resolved.filter((r) => r.text);
   if (entries.length) {

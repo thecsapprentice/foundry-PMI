@@ -3,7 +3,7 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.7.1"; }
+:root { --pmi-css-version: "0.8.0"; }
 
 .pmi-builder {
   /* Fixed inks, not Foundry's theme variables: the builder always sits on light parchment. */
@@ -237,7 +237,14 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-.pmi-preview-head { display: flex; align-items: flex-start; gap: 0.5rem; }
+.pmi-preview-head { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: start; gap: 0.5rem; }
+.pmi-preview-title { min-width: 0; }
+.pmi-name-tools { display: flex; flex-direction: column; gap: 0.2rem; }
+.pmi-builder .pmi-name-tools button { width: 1.7rem; height: 1.7rem; padding: 0; }
+.pmi-name-tools button i { margin: 0; }
+.pmi-name-tools button:disabled { opacity: 0.35; }
+.pmi-builder .pmi-name-input { width: 100%; font-size: var(--font-size-16, 16px); font-weight: bold; }
+.pmi-builder .pmi-item-unid { margin: 0.15rem 0 0; font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); }
 .pmi-preview-head img { width: 48px; height: 48px; flex: 0 0 48px; border: none; border-radius: 4px; }
 .pmi-builder .pmi-item-name {
   margin: 0;
@@ -251,6 +258,7 @@
 .pmi-description { font-size: var(--font-size-13, 13px); }
 .pmi-description ul { margin: 0.25rem 0; padding-left: 1.1rem; }
 .pmi-description li p { margin: 0 0 0.3rem; }
+.pmi-description .pmi-full-name { margin: 0 0 0.3rem; }
 .pmi-preview-empty { margin: auto 0; text-align: center; color: var(--pmi-ink-soft); }
 .pmi-preview-empty i { font-size: 2rem; opacity: 0.4; }
 

@@ -23,92 +23,110 @@
       {
        "value": "acr",
        "name": "Agile",
-       "label": "Acrobatics"
+       "label": "Acrobatics",
+       "theme": "grace"
       },
       {
        "value": "ani",
        "name": "Soothing",
-       "label": "Animal Handling"
+       "label": "Animal Handling",
+       "theme": "wisdom"
       },
       {
        "value": "arc",
        "name": "Mystic",
-       "label": "Arcana"
+       "label": "Arcana",
+       "theme": "mind"
       },
       {
        "value": "ath",
        "name": "Athletic",
-       "label": "Athletics"
+       "label": "Athletics",
+       "theme": "strength"
       },
       {
        "value": "dec",
        "name": "Beguiling",
-       "label": "Deception"
+       "label": "Deception",
+       "theme": "presence"
       },
       {
        "value": "his",
        "name": "Learned",
-       "label": "History"
+       "label": "History",
+       "theme": "mind"
       },
       {
        "value": "ins",
        "name": "Insightful",
-       "label": "Insight"
+       "label": "Insight",
+       "theme": "wisdom"
       },
       {
        "value": "itm",
        "name": "Menacing",
-       "label": "Intimidation"
+       "label": "Intimidation",
+       "theme": "fear"
       },
       {
        "value": "inv",
        "name": "Searching",
-       "label": "Investigation"
+       "label": "Investigation",
+       "theme": "mind"
       },
       {
        "value": "med",
        "name": "Steady-Handed",
-       "label": "Medicine"
+       "label": "Medicine",
+       "theme": "life"
       },
       {
        "value": "nat",
        "name": "Verdant",
-       "label": "Nature"
+       "label": "Nature",
+       "theme": "wisdom"
       },
       {
        "value": "prc",
        "name": "Watchful",
-       "label": "Perception"
+       "label": "Perception",
+       "theme": "watch"
       },
       {
        "value": "prf",
        "name": "Dazzling",
-       "label": "Performance"
+       "label": "Performance",
+       "theme": "presence"
       },
       {
        "value": "per",
        "name": "Silver-Tongued",
-       "label": "Persuasion"
+       "label": "Persuasion",
+       "theme": "presence"
       },
       {
        "value": "rel",
        "name": "Pious",
-       "label": "Religion"
+       "label": "Religion",
+       "theme": "radiant"
       },
       {
        "value": "slt",
        "name": "Deft",
-       "label": "Sleight of Hand"
+       "label": "Sleight of Hand",
+       "theme": "grace"
       },
       {
        "value": "ste",
        "name": "Silent",
-       "label": "Stealth"
+       "label": "Stealth",
+       "theme": "shadow"
       },
       {
        "value": "sur",
        "name": "Trailwise",
-       "label": "Survival"
+       "label": "Survival",
+       "theme": "swift"
       }
      ]
     }
@@ -125,7 +143,9 @@
      ]
     }
    ],
-   "text": "While you wear this item, you have advantage on {skill.label} checks."
+   "text": "While you wear this item, you have advantage on {skill.label} checks.",
+   "theme": "{skill.theme}",
+   "menuLabel": "Skill advantage"
   },
   {
    "id": "ability-score",
@@ -152,32 +172,38 @@
       {
        "value": "str",
        "name": "Might",
-       "label": "Strength"
+       "label": "Strength",
+       "theme": "strength"
       },
       {
        "value": "dex",
        "name": "Grace",
-       "label": "Dexterity"
+       "label": "Dexterity",
+       "theme": "grace"
       },
       {
        "value": "con",
        "name": "Fortitude",
-       "label": "Constitution"
+       "label": "Constitution",
+       "theme": "endurance"
       },
       {
        "value": "int",
        "name": "Brilliance",
-       "label": "Intelligence"
+       "label": "Intelligence",
+       "theme": "mind"
       },
       {
        "value": "wis",
        "name": "Wisdom",
-       "label": "Wisdom"
+       "label": "Wisdom",
+       "theme": "wisdom"
       },
       {
        "value": "cha",
        "name": "Presence",
-       "label": "Charisma"
+       "label": "Charisma",
+       "theme": "presence"
       }
      ]
     },
@@ -202,7 +228,10 @@
      ]
     }
    ],
-   "text": "Your {ability.label} score is @score while you wear this item. It has no effect on you if your {ability.label} is already @score or higher."
+   "text": "Your {ability.label} score is @score while you wear this item. It has no effect on you if your {ability.label} is already @score or higher.",
+   "theme": "{ability.theme}",
+   "themeWeight": 2,
+   "menuLabel": "Ability score"
   },
   {
    "id": "winged",
@@ -247,7 +276,9 @@
     }
    ],
    "text": "As a bonus action, you can gain a flying speed of @speed feet for 10 minutes. Once used, this property can't be used again until the next dawn.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "flight",
+   "themeWeight": 3
   },
   {
    "id": "vanishing",
@@ -281,7 +312,9 @@
     }
    ],
    "text": "As an action, you can become invisible for 1 minute. Once used, this property can't be used again until the next dawn.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "shadow",
+   "themeWeight": 3
   },
   {
    "id": "warding",
@@ -325,7 +358,8 @@
      ]
     }
    ],
-   "text": "As a reaction when you are hit by an attack, you can gain a +@ac bonus to AC for 1 minute, including against the triggering attack. Once used, this property can't be used again until the next dawn."
+   "text": "As a reaction when you are hit by an attack, you can gain a +@ac bonus to AC for 1 minute, including against the triggering attack. Once used, this property can't be used again until the next dawn.",
+   "theme": "guard"
   },
   {
    "id": "striding",
@@ -362,7 +396,8 @@
     }
    ],
    "text": "While you wear this item, your walking speed increases by @speed feet.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "swift"
   },
   {
    "id": "of-tongues",
@@ -451,7 +486,9 @@
      ]
     }
    ],
-   "text": "While you wear this item, you can speak, read and write {lang.label}."
+   "text": "While you wear this item, you can speak, read and write {lang.label}.",
+   "theme": "mind",
+   "menuLabel": "of Tongues (language)"
   },
   {
    "id": "of-the-bat",
@@ -486,7 +523,8 @@
      ]
     }
    ],
-   "text": "While attuned to this item, you have blindsight out to a range of @range feet."
+   "text": "While attuned to this item, you have blindsight out to a range of @range feet.",
+   "theme": "night"
   },
   {
    "id": "of-purity",
@@ -518,7 +556,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, you are immune to poison damage and the poisoned condition."
+   "text": "While you wear this item, you are immune to poison damage and the poisoned condition.",
+   "theme": "radiant"
   },
   {
    "id": "amphibious",
@@ -557,7 +596,8 @@
     }
    ],
    "text": "While you wear this item, you have a swimming speed of @speed feet.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "sea"
   },
   {
    "id": "clinging",
@@ -591,7 +631,8 @@
     }
    ],
    "text": "While you wear this item, you have a climbing speed of @speed feet.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "spider"
   }
  ]
 }

@@ -5,6 +5,7 @@ import { RARITIES, SLOTS } from "./config.mjs";
 const changeTypes = new Map();
 const properties = new Map();
 const bases = new Map();
+let names = { themes: {}, forms: {}, tongues: {}, tongueWeights: {} };
 
 /**
  * Register a translator for one change type.
@@ -100,11 +101,32 @@ export function listBases() {
   return [...bases.values()].map((b) => ({ id: b.id, name: b.name, source: b.source }));
 }
 
+/**
+ * Add naming vocabulary: { themes, forms, tongues, tongueWeights }. Later registrations add to or replace
+ * entries by key, so a module can add a theme or a whole new tongue.
+ */
+export function registerNames(source, data) {
+  const errors = [];
+  for (const section of ["themes", "forms", "tongues", "tongueWeights"]) {
+    const entries = data?.[section];
+    if (entries === undefined) continue;
+    if (!entries || typeof entries !== "object") { errors.push(`${section} must be an object`); continue; }
+    for (const [key, value] of Object.entries(entries)) names[section][key] = structuredClone(value);
+  }
+  return { added: errors.length ? [] : [source], errors };
+}
+
+/** The naming vocabulary (a copy), or null if none is registered. */
+export function getNames() {
+  return Object.keys(names.themes).length && Object.keys(names.forms).length ? structuredClone(names) : null;
+}
+
 /** Test helper: forget everything registered. */
 export function _resetRegistries() {
   changeTypes.clear();
   properties.clear();
   bases.clear();
+  names = { themes: {}, forms: {}, tongues: {}, tongueWeights: {} };
 }
 
 export const api = Object.freeze({
@@ -117,4 +139,6 @@ export const api = Object.freeze({
   registerBases,
   getBase,
   listBases,
+  registerNames,
+  getNames,
 });

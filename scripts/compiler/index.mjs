@@ -5,6 +5,7 @@ import { substitute } from "../generator/params.mjs";
 import { categorize, kindOf } from "../generator/categories.mjs";
 import { CHANGE_ORDER, castCharges } from "./translators.mjs";
 import { buildName } from "./naming.mjs";
+import { nameItem } from "./truename.mjs";
 import { buildDescription } from "./description.mjs";
 
 /** Top-level fields of the base item's source that a new item must not inherit. */
@@ -18,10 +19,12 @@ const DROP = ["_id", "folder", "sort", "ownership", "_stats", "flags"];
  * @param {(id: string) => object|null} opts.getDef         Property lookup.
  * @param {(type: string) => Function|null} opts.getTranslator  Change-type lookup.
  * @param {(key: string) => string} [opts.localize]       For labels; identity by default.
+ * @param {object|null} [opts.names]                      Naming vocabulary (getNames()); without it, no true names.
+ * @param {string} [opts.trueNameMinRarity]               Lowest rarity named automatically.
  * @returns {{ data: object|null, errors: string[], warnings: string[] }}
  *   `data` is null whenever there are errors: a half-built item is never returned.
  */
-export function compile(recipe, base, { getDef, getTranslator, localize = (k) => k }) {
+export function compile(recipe, base, { getDef, getTranslator, localize = (k) => k, names = null, trueNameMinRarity = "rare" }) {
   const errors = [];
   const warnings = [];
   if (!base) return { data: null, errors: ["No base item"], warnings };
@@ -88,19 +91,24 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
 
   // Item-level results.
   const baseName = base.name;
-  data.name = buildName(baseName, resolved);
+  const descriptive = buildName(baseName, resolved);
+  const naming = nameItem({
+    recipe, baseName, descriptive, resolved, categories: categorize(base), vocab: names, minRarity: trueNameMinRarity,
+  });
+  data.name = naming.name;
   data.system.rarity = recipe.rarity;
   data.system.properties = [...new Set([...(data.system.properties ?? []), "mgc"])];
   data.system.attunement = resolved.some((r) => r.def.attunement) ? "required" : (base.system.attunement ?? "");
   data.system.attuned = false;
   data.system.equipped = false;
   data.system.identified = true;
-  data.system.unidentified = { name: baseName, description: base.system.unidentified?.description ?? "" };
+  data.system.unidentified = naming.unidentified;
   data.system.price = { value: (base.system.price?.value ?? 0) + rules.price, denomination: "gp" };
   data.system.description = {
     ...(base.system.description ?? {}),
-    value: buildDescription(resolved, base.system.description?.value ?? "", data.system.attunement === "required"),
+    value: buildDescription(resolved, base.system.description?.value ?? "", data.system.attunement === "required",
+      naming.name !== descriptive ? descriptive : null),
   };
   data.flags = { [MODULE_ID]: { recipe: structuredClone(recipe) } };
-  return { data, errors, warnings };
+  return { data, errors, warnings, naming };
 }

@@ -74,7 +74,13 @@
       "Unlock": "Unlock",
       "RequiresAttunement": "requires attunement",
       "PreviewEmpty": "Roll, or add properties, to see the item here.",
-      "BuiltIn": "Built-in"
+      "BuiltIn": "Built-in",
+      "RerollName": "New name",
+      "UseTrueName": "Use the true name",
+      "UseDescriptiveName": "Use the descriptive name",
+      "EditName": "Type your own name",
+      "NameTools": "Name",
+      "UnidentifiedHint": "What players see before the item is identified"
     },
     "Folder": {
       "Name": "Procedural Magic Items"

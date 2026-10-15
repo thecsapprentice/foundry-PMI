@@ -193,7 +193,10 @@
      ]
     }
    ],
-   "text": "While attuned to this item, you have resistance to @damage damage."
+   "text": "While attuned to this item, you have resistance to @damage damage.",
+   "theme": "@damage",
+   "themeWeight": 2,
+   "menuLabel": "of Resistance (damage type)"
   },
   {
    "id": "featherlight",
@@ -228,7 +231,8 @@
     }
    ],
    "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much.",
-   "nameOrder": 2
+   "nameOrder": 2,
+   "theme": "grace"
   }
  ]
 }

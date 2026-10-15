@@ -1,5 +1,5 @@
 // The DM-guided builder. Drafts live only in this window until the DM clicks Create.
-import { MODULE_ID, RARITIES, SLOTS, BUILTIN_BASE_PREFIX } from "../config.mjs";
+import { MODULE_ID, RARITIES, SLOTS, BUILTIN_BASE_PREFIX, TRUE_NAME_MIN_RARITY } from "../config.mjs";
 import { newSeed, Rng } from "../generator/rng.mjs";
 import { randomBase, randomRarity } from "../generator/random.mjs";
 import { categorize, isMundane, appliesTo, kindOf } from "../generator/categories.mjs";
@@ -8,7 +8,7 @@ import {
 } from "../generator/roller.mjs";
 import { substitute, plain, spellSpecs } from "../generator/params.mjs";
 import { compile } from "../compiler/index.mjs";
-import { getChangeType, getProperty, listProperties, getBase, listBases } from "../api.mjs";
+import { getChangeType, getProperty, listProperties, getBase, listBases, getNames } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
 import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
 
@@ -41,6 +41,9 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       randomBase: PmiBuilder.#onRandomBase,
       randomRarity: PmiBuilder.#onRandomRarity,
       setRarity: PmiBuilder.#onSetRarity,
+      rerollName: PmiBuilder.#onRerollName,
+      toggleName: PmiBuilder.#onToggleName,
+      editName: PmiBuilder.#onEditName,
       lock: PmiBuilder.#onLock,
       reroll: PmiBuilder.#onReroll,
       rerollParams: PmiBuilder.#onRerollParams,
@@ -66,6 +69,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   #baseIndex = null;
   #spellPool = null;
   #busy = false;
+  #editingName = false;
+  #nameBeforeEdit = "";
   #dropBound = false;
 
   /**
@@ -169,6 +174,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       getDef: getProperty,
       getTranslator: getChangeType,
       localize: (k) => game.i18n.localize(k),
+      names: getNames(),
+      trueNameMinRarity: TRUE_NAME_MIN_RARITY,
     });
   }
 
@@ -210,12 +217,17 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells }) }))
       .filter((x) => !x.reason)
       .sort((a, b) => SLOTS.indexOf(a.d.slot) - SLOTS.indexOf(b.d.slot) || a.d.id.localeCompare(b.d.id))
-      .map(({ d }) => ({ id: d.id, label: `${String(d.label ?? d.name ?? d.id).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
+      .map(({ d }) => ({ id: d.id, label: `${d.menuLabel ?? String(d.label ?? d.name ?? d.id).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
       : [];
 
     // Nothing to preview or create until the item has at least one property.
     const compiled = this.recipe.picks.length ? this.#compile() : { data: null, errors: [], warnings: [] };
+    const naming = compiled.naming;
     const preview = compiled.data ? {
+      usesTrueName: !!naming?.usesTrueName,
+      canToggle: !!naming?.trueName && naming.trueName !== naming.descriptive,
+      toggleTooltip: naming?.usesTrueName ? L("PMI.Builder.UseDescriptiveName") : L("PMI.Builder.UseTrueName"),
+      unidentifiedName: compiled.data.system.unidentified?.name,
       rarityLabel: sentenceCase(L(CONFIG.DND5E?.itemRarity?.[this.recipe.rarity] ?? this.recipe.rarity)),
       name: compiled.data.name,
       img: compiled.data.img,
@@ -247,12 +259,33 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       warnings: compiled.warnings,
       canCreate: !!compiled.data && !this.#busy,
       busy: this.#busy,
+      editingName: this.#editingName && !!compiled.data,
     };
   }
 
   _onRender(context, options) {
     super._onRender(context, options);
     const el = this.element;
+    const nameInput = el.querySelector("input[name=customName]");
+    if (nameInput) {
+      nameInput.focus();
+      nameInput.select();
+      const commit = () => {
+        if (!this.#editingName) return;
+        this.#editingName = false;
+        const text = nameInput.value.trim();
+        const naming = this.#naming();
+        // Typing the generated name back (or clearing the field) returns to automatic naming.
+        naming.mode = text && text !== this.#nameBeforeEdit ? "custom" : "auto";
+        naming.custom = naming.mode === "custom" ? text : "";
+        this.render();
+      };
+      nameInput.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") { ev.preventDefault(); commit(); }
+        if (ev.key === "Escape") { ev.preventDefault(); this.#editingName = false; this.render(); }
+      });
+      nameInput.addEventListener("blur", commit);
+    }
     el.querySelector("select[name=base]")?.addEventListener("change", async (ev) => {
       await this.#setBase(ev.currentTarget.value || null, { quiet: false });
       this.render();
@@ -298,6 +331,35 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       return;
     }
     if (await this.#setBase(entry.uuid, { quiet: false })) this.render();
+  }
+
+  /** The recipe's naming state (recipes from before 0.8 have none). */
+  #naming() {
+    this.recipe.naming ??= { mode: "auto", custom: "", rerolls: 0 };
+    return this.recipe.naming;
+  }
+
+  static #onRerollName() {
+    const naming = this.#naming();
+    naming.rerolls = (naming.rerolls ?? 0) + 1;
+    // Rerolling asks for a true name, even on an item that would otherwise use its descriptive one.
+    naming.mode = "true";
+    naming.custom = "";
+    this.render();
+  }
+
+  static #onToggleName() {
+    const naming = this.#naming();
+    const usesTrue = this.#compile().naming?.usesTrueName;
+    naming.mode = usesTrue ? "descriptive" : "true";
+    naming.custom = "";
+    this.render();
+  }
+
+  static #onEditName() {
+    this.#nameBeforeEdit = this.#compile().naming?.name ?? "";
+    this.#editingName = true;
+    this.render();
   }
 
   static #onSetRarity(event, target) {

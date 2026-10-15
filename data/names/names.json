@@ -1,0 +1,1424 @@
+{
+ "$comment": "Vocabulary for true names and unidentified descriptions. Themes come from properties (their `theme` field); forms from what the item is; tongues build invented words.",
+ "themes": {
+  "fire": {
+   "roots": [
+    "Ember",
+    "Cinder",
+    "Pyre",
+    "Blaze",
+    "Flame",
+    "Ash"
+   ],
+   "figures": [
+    "Dragon's",
+    "Phoenix's",
+    "Forge's",
+    "Sun's"
+   ],
+   "singles": [
+    "Cinder",
+    "Ember",
+    "Pyre",
+    "Kindle"
+   ],
+   "looks": [
+    "Warm",
+    "Soot-Streaked",
+    "Ember-Bright"
+   ],
+   "auras": [
+    "warm to the touch, with a faint smell of smoke"
+   ]
+  },
+  "cold": {
+   "roots": [
+    "Rime",
+    "Frost",
+    "Ice",
+    "Hoar",
+    "Winter",
+    "Sleet"
+   ],
+   "figures": [
+    "Winter's",
+    "Glacier's",
+    "Frost Giant's"
+   ],
+   "singles": [
+    "Rime",
+    "Icicle",
+    "Hoarfrost"
+   ],
+   "looks": [
+    "Frost-Rimed",
+    "Chill",
+    "Pale"
+   ],
+   "auras": [
+    "cold to the touch, and its breath fogs the air"
+   ]
+  },
+  "lightning": {
+   "roots": [
+    "Storm",
+    "Spark",
+    "Bolt",
+    "Arc",
+    "Tempest"
+   ],
+   "figures": [
+    "Storm's",
+    "Tempest's",
+    "Sky's"
+   ],
+   "singles": [
+    "Spark",
+    "Thunderhead",
+    "Arc"
+   ],
+   "looks": [
+    "Crackling",
+    "Humming"
+   ],
+   "auras": [
+    "faintly crackling, and it makes your hair stand on end"
+   ]
+  },
+  "thunder": {
+   "roots": [
+    "Thunder",
+    "Boom",
+    "Roar",
+    "Peal"
+   ],
+   "figures": [
+    "Giant's",
+    "Storm's"
+   ],
+   "singles": [
+    "Clamor",
+    "Peal"
+   ],
+   "looks": [
+    "Thrumming",
+    "Resonant"
+   ],
+   "auras": [
+    "thrumming softly, like a distant drum"
+   ]
+  },
+  "acid": {
+   "roots": [
+    "Gall",
+    "Bile",
+    "Etch",
+    "Rot"
+   ],
+   "figures": [
+    "Wyrm's",
+    "Ooze's"
+   ],
+   "singles": [
+    "Gall",
+    "Caustic"
+   ],
+   "looks": [
+    "Pitted",
+    "Acrid"
+   ],
+   "auras": [
+    "pitted and etched, with an acrid smell"
+   ]
+  },
+  "radiant": {
+   "roots": [
+    "Dawn",
+    "Sun",
+    "Glory",
+    "Halo",
+    "Light"
+   ],
+   "figures": [
+    "Dawn's",
+    "Saint's",
+    "Angel's"
+   ],
+   "singles": [
+    "Dawn",
+    "Glimmer",
+    "Halo"
+   ],
+   "looks": [
+    "Gleaming",
+    "Glowing"
+   ],
+   "auras": [
+    "softly glowing, even in darkness"
+   ]
+  },
+  "necrotic": {
+   "roots": [
+    "Grave",
+    "Dusk",
+    "Wither",
+    "Bone",
+    "Doom"
+   ],
+   "figures": [
+    "Widow's",
+    "Lich's",
+    "Reaper's"
+   ],
+   "singles": [
+    "Dirge",
+    "Pall",
+    "Gravesend"
+   ],
+   "looks": [
+    "Ashen",
+    "Grave-Cold"
+   ],
+   "auras": [
+    "cold and lifeless, and flowers wilt near it"
+   ]
+  },
+  "poison": {
+   "roots": [
+    "Venom",
+    "Viper",
+    "Adder",
+    "Nettle"
+   ],
+   "figures": [
+    "Serpent's",
+    "Spider's",
+    "Asp's"
+   ],
+   "singles": [
+    "Sting",
+    "Adder",
+    "Nightshade"
+   ],
+   "looks": [
+    "Green-Tinged",
+    "Oily"
+   ],
+   "auras": [
+    "slick with a faint green sheen"
+   ]
+  },
+  "psychic": {
+   "roots": [
+    "Dream",
+    "Whisper",
+    "Mind",
+    "Madness"
+   ],
+   "figures": [
+    "Dreamer's",
+    "Madman's"
+   ],
+   "singles": [
+    "Whisper",
+    "Reverie",
+    "Lunacy"
+   ],
+   "looks": [
+    "Whispering",
+    "Uncanny"
+   ],
+   "auras": [
+    "murmuring at the edge of hearing"
+   ]
+  },
+  "force": {
+   "roots": [
+    "Will",
+    "Might",
+    "Titan",
+    "Star"
+   ],
+   "figures": [
+    "Titan's",
+    "Wizard's"
+   ],
+   "singles": [
+    "Resolve",
+    "Starfall"
+   ],
+   "looks": [
+    "Shimmering",
+    "Rune-Etched"
+   ],
+   "auras": [
+    "shimmering faintly, as if seen through heat haze"
+   ]
+  },
+  "keen": {
+   "roots": [
+    "Razor",
+    "Keen",
+    "Hair"
+   ],
+   "figures": [
+    "Duelist's",
+    "Executioner's"
+   ],
+   "singles": [
+    "Needle",
+    "Sliver",
+    "Whisker"
+   ],
+   "looks": [
+    "Razor-Edged",
+    "Gleaming"
+   ],
+   "auras": [
+    "impossibly sharp"
+   ]
+  },
+  "cruel": {
+   "roots": [
+    "Gore",
+    "Grim",
+    "Cruel",
+    "Red"
+   ],
+   "figures": [
+    "Butcher's",
+    "Wolf's"
+   ],
+   "singles": [
+    "Ripper",
+    "Gash"
+   ],
+   "looks": [
+    "Cruel",
+    "Barbed"
+   ],
+   "auras": [
+    "with a subtle aura of menace"
+   ]
+  },
+  "sure": {
+   "roots": [
+    "True",
+    "Sure",
+    "Straight"
+   ],
+   "figures": [
+    "Hunter's",
+    "Archer's"
+   ],
+   "singles": [
+    "Truth",
+    "Bullseye"
+   ],
+   "looks": [
+    "Balanced",
+    "Well-Made"
+   ],
+   "auras": [
+    "perfectly balanced in the hand"
+   ]
+  },
+  "watch": {
+   "roots": [
+    "Watch",
+    "Wake",
+    "Vigil"
+   ],
+   "figures": [
+    "Sentinel's",
+    "Watchman's"
+   ],
+   "singles": [
+    "Vigil",
+    "Wakeful"
+   ],
+   "looks": [
+    "Watchful",
+    "Eye-Engraved"
+   ],
+   "auras": [
+    "engraved with a single open eye"
+   ]
+  },
+  "fear": {
+   "roots": [
+    "Dread",
+    "Fear",
+    "Terror"
+   ],
+   "figures": [
+    "Nightmare's",
+    "Tyrant's"
+   ],
+   "singles": [
+    "Dread",
+    "Horror"
+   ],
+   "looks": [
+    "Menacing",
+    "Dark"
+   ],
+   "auras": [
+    "with a subtle aura of menace"
+   ]
+  },
+  "chain": {
+   "roots": [
+    "Chain",
+    "Bind",
+    "Shackle"
+   ],
+   "figures": [
+    "Jailer's",
+    "Warden's"
+   ],
+   "singles": [
+    "Shackle",
+    "Fetter"
+   ],
+   "looks": [
+    "Chain-Wrapped",
+    "Heavy"
+   ],
+   "auras": [
+    "wrapped in a fine, unbreakable chain"
+   ]
+  },
+  "guard": {
+   "roots": [
+    "Haven",
+    "Ward",
+    "Bastion",
+    "Aegis"
+   ],
+   "figures": [
+    "Warden's",
+    "Paladin's",
+    "Sentinel's"
+   ],
+   "singles": [
+    "Bastion",
+    "Haven"
+   ],
+   "looks": [
+    "Sturdy",
+    "Rune-Warded"
+   ],
+   "auras": [
+    "inscribed with protective runes"
+   ]
+  },
+  "swift": {
+   "roots": [
+    "Swift",
+    "Wind",
+    "Gale",
+    "Fleet"
+   ],
+   "figures": [
+    "Wind's",
+    "Hare's",
+    "Messenger's"
+   ],
+   "singles": [
+    "Zephyr",
+    "Gust"
+   ],
+   "looks": [
+    "Wind-Worn",
+    "Feather-Light"
+   ],
+   "auras": [
+    "light as a feather"
+   ]
+  },
+  "flight": {
+   "roots": [
+    "Wing",
+    "Sky",
+    "Cloud",
+    "Hawk"
+   ],
+   "figures": [
+    "Eagle's",
+    "Roc's"
+   ],
+   "singles": [
+    "Skylark",
+    "Updraft"
+   ],
+   "looks": [
+    "Feathered",
+    "Airy"
+   ],
+   "auras": [
+    "trimmed with feathers that stir without a breeze"
+   ]
+  },
+  "shadow": {
+   "roots": [
+    "Shade",
+    "Ghost",
+    "Mist",
+    "Shadow"
+   ],
+   "figures": [
+    "Phantom's",
+    "Thief's"
+   ],
+   "singles": [
+    "Wisp",
+    "Nobody"
+   ],
+   "looks": [
+    "Shadowy",
+    "Dim"
+   ],
+   "auras": [
+    "hard to look at directly, as if it slips from sight"
+   ]
+  },
+  "night": {
+   "roots": [
+    "Night",
+    "Gloam",
+    "Moon",
+    "Owl"
+   ],
+   "figures": [
+    "Moon's",
+    "Owl's"
+   ],
+   "singles": [
+    "Gloaming",
+    "Nightfall"
+   ],
+   "looks": [
+    "Moonlit",
+    "Dusky"
+   ],
+   "auras": [
+    "catching moonlight that isn't there"
+   ]
+  },
+  "life": {
+   "roots": [
+    "Life",
+    "Bloom",
+    "Heart",
+    "Mend"
+   ],
+   "figures": [
+    "Healer's",
+    "Mother's"
+   ],
+   "singles": [
+    "Mercy",
+    "Bloom"
+   ],
+   "looks": [
+    "Warm",
+    "Verdant"
+   ],
+   "auras": [
+    "faintly warm, like something living"
+   ]
+  },
+  "strength": {
+   "roots": [
+    "Giant",
+    "Titan",
+    "Ox",
+    "Bull"
+   ],
+   "figures": [
+    "Giant's",
+    "Titan's"
+   ],
+   "singles": [
+    "Mountain",
+    "Brawn"
+   ],
+   "looks": [
+    "Massive",
+    "Heavy"
+   ],
+   "auras": [
+    "heavier than it should be"
+   ]
+  },
+  "grace": {
+   "roots": [
+    "Cat",
+    "Silk",
+    "Quick"
+   ],
+   "figures": [
+    "Dancer's",
+    "Cat's"
+   ],
+   "singles": [
+    "Silk",
+    "Pounce"
+   ],
+   "looks": [
+    "Elegant",
+    "Supple"
+   ],
+   "auras": [
+    "elegant and supple"
+   ]
+  },
+  "endurance": {
+   "roots": [
+    "Oak",
+    "Stone",
+    "Iron"
+   ],
+   "figures": [
+    "Mountain's",
+    "Oak's"
+   ],
+   "singles": [
+    "Bedrock",
+    "Ironroot"
+   ],
+   "looks": [
+    "Weathered",
+    "Sturdy"
+   ],
+   "auras": [
+    "unmarked by age or wear"
+   ]
+  },
+  "mind": {
+   "roots": [
+    "Sage",
+    "Lore",
+    "Rune"
+   ],
+   "figures": [
+    "Sage's",
+    "Scholar's"
+   ],
+   "singles": [
+    "Insight",
+    "Lorekeeper"
+   ],
+   "looks": [
+    "Rune-Etched",
+    "Inscribed"
+   ],
+   "auras": [
+    "covered in tiny, shifting script"
+   ]
+  },
+  "wisdom": {
+   "roots": [
+    "Owl",
+    "Seer",
+    "Star"
+   ],
+   "figures": [
+    "Hermit's",
+    "Seer's"
+   ],
+   "singles": [
+    "Clarity",
+    "Omen"
+   ],
+   "looks": [
+    "Serene",
+    "Plain"
+   ],
+   "auras": [
+    "calming to hold"
+   ]
+  },
+  "presence": {
+   "roots": [
+    "Crown",
+    "Silver",
+    "Golden"
+   ],
+   "figures": [
+    "Queen's",
+    "Herald's"
+   ],
+   "singles": [
+    "Sovereign",
+    "Glamour"
+   ],
+   "looks": [
+    "Gilded",
+    "Ornate"
+   ],
+   "auras": [
+    "drawing every eye in the room"
+   ]
+  },
+  "sea": {
+   "roots": [
+    "Tide",
+    "Wave",
+    "Brine",
+    "Kelp"
+   ],
+   "figures": [
+    "Mariner's",
+    "Kraken's"
+   ],
+   "singles": [
+    "Undertow",
+    "Riptide"
+   ],
+   "looks": [
+    "Salt-Stained",
+    "Pearlescent"
+   ],
+   "auras": [
+    "smelling faintly of the sea"
+   ]
+  },
+  "spider": {
+   "roots": [
+    "Spider",
+    "Web",
+    "Silk"
+   ],
+   "figures": [
+    "Spider's",
+    "Weaver's"
+   ],
+   "singles": [
+    "Silkthread",
+    "Cobweb"
+   ],
+   "looks": [
+    "Web-Patterned",
+    "Clinging"
+   ],
+   "auras": [
+    "tacky to the touch, like spider silk"
+   ]
+  },
+  "hero": {
+   "roots": [
+    "Oath",
+    "Fate",
+    "Hope",
+    "Bright",
+    "King"
+   ],
+   "figures": [
+    "Hero's",
+    "King's",
+    "Champion's"
+   ],
+   "singles": [
+    "Oath",
+    "Valor",
+    "Resolve"
+   ],
+   "looks": [
+    "Fine",
+    "Ornate",
+    "Engraved"
+   ],
+   "auras": [
+    "finely made, with a faint magical aura"
+   ]
+  },
+  "abj": {
+   "roots": [
+    "Ward",
+    "Seal",
+    "Bastion"
+   ],
+   "figures": [
+    "Warden's",
+    "Abjurer's"
+   ],
+   "singles": [
+    "Sanctum",
+    "Bulwark"
+   ],
+   "looks": [
+    "Sigil-Carved",
+    "Warded"
+   ],
+   "auras": [
+    "carved with warding sigils"
+   ]
+  },
+  "con": {
+   "roots": [
+    "Gate",
+    "Summon",
+    "Path"
+   ],
+   "figures": [
+    "Summoner's",
+    "Traveller's"
+   ],
+   "singles": [
+    "Threshold",
+    "Waygate"
+   ],
+   "looks": [
+    "Rune-Ringed",
+    "Strange"
+   ],
+   "auras": [
+    "slightly out of place wherever it is"
+   ]
+  },
+  "div": {
+   "roots": [
+    "Seer",
+    "Eye",
+    "Omen"
+   ],
+   "figures": [
+    "Oracle's",
+    "Seer's"
+   ],
+   "singles": [
+    "Foresight",
+    "Omen"
+   ],
+   "looks": [
+    "Eye-Set",
+    "Clouded"
+   ],
+   "auras": [
+    "set with a clouded crystal"
+   ]
+  },
+  "enc": {
+   "roots": [
+    "Siren",
+    "Charm",
+    "Velvet"
+   ],
+   "figures": [
+    "Siren's",
+    "Courtier's"
+   ],
+   "singles": [
+    "Allure",
+    "Lullaby"
+   ],
+   "looks": [
+    "Lovely",
+    "Charming"
+   ],
+   "auras": [
+    "strangely hard to put down"
+   ]
+  },
+  "evo": {
+   "roots": [
+    "Storm",
+    "Blaze",
+    "Star"
+   ],
+   "figures": [
+    "Archmage's",
+    "Storm's"
+   ],
+   "singles": [
+    "Starfire",
+    "Cataclysm"
+   ],
+   "looks": [
+    "Scorched",
+    "Charged"
+   ],
+   "auras": [
+    "scorched at the tip, and humming with power"
+   ]
+  },
+  "ill": {
+   "roots": [
+    "Mirage",
+    "Glamour",
+    "Mirror"
+   ],
+   "figures": [
+    "Trickster's",
+    "Jester's"
+   ],
+   "singles": [
+    "Mirage",
+    "Phantasm"
+   ],
+   "looks": [
+    "Iridescent",
+    "Shifting"
+   ],
+   "auras": [
+    "shifting colour as you watch"
+   ]
+  },
+  "nec": {
+   "roots": [
+    "Grave",
+    "Bone",
+    "Dusk"
+   ],
+   "figures": [
+    "Lich's",
+    "Widow's"
+   ],
+   "singles": [
+    "Gravesend",
+    "Requiem"
+   ],
+   "looks": [
+    "Bone-Carved",
+    "Grave-Cold"
+   ],
+   "auras": [
+    "carved from something that was once alive"
+   ]
+  },
+  "trs": {
+   "roots": [
+    "Quicksilver",
+    "Change",
+    "Alchemy"
+   ],
+   "figures": [
+    "Alchemist's",
+    "Shaper's"
+   ],
+   "singles": [
+    "Quicksilver",
+    "Metamorph"
+   ],
+   "looks": [
+    "Mercurial",
+    "Shimmering"
+   ],
+   "auras": [
+    "never quite the same shape twice"
+   ]
+  },
+  "word": {
+   "roots": [
+    "Word",
+    "Rune",
+    "Spell",
+    "Star"
+   ],
+   "figures": [
+    "Archmage's",
+    "Witch's",
+    "Wizard's"
+   ],
+   "singles": [
+    "Cantrip",
+    "Starlight"
+   ],
+   "looks": [
+    "Rune-Etched",
+    "Arcane"
+   ],
+   "auras": [
+    "humming with arcane power"
+   ]
+  }
+ },
+ "forms": {
+  "blade": {
+   "suffixes": [
+    "fang",
+    "brand",
+    "edge",
+    "bite",
+    "song",
+    "thorn"
+   ],
+   "nouns": [
+    "Edge",
+    "Fang",
+    "Bite",
+    "Kiss",
+    "Thorn",
+    "Song"
+   ]
+  },
+  "axe": {
+   "suffixes": [
+    "cleaver",
+    "bite",
+    "reaver",
+    "hewer",
+    "splitter"
+   ],
+   "nouns": [
+    "Bite",
+    "Cleaver",
+    "Hunger",
+    "Harvest"
+   ]
+  },
+  "blunt": {
+   "suffixes": [
+    "breaker",
+    "hammer",
+    "fist",
+    "crusher",
+    "maul"
+   ],
+   "nouns": [
+    "Fist",
+    "Wrath",
+    "Knell",
+    "Judgement"
+   ]
+  },
+  "polearm": {
+   "suffixes": [
+    "thorn",
+    "reach",
+    "lance",
+    "tooth",
+    "sting"
+   ],
+   "nouns": [
+    "Reach",
+    "Thorn",
+    "Tooth",
+    "Spite"
+   ]
+  },
+  "bow": {
+   "suffixes": [
+    "string",
+    "flight",
+    "shot",
+    "song",
+    "wing"
+   ],
+   "nouns": [
+    "Reach",
+    "Whistle",
+    "Aim",
+    "Flight"
+   ]
+  },
+  "armor": {
+   "suffixes": [
+    "ward",
+    "mail",
+    "shell",
+    "hide",
+    "coat"
+   ],
+   "nouns": [
+    "Ward",
+    "Embrace",
+    "Bulwark",
+    "Shell",
+    "Coat"
+   ]
+  },
+  "shield": {
+   "suffixes": [
+    "wall",
+    "ward",
+    "guard"
+   ],
+   "nouns": [
+    "Wall",
+    "Bulwark",
+    "Ward",
+    "Promise"
+   ]
+  },
+  "staff": {
+   "suffixes": [
+    "staff",
+    "weaver",
+    "caller",
+    "root"
+   ],
+   "nouns": [
+    "Staff",
+    "Word",
+    "Will",
+    "Root"
+   ]
+  },
+  "wand": {
+   "suffixes": [
+    "spark",
+    "caller",
+    "whisper",
+    "weaver"
+   ],
+   "nouns": [
+    "Word",
+    "Spark",
+    "Whisper",
+    "Finger"
+   ]
+  },
+  "rod": {
+   "suffixes": [
+    "scepter",
+    "rule",
+    "caller"
+   ],
+   "nouns": [
+    "Rule",
+    "Scepter",
+    "Command"
+   ]
+  },
+  "ring": {
+   "suffixes": [
+    "band",
+    "loop",
+    "seal"
+   ],
+   "nouns": [
+    "Promise",
+    "Seal",
+    "Circle",
+    "Oath"
+   ]
+  },
+  "neck": {
+   "suffixes": [
+    "heart",
+    "eye",
+    "tear",
+    "star"
+   ],
+   "nouns": [
+    "Heart",
+    "Tear",
+    "Eye",
+    "Star"
+   ]
+  },
+  "cloak": {
+   "suffixes": [
+    "veil",
+    "shroud",
+    "mantle",
+    "wing",
+    "cowl"
+   ],
+   "nouns": [
+    "Mantle",
+    "Veil",
+    "Shroud",
+    "Embrace"
+   ]
+  },
+  "feet": {
+   "suffixes": [
+    "strider",
+    "step",
+    "walker",
+    "runner"
+   ],
+   "nouns": [
+    "Stride",
+    "Path",
+    "Step",
+    "Road"
+   ]
+  },
+  "hands": {
+   "suffixes": [
+    "grip",
+    "hand",
+    "fist",
+    "touch",
+    "grasp"
+   ],
+   "nouns": [
+    "Grasp",
+    "Touch",
+    "Hand"
+   ]
+  },
+  "waist": {
+   "suffixes": [
+    "girdle",
+    "cinch",
+    "belt"
+   ],
+   "nouns": [
+    "Girdle",
+    "Cinch",
+    "Strength"
+   ]
+  },
+  "wrists": {
+   "suffixes": [
+    "guard",
+    "bracer",
+    "band"
+   ],
+   "nouns": [
+    "Guard",
+    "Bracers",
+    "Vow"
+   ]
+  },
+  "head": {
+   "suffixes": [
+    "crown",
+    "halo",
+    "brow",
+    "diadem"
+   ],
+   "nouns": [
+    "Crown",
+    "Halo",
+    "Sight",
+    "Thought"
+   ]
+  }
+ },
+ "tongues": {
+  "elvish": {
+   "starts": [
+    "Cal",
+    "Nar",
+    "Gil",
+    "Aer",
+    "Ith",
+    "Mor",
+    "Tal",
+    "Fin",
+    "Gal",
+    "Hith",
+    "Lin",
+    "Mith",
+    "Ril",
+    "Sil",
+    "Thal",
+    "Ear",
+    "Elen",
+    "Glor",
+    "Loth",
+    "Nim",
+    "Cel",
+    "Naur",
+    "Aeg",
+    "Faen"
+   ],
+   "middles": [
+    "an",
+    "en",
+    "ir",
+    "or",
+    "ath",
+    "ael",
+    "ui",
+    "ia",
+    "ad",
+    "ol",
+    "e"
+   ],
+   "ends": [
+    "dil",
+    "mir",
+    "thel",
+    "ion",
+    "las",
+    "wen",
+    "ril",
+    "ras",
+    "dor",
+    "nar",
+    "iel",
+    "eth",
+    "gond",
+    "rist",
+    "ring",
+    "los",
+    "dhel",
+    "vain"
+   ]
+  },
+  "dwarvish": {
+   "starts": [
+    "Bar",
+    "Dur",
+    "Kha",
+    "Gor",
+    "Thra",
+    "Bal",
+    "Az",
+    "Gund",
+    "Kar",
+    "Mor",
+    "Dum",
+    "Thor",
+    "Grim",
+    "Brok",
+    "Khel",
+    "Rag",
+    "Thun"
+   ],
+   "middles": [
+    "ak",
+    "um",
+    "az",
+    "ar",
+    "un",
+    "ek",
+    "ad"
+   ],
+   "ends": [
+    "dun",
+    "grim",
+    "zul",
+    "rak",
+    "nar",
+    "dum",
+    "bek",
+    "goth",
+    "run",
+    "dek",
+    "mok",
+    "barak",
+    "zan"
+   ]
+  },
+  "draconic": {
+   "starts": [
+    "Vor",
+    "Ix",
+    "Thar",
+    "Sva",
+    "Kryx",
+    "Ur",
+    "Zor",
+    "Ath",
+    "Veth",
+    "Sar",
+    "Xal",
+    "Ghor",
+    "Rha"
+   ],
+   "middles": [
+    "a",
+    "ix",
+    "or",
+    "ae",
+    "yr",
+    "os"
+   ],
+   "ends": [
+    "ax",
+    "thrax",
+    "ion",
+    "yss",
+    "arn",
+    "oth",
+    "ix",
+    "ul",
+    "esh",
+    "iros"
+   ]
+  },
+  "heroic": {
+   "starts": [
+    "Cal",
+    "Dur",
+    "Aur",
+    "Lux",
+    "Ver",
+    "Sol",
+    "Mor",
+    "Vael",
+    "Ser",
+    "Arn",
+    "Hal",
+    "Bel",
+    "Cor",
+    "Gal"
+   ],
+   "middles": [
+    "en",
+    "an",
+    "or",
+    "i",
+    "a",
+    "on"
+   ],
+   "ends": [
+    "endal",
+    "ibur",
+    "andis",
+    "orin",
+    "ana",
+    "eon",
+    "ius",
+    "ara",
+    "ellan",
+    "ador",
+    "ithe",
+    "iel"
+   ]
+  }
+ },
+ "tongueWeights": {
+  "default": {
+   "elvish": 4,
+   "dwarvish": 2,
+   "draconic": 2,
+   "heroic": 3
+  },
+  "axe": {
+   "dwarvish": 6,
+   "heroic": 2,
+   "draconic": 2,
+   "elvish": 1
+  },
+  "blunt": {
+   "dwarvish": 6,
+   "heroic": 2,
+   "draconic": 2,
+   "elvish": 1
+  },
+  "armor": {
+   "dwarvish": 5,
+   "heroic": 3,
+   "elvish": 2,
+   "draconic": 1
+  },
+  "bow": {
+   "elvish": 6,
+   "heroic": 2,
+   "draconic": 1,
+   "dwarvish": 1
+  },
+  "cloak": {
+   "elvish": 6,
+   "heroic": 2,
+   "draconic": 1,
+   "dwarvish": 1
+  },
+  "fire": {
+   "draconic": 5,
+   "dwarvish": 2,
+   "elvish": 2,
+   "heroic": 2
+  }
+ }
+}

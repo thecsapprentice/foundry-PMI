@@ -72,6 +72,9 @@ export const IDENTIFIER_CATEGORIES = {
   circlet: ["worn", "head"], headband: ["worn", "head"],
 };
 
+/** Items of this rarity and up get a true name ("Emberfang") instead of the descriptive one, unless the DM chooses. */
+export const TRUE_NAME_MIN_RARITY = "rare";
+
 /** UUID-like prefix for PMI's built-in base items (they live in data/bases/, not in a compendium). */
 export const BUILTIN_BASE_PREFIX = "pmi-base:";
 

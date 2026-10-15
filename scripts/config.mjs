@@ -22,8 +22,8 @@ export const RARITY_RULES = {
 };
 
 /** Property slots, in the order names are built, with how many of each one item may have. */
-export const SLOTS = ["enhancement", "prefix", "suffix", "spell"];
-export const SLOT_LIMITS = { enhancement: 1, prefix: 2, suffix: 1, spell: 3 };
+export const SLOTS = ["enhancement", "prefix", "suffix", "spell", "persona"];
+export const SLOT_LIMITS = { enhancement: 1, prefix: 2, suffix: 1, spell: 3, persona: 1 };
 
 /** Item types the generator supports so far. */
 export const SUPPORTED_ITEM_TYPES = ["weapon", "equipment"];

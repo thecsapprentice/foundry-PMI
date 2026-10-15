@@ -110,6 +110,7 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
     value: buildDescription(resolved, base.system.description?.value ?? "", data.system.attunement === "required",
       naming.name !== descriptive ? descriptive : null),
   };
-  data.flags = { [MODULE_ID]: { recipe: structuredClone(recipe) } };
+  // Keep anything translators recorded (such as triggers) alongside the recipe.
+  data.flags = { [MODULE_ID]: { ...(data.flags?.[MODULE_ID] ?? {}), recipe: structuredClone(recipe) } };
   return { data, errors, warnings, naming };
 }

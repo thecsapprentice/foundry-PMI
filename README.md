@@ -27,6 +27,12 @@ https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json
 
 **True names.** Rare and rarer items get a true name drawn from their strongest property and what they are: *Duskbite* (a necrotic longsword), *Updraft* (winged boots), *Giant's Edge*, and at very rare and legendary, an invented word with an epithet such as *Veribur, the Graveroot*. The full descriptive name (*Withering Longsword +1*) leads the item's description. Beside the name in the preview, the dice rolls a new name, the tag switches between the true and descriptive names, and the pen lets you type your own. Before an item is identified, players see a hint of it instead, such as *Frost-Rimed Longsword* or *Longsword with a subtle aura of menace*. Name vocabulary lives in `data/names/names.json`.
 
+**Triggers.** Some weapon properties happen by themselves in play. On a critical hit: *of Staggering* (Con save or stunned), *Blinding* (Con save or blinded), *Bloodthirsty* (temporary HP). On a kill: *Reaping* (heal), *Exultant* (+2 to hit and +10 ft. speed until your next turn), *Hungering* (regain a charge). Each is a normal dnd5e activity on the item, marked *Special* with its condition written on it. PMI uses it automatically when the event happens, which posts dnd5e's usual chat card, and you apply damage, healing or conditions with dnd5e's own buttons. Kills are counted when damage is applied with dnd5e's apply-damage buttons on the weapon's own damage roll, and need libWrapper. Without PMI, players can still use these activities by hand.
+
+**Sapient weapons.** Very rare and legendary weapons can roll *Sapient*: a personality, a voice, a quirk, an alignment, mental scores and a purpose (*Slay every elf it meets*, *Destroy every chest it finds*, …). Very rare weapons communicate by empathy; legendary ones speak and see in the dark. When the weapon's desires conflict with its wielder's, its *Conflict of Wills* activity calls for a Wisdom save against the item's DC.
+
+**Unidentified items.** The *Created identified* button above *Create item* switches to *Created unidentified*, so players see only the item's plain look until you identify it.
+
 **Wands, staves and rods** get spells they can cast from charges, using dnd5e's own Cast activity: the spell is cast at a fixed save DC and attack bonus set by the item's rarity, without components, and each extra charge raises its level. The item's charge pool follows the DMG: wands hold 7 charges and regain 1d6 + 1 at dawn, staves 10 and regain 1d6 + 4. A wand spends 1 charge per spell; a staff or rod spends charges equal to the spell's level. Staves are also quarterstaffs, so they can roll weapon properties too.
 
 **Worn wondrous items** start from PMI's own built-in bases (ring, amulet, cloak, boots, gloves, belt, bracers, circlet, plus a wand and a rod), which are always in the base list. They can roll save bonuses, resistances, speed, darkvision, protection, advantage on a skill, a set ability score (like a belt of giant strength), spells cast from charges, and once-a-day powers such as flight, invisibility or a ward. A power is a normal dnd5e activity on the item: the wearer uses it, and the effect it applies to them lasts its set time. Properties favour fitting slots, so boots roll speed and flight more often than rings do. Mundane rings, amulets and the like from your own compendiums work too, when dnd5e's identifier says what they are.
@@ -46,9 +52,11 @@ PMI only changes what's listed here. It uses Foundry's normal document API, so e
 | **New items** | A GM clicks *Create item* | One new item, after it passes dnd5e's data validation. Default ownership is **None**, so players can't see it until you share it. It carries its recipe in `flags.foundry-pmi.recipe`. |
 | **World setting** `foundry-pmi.basePacks` | A GM saves *Base item sources* | The list of compendium ids the builder offers bases from. |
 | **World setting** `foundry-pmi.spellPacks` | A GM saves *Spell sources* | The list of compendium ids spell properties pick from. |
+| **Chat messages** | A trigger fires in play | PMI's own message when *Hungering* restores charges. Other triggers use dnd5e's own chat cards. |
+| **A PMI item's charges** | A *Hungering* weapon gets a kill | That item's own spent charges go down. PMI never applies damage, healing or conditions itself: people do, with dnd5e's buttons. |
 | **PMI's folder** | The first *Create item* | One Item folder, *Procedural Magic Items*, marked with `flags.foundry-pmi.generated`. PMI finds it by that flag, never by name, so renaming it is fine. |
 
-PMI never edits or deletes existing items (including the ones it made), actors, scenes, journals, tables, macros or folders, and never changes permissions. Players can't open the builder.
+Apart from restoring a PMI item's own charges, PMI never edits or deletes existing items, actors, scenes, journals, tables, macros or folders, and never changes permissions. Players can't open the builder.
 
 **Disabling the module.** Generated items are ordinary dnd5e items: magical bonuses, attack activities with extra damage, save activities, charges and Active Effects all keep working without PMI. Only the builder and the right-click entry go away.
 
@@ -62,7 +70,7 @@ A parameter can roll a spell: `{ "spell": { "minLevel": 3, "maxLevel": 3, "schoo
 
 Built-in bases live in `data/bases/builtin.json`.
 
-Change types so far: `magicalBonus`, `itemField`, `activityDamage`, `attackCritical`, `attackBonus`, `effect`, `activate`, `healActivity`, `uses`, `usesBonus`, `saveActivity` (damage and/or a condition on a failed save, optionally once per day) and `castSpell` (0 charges for at-will cantrips). Other modules can add bases, properties and change types through `game.modules.get("foundry-pmi").api` in the `foundry-pmi.ready` hook.
+Change types so far: `magicalBonus`, `itemField`, `activityDamage`, `attackCritical`, `attackBonus`, `effect`, `activate`, `healActivity`, `trigger` (on `crit` or `kill`: a Special activity PMI uses automatically, or `restoreCharges`), `uses`, `usesBonus`, `saveActivity` (damage and/or a condition on a failed save, optionally once per day) and `castSpell` (0 charges for at-will cantrips). Other modules can add bases, properties and change types through `game.modules.get("foundry-pmi").api` in the `foundry-pmi.ready` hook.
 
 | Rarity | Budget | Max properties | Save DC |
 |---|---|---|---|

@@ -5,6 +5,7 @@ import { PmiBuilder } from "./apps/builder.mjs";
 import { registerBuiltinChangeTypes, loadBuiltinProperties } from "./registry/load.mjs";
 import { isPmiItem } from "./util.mjs";
 import { registerSettings } from "./settings.mjs";
+import { registerTriggers } from "./runtime/triggers.mjs";
 
 Hooks.once("init", () => {
   registerSettings({
@@ -32,6 +33,7 @@ Hooks.once("ready", async () => {
       ui.notifications.warn(game.i18n.localize("PMI.Errors.StaleStyles"), { permanent: true });
     }
   }
+  registerTriggers();
   const { added, errors } = await loadBuiltinProperties();
   if (errors.length) {
     console.warn(`${MODULE_ID} | Property problems:\n${errors.join("\n")}`);

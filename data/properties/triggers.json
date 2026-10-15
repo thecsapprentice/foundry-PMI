@@ -1,0 +1,241 @@
+{
+ "$comment": "Tier 3: properties PMI triggers automatically in play (crit, kill). Each also works by hand without PMI.",
+ "properties": [
+  {
+   "id": "of-staggering",
+   "slot": "suffix",
+   "label": "of Staggering (crit: stun)",
+   "name": "of Staggering",
+   "menuLabel": "of Staggering (on a crit)",
+   "cost": 3,
+   "weight": 3,
+   "appliesTo": [
+    "weapon.melee"
+   ],
+   "minRarity": "rare",
+   "theme": "thunder",
+   "themeWeight": 2,
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "crit",
+     "do": {
+      "type": "saveActivity",
+      "name": "Staggering Blow",
+      "ability": [
+       "con"
+      ],
+      "dc": "@dc",
+      "range": {
+       "value": 5,
+       "units": "ft"
+      },
+      "target": {
+       "type": "creature",
+       "count": 1
+      },
+      "statuses": [
+       "stunned"
+      ],
+      "duration": {
+       "value": 1,
+       "units": "round"
+      }
+     }
+    }
+   ],
+   "text": "When you score a critical hit with this weapon, the target must succeed on a [[/save con @dc]] saving throw or be stunned until the end of your next turn."
+  },
+  {
+   "id": "blinding",
+   "slot": "prefix",
+   "label": "Blinding (crit: blind)",
+   "name": "Blinding",
+   "menuLabel": "Blinding (on a crit)",
+   "cost": 2,
+   "weight": 3,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "rare",
+   "theme": "radiant",
+   "themeWeight": 2,
+   "nameOrder": 2,
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "crit",
+     "do": {
+      "type": "saveActivity",
+      "name": "Blinding Flash",
+      "ability": [
+       "con"
+      ],
+      "dc": "@dc",
+      "range": {
+       "value": 5,
+       "units": "ft"
+      },
+      "target": {
+       "type": "creature",
+       "count": 1
+      },
+      "statuses": [
+       "blinded"
+      ],
+      "duration": {
+       "value": 1,
+       "units": "round"
+      }
+     }
+    }
+   ],
+   "text": "When you score a critical hit with this weapon, it flares with light: the target must succeed on a [[/save con @dc]] saving throw or be blinded until the end of your next turn."
+  },
+  {
+   "id": "bloodthirsty",
+   "slot": "prefix",
+   "label": "Bloodthirsty (crit: @thp temp HP)",
+   "name": "Bloodthirsty",
+   "menuLabel": "Bloodthirsty (on a crit)",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "uncommon",
+   "theme": "cruel",
+   "themeWeight": 2,
+   "params": {
+    "thp": {
+     "byRarity": {
+      "uncommon": "2d6",
+      "rare": "3d6",
+      "veryRare": "4d6"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "crit",
+     "do": {
+      "type": "healActivity",
+      "name": "Blood Rush",
+      "formula": "@thp",
+      "healType": "temphp"
+     }
+    }
+   ],
+   "text": "When you score a critical hit with this weapon, you gain [[/heal @thp temp]] temporary hit points."
+  },
+  {
+   "id": "reaping",
+   "slot": "prefix",
+   "label": "Reaping (kill: heal @heal)",
+   "name": "Reaping",
+   "menuLabel": "Reaping (on a kill)",
+   "cost": 3,
+   "weight": 3,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "rare",
+   "theme": "necrotic",
+   "themeWeight": 3,
+   "params": {
+    "heal": {
+     "byRarity": {
+      "rare": "2d8",
+      "veryRare": "3d8",
+      "legendary": "4d8"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "kill",
+     "do": {
+      "type": "healActivity",
+      "name": "Reap",
+      "formula": "@heal",
+      "healType": "healing"
+     }
+    }
+   ],
+   "text": "When you reduce a creature to 0 hit points with this weapon, you regain [[/heal @heal]] hit points."
+  },
+  {
+   "id": "exultant",
+   "slot": "prefix",
+   "label": "Exultant (kill: +2 to hit, +10 ft.)",
+   "name": "Exultant",
+   "menuLabel": "Exultant (on a kill)",
+   "cost": 2,
+   "weight": 3,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "uncommon",
+   "theme": "hero",
+   "themeWeight": 1,
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "kill",
+     "do": {
+      "type": "activate",
+      "name": "Exultation",
+      "duration": {
+       "value": 1,
+       "units": "round"
+      },
+      "changes": [
+       {
+        "key": "system.bonuses.mwak.attack",
+        "mode": "add",
+        "value": "+2"
+       },
+       {
+        "key": "system.bonuses.rwak.attack",
+        "mode": "add",
+        "value": "+2"
+       },
+       {
+        "key": "system.attributes.movement.walk",
+        "mode": "add",
+        "value": 10
+       }
+      ]
+     }
+    }
+   ],
+   "text": "When you reduce a creature to 0 hit points with this weapon, you gain a +2 bonus to weapon attack rolls and your walking speed increases by 10 feet until the end of your next turn."
+  },
+  {
+   "id": "hungering",
+   "slot": "prefix",
+   "label": "Hungering (kill: regain a charge)",
+   "name": "Hungering",
+   "menuLabel": "Hungering (on a kill, regain a charge)",
+   "cost": 1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "rare",
+   "requiresCharges": true,
+   "theme": "necrotic",
+   "themeWeight": 1,
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "kill",
+     "restoreCharges": 1
+    }
+   ],
+   "text": "When you reduce a creature to 0 hit points with this weapon, it regains 1 expended charge."
+  }
+ ]
+}

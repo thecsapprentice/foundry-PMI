@@ -93,7 +93,8 @@
       "enhancement": "Enhancement",
       "prefix": "Prefix",
       "suffix": "Suffix",
-      "spell": "Spell"
+      "spell": "Spell",
+      "persona": "Sapience"
     },
     "Reason": {
       "category": "Doesn't apply to this base item.",
@@ -129,6 +130,9 @@
       },
       "World": "World",
       "Save": "Save"
+    },
+    "Triggers": {
+      "ChargesRestored": "{name} drinks in the moment of death and regains {count} charge(s)."
     }
   }
 }

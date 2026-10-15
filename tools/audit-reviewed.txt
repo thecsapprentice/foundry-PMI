@@ -2,8 +2,10 @@
 # Regenerate ONLY after reviewing each new/changed site against the checklist in CLAUDE.md:
 #   python3 tools/audit.py --accept
 CREATE	apps/builder.mjs	const item = await Item.implementation.create({
+CREATE	runtime/triggers.mjs	await ChatMessage.implementation.create({
 CREATE	util.mjs	return findPmiFolder() ?? Folder.implementation.create({
 FILE/NET	registry/load.mjs	const res = await fetch(`modules/${MODULE_ID}/data/${path}`, { cache: "no-cache" });
+GLOBAL	runtime/triggers.mjs	if (game.modules.get("lib-wrapper")?.active && globalThis.libWrapper) {
 GLOBAL	settings.mjs	const lists = globalThis.dnd5e?.registry?.spellLists;
 PERMISSION	apps/builder.mjs	ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE },
 PERMISSION	compiler/index.mjs	const DROP = ["_id", "folder", "sort", "ownership", "_stats", "flags"];
@@ -12,7 +14,12 @@ SETTING	settings.mjs	game.settings.register(MODULE_ID, "basePacks", {
 SETTING	settings.mjs	game.settings.register(MODULE_ID, "spellPacks", {
 SETTING	settings.mjs	game.settings.registerMenu(MODULE_ID, "basePacksMenu", {
 SETTING	settings.mjs	game.settings.registerMenu(MODULE_ID, "spellPacksMenu", {
+UPDATE	runtime/triggers.mjs	await item.update({ "system.uses.spent": spent });
 WRAP/HOOK	main.mjs	Hooks.on("getItemDirectoryEntryContext", (html, options) => {
 WRAP/HOOK	main.mjs	Hooks.on("renderItemDirectory", (app, html) => {
 WRAP/HOOK	main.mjs	Hooks.once("init", () => {
 WRAP/HOOK	main.mjs	Hooks.once("ready", async () => {
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.applyDamage", onApplyDamage);
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.preApplyDamage", onPreApplyDamage);
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.rollAttackV2", onAttackRoll);
+WRAP/HOOK	runtime/triggers.mjs	libWrapper.register(

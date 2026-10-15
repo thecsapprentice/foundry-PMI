@@ -250,3 +250,41 @@ const keenFlaming = compile({ ...newRecipe({ seed: "nm", rarity: "rare", baseUui
 check("quality prefixes come before elemental ones", keenFlaming.name === "Keen Flaming Longsword", keenFlaming.name);
 check("no possessive prefixes", properties.filter((d) => d.slot === "prefix").every((d) => !String(d.name).includes("'s")) && properties.filter((d) => d.slot === "prefix").flatMap((d) => Object.values(d.params ?? {}).flatMap((sp) => (sp.pick ?? []).map((e) => e?.name))).every((n) => !String(n ?? "").includes("'s")));
 check("cold weapons are Icy", getDef("elemental").params.element.pick.find((e) => e.value === "cold").name === "Icy");
+
+// ---- Tier 3 triggers and sapience (0.9)
+const stag = one("longsword", "rare", pick("of-staggering")).data;
+const stagAct = Object.values(stag.system.activities).find((a) => a.type === "save");
+const stagFx = stag.effects.find((e) => e._id === stagAct?.effects[0]?._id);
+const trig = stag.flags["foundry-pmi"].triggers;
+check("crit trigger recorded in flags", trig?.length === 1 && trig[0].on === "crit" && trig[0].activity === stagAct?._id);
+check("flags keep the recipe beside the triggers", !!stag.flags["foundry-pmi"].recipe);
+check("triggered activity is Special, with its condition written on it", stagAct?.activation.type === "special" && /critical hit/.test(stagAct.activation.condition));
+check("staggering: stunned until your next turn", JSON.stringify(stagFx?.statuses) === '["stunned"]' && stagFx.duration.rounds === 1);
+check("triggered activity has no use limit", !stagAct?.uses.max && stagAct?.consumption.targets.length === 0);
+const reap = one("greataxe", "rare", pick("reaping", { heal: "2d8" })).data;
+const reapAct = Object.values(reap.system.activities).find((a) => a.type === "heal");
+check("kill trigger: heal activity", reap.flags["foundry-pmi"].triggers[0].on === "kill" && reap.flags["foundry-pmi"].triggers[0].activity === reapAct?._id && /0 hit points/.test(reapAct.activation.condition));
+const ex = one("longsword", "uncommon", pick("exultant")).data;
+const exAct = Object.values(ex.system.activities).find((a) => a.type === "utility");
+check("kill trigger: self buff for one round", exAct?.activation.type === "special" && ex.effects.find((e) => e._id === exAct.effects[0]._id)?.duration.rounds === 1);
+const hung = compile({ ...newRecipe({ seed: "h", rarity: "rare", baseUuid: "x" }), picks: [pick("of-thunder", { damage: "2d8" }), pick("hungering")] }, fixture("longsword"), opts).data;
+check("Hungering restores charges on a kill", JSON.stringify(hung.flags["foundry-pmi"].triggers) === JSON.stringify([{ on: "kill", property: "hungering", restoreCharges: 1 }]));
+check("Hungering only appears with charges", blockReason(getDef("hungering"), newRecipe({ seed: "x", rarity: "rare" }), categorize(fixture("longsword")), getDef, { spells }) === "requires");
+const badTrig = compile({ ...newRecipe({ seed: "t", rarity: "rare", baseUuid: "x" }), picks: [{ id: "x", seed: "s", params: {} }] }, fixture("longsword"), {
+  getDef: () => ({ id: "x", slot: "prefix", cost: 0, appliesTo: ["weapon"], changes: [{ type: "trigger", on: "sneeze", do: { type: "healActivity", formula: "1" } }] }), getTranslator });
+check("unknown trigger events fail safely", badTrig.data === null && /trigger "on"/.test(badTrig.errors[0]));
+
+check("sapience is very rare and up", getDef("sapient").minRarity === "veryRare" && blockReason(getDef("sapient"), newRecipe({ seed: "x", rarity: "rare" }), categorize(fixture("longsword")), getDef, {}) === "rarityLow");
+let sapR = addPick(newRecipe({ seed: "sap", rarity: "veryRare", baseUuid: "x" }), getDef("sapient"));
+const sap = compile(sapR, fixture("longsword"), opts).data;
+const conflict = Object.values(sap.system.activities).find((a) => a.type === "save");
+check("sapient: Wisdom save at the item's DC", conflict?.save.ability[0] === "wis" && conflict.save.dc.formula === "17" && conflict.activation.type === "special");
+check("sapient: description has personality, purpose, voice and quirk", ["Personality.", "Purpose.", "Quirk.", "speaks in", "[[/save wis 17]]"].every((t) => sap.system.description.value.includes(t)));
+check("sapient: very rare weapons communicate by empathy", sap.system.description.value.includes("empathy"));
+check("sapient doesn't change the descriptive name", sap.name === "Longsword");
+const sapL = compile(addPick(newRecipe({ seed: "sap", rarity: "legendary", baseUuid: "x" }), getDef("sapient")), fixture("longsword"), opts).data;
+check("sapient: legendary weapons speak and see in the dark", sapL.system.description.value.includes("speaking aloud") && sapL.system.description.value.includes("darkvision"));
+check("sapient: mental scores 10-18", (() => { const p = sapR.picks[0].params; return [p.int, p.wis, p.cha].every((n) => n >= 10 && n <= 18); })());
+const goals = new Set();
+for (let i = 0; i < 60; i++) goals.add(addPick(newRecipe({ seed: `g${i}`, rarity: "veryRare" }), getDef("sapient")).picks[0].params.goal.value);
+check("sapient purposes vary", goals.size >= 25, `${goals.size}`);

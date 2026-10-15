@@ -55,8 +55,15 @@ function attackActivities(data) {
   return acts;
 }
 
+/** Events a trigger can react to, with the condition text written on its activity. */
+export const TRIGGER_EVENTS = {
+  crit: "When you score a critical hit with this weapon",
+  kill: "When you reduce a creature to 0 hit points with this weapon",
+};
+const TRIGGERABLE = ["saveActivity", "healActivity", "activate"];
+
 /** Order change types run in: charge pools first, then things that spend them, then changes to the pool. */
-export const CHANGE_ORDER = { uses: 0, usesBonus: 2 };
+export const CHANGE_ORDER = { uses: 0, usesBonus: 2, trigger: 3 };
 
 /**
  * Charges a castSpell change spends: `chargesByKind[kind]`, else `charges`, else 1. "level" means the spell's level.
@@ -139,6 +146,12 @@ function limits(change, data, ctx, { required = true } = {}) {
   return { uses: { spent: 0, recovery: [] }, targets: charges != null ? [target("itemUses", charges)] : [] };
 }
 
+/** Activation data: { activation: "action" | "bonus" | "reaction" | "special", activationCondition }. */
+function activationOf(change) {
+  const type = change.activation ?? "action";
+  return { type, value: type === "special" ? null : 1, condition: change.activationCondition ?? "", override: false };
+}
+
 /** Fields every activity needs, with sensible defaults; `extra` overrides or adds. */
 function baseActivity(id, type, ctx, change, data, extra) {
   return {
@@ -147,7 +160,7 @@ function baseActivity(id, type, ctx, change, data, extra) {
     name: change.name ?? ctx.label,
     img: change.img ?? ctx.img,
     sort: 100000 + Object.keys(data.system.activities ?? {}).length,
-    activation: { type: change.activation ?? "action", value: 1, condition: "", override: false },
+    activation: activationOf(change),
     consumption: { targets: [], scaling: { allowed: false, max: "" }, spellSlot: false },
     description: { chatFlavor: "" },
     duration: { concentration: false, value: "", units: "inst", special: "", override: false },
@@ -238,7 +251,7 @@ export const BUILTIN_TRANSLATORS = {
     if (!change.formula) throw new Error("healActivity needs a formula");
     const type = change.healType ?? "healing";
     if (!["healing", "temphp"].includes(type)) throw new Error(`healActivity type must be healing or temphp, got ${type}`);
-    const { uses, targets } = limits(change, data, ctx);
+    const { uses, targets } = limits(change, data, ctx, { required: change.activation !== "special" });
     const id = ctx.id("heal");
     data.system.activities ??= {};
     data.system.activities[id] = baseActivity(id, "heal", ctx, change, data, {
@@ -246,6 +259,37 @@ export const BUILTIN_TRANSLATORS = {
       uses,
       healing: damagePart(change.formula, [type]),
     });
+  },
+
+  /**
+   * Something that happens automatically on an event (Tier 3; PMI's runtime watches for the event):
+   *   { on: "crit" | "kill", do: { type: "saveActivity" | "healActivity" | "activate", … } }
+   *       creates that activity with activation "Special" and the event as its condition, and PMI uses it
+   *       when the event happens. Without PMI the activity stays on the item for the player to use by hand.
+   *   { on: "kill", restoreCharges: 1 }
+   *       PMI restores that many of the item's charges.
+   * Triggers are recorded in flags.foundry-pmi.triggers.
+   */
+  trigger(data, change, ctx) {
+    if (!TRIGGER_EVENTS[change.on]) throw new Error(`trigger "on" must be one of ${Object.keys(TRIGGER_EVENTS).join(", ")}`);
+    const record = { on: change.on, property: ctx.pick.id };
+    if (change.restoreCharges != null) {
+      const n = Number(change.restoreCharges);
+      if (!Number.isInteger(n) || n < 1) throw new Error(`restoreCharges must be a positive whole number, got ${change.restoreCharges}`);
+      if (!data.system.uses?.max) throw new Error("restoreCharges needs an item with charges");
+      record.restoreCharges = n;
+    } else {
+      const type = change.do?.type;
+      if (!TRIGGERABLE.includes(type)) throw new Error(`trigger "do" must be one of ${TRIGGERABLE.join(", ")}`);
+      const before = new Set(Object.keys(data.system.activities ?? {}));
+      BUILTIN_TRANSLATORS[type](data, { ...change.do, activation: "special", activationCondition: TRIGGER_EVENTS[change.on] }, ctx);
+      const added = Object.keys(data.system.activities ?? {}).filter((k) => !before.has(k));
+      if (added.length !== 1) throw new Error("trigger must create exactly one activity");
+      record.activity = added[0];
+    }
+    data.flags ??= {};
+    data.flags[MODULE_ID] ??= {};
+    (data.flags[MODULE_ID].triggers ??= []).push(record);
   },
 
   /** { changes: [{ key, mode, value }], name? } → one transfer Active Effect on the item. */
@@ -267,12 +311,8 @@ export const BUILTIN_TRANSLATORS = {
     const statuses = [].concat(change.statuses ?? []);
     if (!changes.length && !statuses.length) throw new Error("activate needs changes or statuses");
     if (statuses.some((st) => typeof st !== "string" || !/^[a-z][\w-]*$/.test(st))) throw new Error("activate statuses must be status ids");
-    const perDay = change.perDay != null ? Number(change.perDay) : null;
-    const charges = change.charges != null ? Number(change.charges) : null;
-    if ((perDay == null) === (charges == null)) throw new Error("activate needs exactly one of perDay or charges");
-    if (perDay != null && (!Number.isInteger(perDay) || perDay < 1)) throw new Error(`activate perDay must be a positive whole number, got ${change.perDay}`);
-    if (charges != null && (!Number.isInteger(charges) || charges < 1)) throw new Error(`activate charges must be a positive whole number, got ${change.charges}`);
-    if (charges != null) ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
+    // Powers the wearer clicks need a limit (perDay or charges); triggered ones (activation "special") don't.
+    const { uses, targets } = limits(change, data, ctx, { required: change.activation !== "special" });
     const duration = { value: String(change.duration?.value ?? ""), units: change.duration?.units ?? "inst" };
 
     const effect = newEffect(ctx, data, {
@@ -288,14 +328,8 @@ export const BUILTIN_TRANSLATORS = {
       name: change.name ?? ctx.label,
       img: change.img ?? ctx.img,
       sort: 100000 + Object.keys(data.system.activities).length,
-      activation: { type: change.activation ?? "action", value: 1, condition: "", override: false },
-      consumption: {
-        targets: [perDay != null
-          ? { type: "activityUses", target: "", value: "1", scaling: { mode: "", formula: "" } }
-          : { type: "itemUses", target: "", value: String(charges), scaling: { mode: "", formula: "" } }],
-        scaling: { allowed: false, max: "" },
-        spellSlot: false,
-      },
+      activation: activationOf(change),
+      consumption: { targets, scaling: { allowed: false, max: "" }, spellSlot: false },
       description: { chatFlavor: "" },
       duration: { concentration: false, value: duration.value, units: duration.units, special: "", override: false },
       range: { value: "", units: "self", special: "", override: false },
@@ -305,9 +339,7 @@ export const BUILTIN_TRANSLATORS = {
         prompt: false,
         override: false,
       },
-      uses: perDay != null
-        ? { spent: 0, max: String(perDay), recovery: [{ period: "dawn", type: "recoverAll", formula: "" }] }
-        : { spent: 0, recovery: [] },
+      uses,
       effects: [{ _id: effect._id }],
       roll: { formula: "", name: "", prompt: false, visible: false },
     };
@@ -399,7 +431,7 @@ export const BUILTIN_TRANSLATORS = {
     if (!Number.isInteger(dc) || dc < 1) throw new Error(`saveActivity needs a whole-number DC, got ${change.dc}`);
     const statuses = [].concat(change.statuses ?? []);
     if (statuses.some((st) => typeof st !== "string" || !/^[a-z][\w-]*$/.test(st))) throw new Error("saveActivity statuses must be status ids");
-    if (!(change.damage ?? []).length && !statuses.length) throw new Error("saveActivity needs damage or statuses");
+    if (!(change.damage ?? []).length && !statuses.length && !change.promptOnly) throw new Error("saveActivity needs damage, statuses or promptOnly");
     const { uses, targets } = limits(change, data, ctx, { required: false });
 
     // A condition on a failed save: an effect on the item that the activity applies to targets.

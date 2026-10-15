@@ -1,0 +1,460 @@
+{
+ "$comment": "Sapient weapons: a roleplaying persona with a purpose, and a Wisdom save to resist it.",
+ "properties": [
+  {
+   "id": "sapient",
+   "slot": "persona",
+   "label": "Sapient ({goal.label})",
+   "name": "",
+   "menuLabel": "Sapient (personality and purpose)",
+   "cost": 1,
+   "weight": 2,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "veryRare",
+   "attunement": true,
+   "params": {
+    "personality": {
+     "pick": [
+      {
+       "value": "p0",
+       "label": "Haughty and condescending, it speaks only to those it deems worthy."
+      },
+      {
+       "value": "p1",
+       "label": "Cheerful and endlessly curious about the world."
+      },
+      {
+       "value": "p2",
+       "label": "Grim and fatalistic; it expects every battle to be its last."
+      },
+      {
+       "value": "p3",
+       "label": "Flirtatious and theatrical, it narrates its wielder's deeds."
+      },
+      {
+       "value": "p4",
+       "label": "Paranoid, convinced that someone is always plotting to steal it."
+      },
+      {
+       "value": "p5",
+       "label": "Gentle and melancholy, mourning a long-dead first wielder."
+      },
+      {
+       "value": "p6",
+       "label": "Bloodthirsty and impatient, it sulks when kept sheathed."
+      },
+      {
+       "value": "p7",
+       "label": "Pious and stern, quick to judge sinners."
+      },
+      {
+       "value": "p8",
+       "label": "A braggart who exaggerates every victory."
+      },
+      {
+       "value": "p9",
+       "label": "Cold and calculating, it treats its wielder as a useful tool."
+      },
+      {
+       "value": "p10",
+       "label": "Childlike and easily frightened by the dark."
+      },
+      {
+       "value": "p11",
+       "label": "Fiercely loyal, protective of its wielder to a fault."
+      },
+      {
+       "value": "p12",
+       "label": "Sardonic and bored; it has seen it all before."
+      },
+      {
+       "value": "p13",
+       "label": "Obsessed with etiquette and proper forms of address."
+      },
+      {
+       "value": "p14",
+       "label": "Greedy, it appraises everything it sees."
+      },
+      {
+       "value": "p15",
+       "label": "Scholarly, it corrects everyone's history and grammar."
+      },
+      {
+       "value": "p16",
+       "label": "Wrathful and proud, it never forgets an insult."
+      },
+      {
+       "value": "p17",
+       "label": "Mischievous, it loves to play harmless pranks on its wielder."
+      },
+      {
+       "value": "p18",
+       "label": "Weary and kind, an old soldier tired of war."
+      },
+      {
+       "value": "p19",
+       "label": "Vain, it demands to be polished and admired."
+      },
+      {
+       "value": "p20",
+       "label": "Superstitious, it reads omens in everything."
+      },
+      {
+       "value": "p21",
+       "label": "Brooding and poetic, it composes verses about each fight."
+      },
+      {
+       "value": "p22",
+       "label": "Mercantile, it is always looking for a deal."
+      },
+      {
+       "value": "p23",
+       "label": "Restless and reckless, it urges its wielder toward danger."
+      }
+     ]
+    },
+    "goal": {
+     "pick": [
+      {
+       "value": "elves",
+       "label": "Slay every elf it meets"
+      },
+      {
+       "value": "chests",
+       "label": "Destroy every chest it finds"
+      },
+      {
+       "value": "undead",
+       "label": "Hunt down and destroy the undead"
+      },
+      {
+       "value": "dragons",
+       "label": "Slay dragons, wherever they lair"
+      },
+      {
+       "value": "goblins",
+       "label": "Kill every goblinoid it meets"
+      },
+      {
+       "value": "fiends",
+       "label": "Banish fiends back to the Hells"
+      },
+      {
+       "value": "captives",
+       "label": "Free every captive it comes across"
+      },
+      {
+       "value": "gold",
+       "label": "Hoard gold, the more the better"
+      },
+      {
+       "value": "lore",
+       "label": "Burn every library of forbidden lore"
+      },
+      {
+       "value": "tyrants",
+       "label": "Topple tyrants and false kings"
+      },
+      {
+       "value": "innocent",
+       "label": "Protect the innocent, whatever the cost"
+      },
+      {
+       "value": "twin",
+       "label": "Find its long-lost twin weapon"
+      },
+      {
+       "value": "forge",
+       "label": "Return to the forge where it was made"
+      },
+      {
+       "value": "vengeance",
+       "label": "Avenge the death of its creator"
+      },
+      {
+       "value": "glory",
+       "label": "Win glory in single combat"
+      },
+      {
+       "value": "giants",
+       "label": "Spill the blood of giants"
+      },
+      {
+       "value": "bards",
+       "label": "Silence every bard it hears"
+      },
+      {
+       "value": "retreat",
+       "label": "Never let its wielder retreat"
+      },
+      {
+       "value": "rivals",
+       "label": "Destroy every magic item that rivals it"
+      },
+      {
+       "value": "trophies",
+       "label": "Collect a trophy from every foe it slays"
+      },
+      {
+       "value": "faith",
+       "label": "Convert others to its god"
+      },
+      {
+       "value": "lycanthropes",
+       "label": "Hunt lycanthropes under the full moon"
+      },
+      {
+       "value": "spiders",
+       "label": "Slay every spider it sees"
+      },
+      {
+       "value": "locks",
+       "label": "Break every lock and chain it finds"
+      },
+      {
+       "value": "order",
+       "label": "Bring order to lawless places"
+      },
+      {
+       "value": "chaos",
+       "label": "Sow chaos wherever it goes"
+      },
+      {
+       "value": "heir",
+       "label": "Find a worthy heir and pass to them"
+      },
+      {
+       "value": "royalty",
+       "label": "Taste the blood of royalty"
+      },
+      {
+       "value": "ships",
+       "label": "Sink every ship it boards"
+      },
+      {
+       "value": "nature",
+       "label": "Protect the natural world from the axe and plough"
+      },
+      {
+       "value": "liars",
+       "label": "Expose every liar"
+      },
+      {
+       "value": "magic",
+       "label": "Stamp out every spark of arcane magic"
+      },
+      {
+       "value": "crown",
+       "label": "Recover the crown of its ancient kingdom"
+      },
+      {
+       "value": "survival",
+       "label": "Keep its wielder alive, no matter what"
+      }
+     ]
+    },
+    "voice": {
+     "pick": [
+      "a whispering hiss",
+      "a booming baritone",
+      "a child's giggle",
+      "a dry, scholarly drawl",
+      "an old soldier's rasp",
+      "a sing-song lilt",
+      "a chorus of overlapping voices",
+      "a cold, clipped monotone",
+      "a honeyed purr",
+      "a gravelly growl",
+      "an archaic, formal tongue",
+      "a nervous stammer",
+      "a mocking sneer",
+      "a warm, motherly murmur",
+      "a thunderous roar",
+      "a faint, distant echo"
+     ]
+    },
+    "quirk": {
+     "pick": [
+      {
+       "value": "q0",
+       "label": "It hums to itself when it is happy."
+      },
+      {
+       "value": "q1",
+       "label": "It refuses to be drawn in the presence of cats."
+      },
+      {
+       "value": "q2",
+       "label": "It insists on being called by its full name."
+      },
+      {
+       "value": "q3",
+       "label": "It grows uncomfortably cold when lied to."
+      },
+      {
+       "value": "q4",
+       "label": "It counts every foe it has ever slain, out loud."
+      },
+      {
+       "value": "q5",
+       "label": "It hates being left in water."
+      },
+      {
+       "value": "q6",
+       "label": "It gossips about previous wielders."
+      },
+      {
+       "value": "q7",
+       "label": "It glows faintly whenever gold is near."
+      },
+      {
+       "value": "q8",
+       "label": "It is terrified of rust."
+      },
+      {
+       "value": "q9",
+       "label": "It gives everyone it meets a nickname."
+      },
+      {
+       "value": "q10",
+       "label": "It sings old battle hymns at inconvenient moments."
+      },
+      {
+       "value": "q11",
+       "label": "It sulks for an hour after a missed attack."
+      },
+      {
+       "value": "q12",
+       "label": "It loves riddles and hates losing them."
+      },
+      {
+       "value": "q13",
+       "label": "It whispers the true names of the dead."
+      },
+      {
+       "value": "q14",
+       "label": "It demands a toast after every victory."
+      },
+      {
+       "value": "q15",
+       "label": "It can't stand silence and fills it with chatter."
+      },
+      {
+       "value": "q16",
+       "label": "It quietly judges its wielder's cooking."
+      },
+      {
+       "value": "q17",
+       "label": "It shivers when a storm approaches."
+      }
+     ]
+    },
+    "alignment": {
+     "pick": [
+      {
+       "value": "lawful good",
+       "label": "lawful good"
+      },
+      {
+       "value": "neutral good",
+       "label": "neutral good"
+      },
+      {
+       "value": "chaotic good",
+       "label": "chaotic good"
+      },
+      {
+       "value": "lawful neutral",
+       "label": "lawful neutral"
+      },
+      {
+       "value": "neutral",
+       "label": "neutral"
+      },
+      {
+       "value": "chaotic neutral",
+       "label": "chaotic neutral"
+      },
+      {
+       "value": "lawful evil",
+       "label": "lawful evil"
+      },
+      {
+       "value": "neutral evil",
+       "label": "neutral evil"
+      },
+      {
+       "value": "chaotic evil",
+       "label": "chaotic evil"
+      }
+     ]
+    },
+    "communication": {
+     "byRarity": {
+      "veryRare": {
+       "value": "empathy",
+       "label": "empathy, sharing emotions and urges with whoever wields it"
+      },
+      "legendary": {
+       "value": "speech",
+       "label": "speaking aloud in Common and one other language"
+      },
+      "artifact": {
+       "value": "telepathy",
+       "label": "telepathy with any creature that carries it, and speaking aloud in any language its wielder knows"
+      }
+     }
+    },
+    "senses": {
+     "byRarity": {
+      "veryRare": {
+       "value": "30",
+       "label": "hearing and normal vision out to 30 feet"
+      },
+      "legendary": {
+       "value": "120",
+       "label": "hearing and darkvision out to 120 feet"
+      }
+     }
+    },
+    "int": {
+     "range": [
+      10,
+      18
+     ]
+    },
+    "wis": {
+     "range": [
+      10,
+      18
+     ]
+    },
+    "cha": {
+     "range": [
+      10,
+      18
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "saveActivity",
+     "name": "Conflict of Wills",
+     "ability": [
+      "wis"
+     ],
+     "dc": "@dc",
+     "promptOnly": true,
+     "activation": "special",
+     "activationCondition": "When the weapon's desires conflict with its wielder's",
+     "target": {
+      "type": "self"
+     }
+    }
+   ],
+   "text": "<p><strong>Sapience.</strong> This weapon is a sentient {alignment.label} being with an Intelligence of @int, a Wisdom of @wis and a Charisma of @cha. It has {senses.label}, and it communicates by {communication.label}.</p><p><em>Personality.</em> {personality.label} It speaks in @voice.</p><p><em>Purpose.</em> {goal.label}.</p><p><em>Quirk.</em> {quirk.label}</p><p><em>Conflict.</em> When its wielder acts against its purpose, or passes up a chance to pursue it, the weapon demands its way. The wielder must succeed on a [[/save wis @dc]] saving throw or do as the weapon wishes until the moment passes.</p>"
+  }
+ ]
+}

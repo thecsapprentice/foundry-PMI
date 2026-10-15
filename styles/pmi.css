@@ -3,7 +3,7 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.8.1"; }
+:root { --pmi-css-version: "0.9.0"; }
 
 .pmi-builder {
   /* Fixed inks, not Foundry's theme variables: the builder always sits on light parchment. */

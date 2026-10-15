@@ -15,7 +15,7 @@ A Foundry VTT **v12** module for the **dnd5e 4.4.x** system that generates magic
 In Foundry's Setup screen, go to **Add-on Modules → Install Module** and paste this manifest URL:
 
 ```
-https://raw.githubusercontent.com/thecsapprentice/foundry-pmi/main/module.json
+https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json
 ```
 
 ## Usage
@@ -58,7 +58,7 @@ Change types so far: `magicalBonus`, `itemField`, `activityDamage`, `attackCriti
 ## Development
 
 ```
-python3 tools/build.py --repo thecsapprentice/foundry-pmi --version X.Y.Z   # module.json + dist/foundry-pmi.zip
+python3 tools/build.py --repo thecsapprentice/foundry-PMI --version X.Y.Z   # module.json + dist/foundry-pmi.zip
 node tests/run.mjs                                                         # tests
 python3 tools/audit.py                                                     # world-safety audit
 ```

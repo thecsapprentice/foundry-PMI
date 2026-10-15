@@ -6,7 +6,7 @@ Procedural Magic Items (PMI, module id `foundry-pmi`) is a Foundry VTT **v12** m
 
 Do all four steps before every commit, with no exceptions. If any step fails, fix it or stop and tell the user. Never commit around a failure.
 
-1. **Build:** `python3 tools/build.py --repo thecsapprentice/foundry-pmi --version X.Y.Z` (bump the version for any user-facing change).
+1. **Build:** `python3 tools/build.py --repo thecsapprentice/foundry-PMI --version X.Y.Z` (bump the version for any user-facing change).
 2. **Tests:** `node tests/run.mjs`. Every check must pass. Add tests for new behaviour, and especially for anything that writes to the world.
 3. **Audit:** `python3 tools/audit.py`. It lists every line that can change world data or global behaviour and marks new or changed ones as `NEW`.
    - Review **each** `NEW` site against the checklist below, reading the surrounding code rather than just the one line.

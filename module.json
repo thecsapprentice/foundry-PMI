@@ -50,9 +50,9 @@
       "path": "lang/en.json"
     }
   ],
-  "url": "https://github.com/thecsapprentice/foundry-pmi",
-  "manifest": "https://raw.githubusercontent.com/thecsapprentice/foundry-pmi/main/module.json",
-  "download": "https://github.com/thecsapprentice/foundry-pmi/raw/main/dist/foundry-pmi.zip",
-  "readme": "https://github.com/thecsapprentice/foundry-pmi#readme",
-  "bugs": "https://github.com/thecsapprentice/foundry-pmi/issues"
+  "url": "https://github.com/thecsapprentice/foundry-PMI",
+  "manifest": "https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json",
+  "download": "https://github.com/thecsapprentice/foundry-PMI/raw/main/dist/foundry-pmi.zip",
+  "readme": "https://github.com/thecsapprentice/foundry-PMI#readme",
+  "bugs": "https://github.com/thecsapprentice/foundry-PMI/issues"
 }

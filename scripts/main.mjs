@@ -23,6 +23,15 @@ Hooks.once("ready", async () => {
   if (!game.modules.get("lib-wrapper")?.active && game.user.isGM) {
     ui.notifications.warn(game.i18n.localize("PMI.Errors.NoLibWrapper"));
   }
+  // A browser can keep an old cached stylesheet after an update while the scripts are new.
+  if (game.user.isGM) {
+    const cssVersion = getComputedStyle(document.documentElement).getPropertyValue("--pmi-css-version").trim().replace(/"/g, "");
+    const version = game.modules.get(MODULE_ID).version;
+    if (cssVersion !== version) {
+      console.warn(`${MODULE_ID} | Stylesheet version "${cssVersion || "none"}" doesn't match module version ${version}`);
+      ui.notifications.warn(game.i18n.localize("PMI.Errors.StaleStyles"), { permanent: true });
+    }
+  }
   const { added, errors } = await loadBuiltinProperties();
   if (errors.length) {
     console.warn(`${MODULE_ID} | Property problems:\n${errors.join("\n")}`);

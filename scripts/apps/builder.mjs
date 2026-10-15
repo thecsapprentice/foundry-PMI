@@ -14,6 +14,9 @@ import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
+/** dnd5e's rarity labels are lowercase ("very rare"); buttons and headings want "Very rare". */
+const sentenceCase = (s) => (s ? s.charAt(0).toLocaleUpperCase() + s.slice(1) : s);
+
 /** Icons for the base-kind buttons. Each button also shows its name, so it reads even without the icon. */
 const KIND_ICONS = {
   any: "fa-solid fa-dice",
@@ -199,7 +202,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     // Nothing to preview or create until the item has at least one property.
     const compiled = this.recipe.picks.length ? this.#compile() : { data: null, errors: [], warnings: [] };
     const preview = compiled.data ? {
-      rarityLabel: L(CONFIG.DND5E?.itemRarity?.[this.recipe.rarity] ?? this.recipe.rarity),
+      rarityLabel: sentenceCase(L(CONFIG.DND5E?.itemRarity?.[this.recipe.rarity] ?? this.recipe.rarity)),
       name: compiled.data.name,
       img: compiled.data.img,
       attunement: compiled.data.system.attunement === "required",
@@ -209,7 +212,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     const bases = await this.#loadBaseIndex();
     return {
       recipe: this.recipe,
-      rarities: RARITIES.map((key) => ({ key, label: L(CONFIG.DND5E?.itemRarity?.[key] ?? key), selected: key === this.recipe.rarity })),
+      rarities: RARITIES.map((key) => ({ key, label: sentenceCase(L(CONFIG.DND5E?.itemRarity?.[key] ?? key)), selected: key === this.recipe.rarity })),
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
       baseKinds: ["any", "weapon", "armor", "shield", "staff", "wand", "rod"].map((kind) => ({
         kind,

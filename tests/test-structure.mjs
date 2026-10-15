@@ -61,3 +61,11 @@ for (const f of fs.readdirSync(path.join(ROOT, "templates")).filter((f) => f.end
   const r = rootElements(fs.readFileSync(path.join(ROOT, "templates", f), "utf8"));
   check(`templates/${f} has exactly one root element`, r.roots === 1 && !r.strayText && r.balanced, JSON.stringify(r));
 }
+
+// The stylesheet's version stamp matches module.json (tools/build.py writes it).
+if (fs.existsSync(mpath)) {
+  const m = JSON.parse(fs.readFileSync(mpath, "utf8"));
+  const css = fs.readFileSync(path.join(ROOT, "styles/pmi.css"), "utf8");
+  const stamp = css.match(/--pmi-css-version:\s*"([^"]*)"/)?.[1];
+  check("stylesheet version stamp matches module.json", stamp === m.version, `css ${stamp}, module ${m.version}`);
+}

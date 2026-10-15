@@ -69,6 +69,14 @@ def main():
             sys.exit(f"module.json references a missing file: {rel}")
     (ROOT / "module.json").write_text(json.dumps(m, indent=2) + "\n", encoding="utf-8")
 
+    # Stamp the version into the stylesheet, so PMI can tell when a browser is using a stale cached copy.
+    css_path = ROOT / "styles" / "pmi.css"
+    css = css_path.read_text(encoding="utf-8")
+    stamped, n = re.subn(r'--pmi-css-version:\s*"[^"]*"', f'--pmi-css-version: "{version}"', css)
+    if n != 1:
+        sys.exit("styles/pmi.css must contain exactly one --pmi-css-version declaration")
+    css_path.write_text(stamped, encoding="utf-8")
+
     # Release zip: only what Foundry needs, with module.json at the top level.
     dist = ROOT / "dist"
     dist.mkdir(exist_ok=True)

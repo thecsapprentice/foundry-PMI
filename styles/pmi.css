@@ -2,6 +2,9 @@
    Quiet surfaces in Foundry's own palette; the one accent is the item's rarity colour,
    which runs through the rarity control, the budget bar and the preview's item name. */
 
+/* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
+:root { --pmi-css-version: "0.5.1"; }
+
 .pmi-builder {
   --pmi-ink: var(--color-text-dark-primary, #191813);
   --pmi-ink-soft: var(--color-text-dark-secondary, #4b4a44);
@@ -30,6 +33,7 @@
 
 .pmi-layout {
   --pmi-rarity: var(--pmi-r-uncommon);
+  flex: 1;
   height: 100%;
   min-height: 0;
   display: grid;
@@ -71,6 +75,14 @@
 
 /* ---------- shared bits ---------- */
 .pmi-block { display: flex; flex-direction: column; gap: 0.4rem; }
+.pmi-builder h3,
+.pmi-builder h4 {
+  /* Undo Foundry's default heading look (display font, underline, shadow) inside the builder. */
+  font-family: inherit;
+  text-shadow: none;
+  border: none;
+  padding: 0;
+}
 .pmi-heading {
   margin: 0;
   border: none;

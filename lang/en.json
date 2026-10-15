@@ -97,7 +97,8 @@
     "Errors": {
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
       "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work.",
-      "PropertyLoad": "Procedural Magic Items: some property definitions couldn't be loaded. See the console (F12)."
+      "PropertyLoad": "Procedural Magic Items: some property definitions couldn't be loaded. See the console (F12).",
+      "StaleStyles": "Procedural Magic Items was updated, but your browser is still using its old stylesheet, so the builder will look wrong. Reload with the cache cleared: Ctrl+Shift+R (Cmd+Shift+R on Mac), or Ctrl+F5 in the Foundry app."
     },
     "Settings": {
       "BasePacks": {

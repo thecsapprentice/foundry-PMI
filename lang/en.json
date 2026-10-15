@@ -1,0 +1,17 @@
+{
+  "PMI": {
+    "Builder": {
+      "Title": "Magic Item Builder",
+      "Open": "Magic Item Builder",
+      "GMOnly": "Only a GM can use the Magic Item Builder.",
+      "Rarity": "Rarity",
+      "Seed": "Seed",
+      "NewSeed": "New seed",
+      "Placeholder": "Drafting properties is coming next. Nothing is created in your world from this window yet."
+    },
+    "Errors": {
+      "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
+      "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work."
+    }
+  }
+}

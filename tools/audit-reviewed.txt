@@ -1,0 +1,6 @@
+# PMI world-safety audit: every reviewed site that can change world data or global behaviour.
+# Regenerate ONLY after reviewing each new/changed site against the checklist in CLAUDE.md:
+#   python3 tools/audit.py --accept
+WRAP/HOOK	main.mjs	Hooks.on("renderItemDirectory", (app, html) => {
+WRAP/HOOK	main.mjs	Hooks.once("init", () => {
+WRAP/HOOK	main.mjs	Hooks.once("ready", () => {

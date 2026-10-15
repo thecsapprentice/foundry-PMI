@@ -1,0 +1,4 @@
+.pmi-builder .pmi-builder-body { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem; }
+.pmi-builder .pmi-seed { flex: 1; font-size: var(--font-size-14); }
+.pmi-builder .form-group button { flex: 0 0 2rem; }
+#items .header-actions .pmi-open-builder { flex: 1 0 100%; }

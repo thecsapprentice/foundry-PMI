@@ -1,0 +1,14 @@
+<section class="pmi-builder-body">
+  <div class="form-group">
+    <label>{{localize "PMI.Builder.Rarity"}}</label>
+    <select name="rarity">
+      {{#each rarities}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "PMI.Builder.Seed"}}</label>
+    <code class="pmi-seed">{{recipe.seed}}</code>
+    <button type="button" data-action="newSeed" data-tooltip="PMI.Builder.NewSeed"><i class="fa-solid fa-dice"></i></button>
+  </div>
+  <p class="hint">{{localize "PMI.Builder.Placeholder"}}</p>
+</section>

@@ -39,3 +39,25 @@ const has = (key) => key.split(".").reduce((o, k) => o?.[k], en) !== undefined;
 const sources = walk(path.join(ROOT, "scripts")).concat(walk(path.join(ROOT, "templates")));
 const keys = new Set(sources.flatMap((f) => fs.readFileSync(f, "utf8").match(/PMI\.[A-Za-z]+\.[A-Za-z.]+[A-Za-z]/g) ?? []));
 for (const k of keys) check(`localization key exists: ${k}`, has(k));
+
+// ApplicationV2 template parts must render exactly one root element.
+function rootElements(hbs) {
+  const src = hbs.replace(/\{\{!--[\s\S]*?--\}\}|\{\{![\s\S]*?\}\}|<!--[\s\S]*?-->/g, "").replace(/\{\{[\s\S]*?\}\}/g, "");
+  const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+  let depth = 0, roots = 0, strayText = false;
+  const re = /<\/?([a-zA-Z][\w-]*)[^>]*?(\/?)>|([^<]+)/g;
+  let m;
+  while ((m = re.exec(src))) {
+    if (m[3] !== undefined) { if (depth === 0 && m[3].trim()) strayText = true; continue; }
+    const closing = m[0].startsWith("</");
+    const tag = m[1].toLowerCase();
+    if (closing) { depth--; continue; }
+    if (depth === 0) roots++;
+    if (!VOID.has(tag) && m[2] !== "/") depth++;
+  }
+  return { roots, strayText, balanced: depth === 0 };
+}
+for (const f of fs.readdirSync(path.join(ROOT, "templates")).filter((f) => f.endsWith(".hbs"))) {
+  const r = rootElements(fs.readFileSync(path.join(ROOT, "templates", f), "utf8"));
+  check(`templates/${f} has exactly one root element`, r.roots === 1 && !r.strayText && r.balanced, JSON.stringify(r));
+}

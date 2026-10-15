@@ -2,7 +2,7 @@
   "id": "foundry-pmi",
   "title": "Procedural Magic Items",
   "description": "A DM-guided builder for procedurally generated D&D 5e magic items with real mechanical effects: native activities, Active Effects and charges, reviewed by the DM before players see them.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "authors": [
     {
       "name": "thecsapprentice",

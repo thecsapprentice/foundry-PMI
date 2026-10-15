@@ -80,7 +80,11 @@
       "UseDescriptiveName": "Use the descriptive name",
       "EditName": "Type your own name",
       "NameTools": "Name",
-      "UnidentifiedHint": "What players see before the item is identified"
+      "UnidentifiedHint": "What players see before the item is identified",
+      "Identified": "Created identified",
+      "Unidentified": "Created unidentified",
+      "MakeUnidentified": "Click to create it unidentified: players see only its plain look until it's identified",
+      "MakeIdentified": "Click to create it identified"
     },
     "Folder": {
       "Name": "Procedural Magic Items"

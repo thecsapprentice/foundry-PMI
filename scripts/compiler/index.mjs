@@ -101,7 +101,8 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
   data.system.attunement = resolved.some((r) => r.def.attunement) ? "required" : (base.system.attunement ?? "");
   data.system.attuned = false;
   data.system.equipped = false;
-  data.system.identified = true;
+  // The DM chooses whether the item starts identified (default) or not; players then see its unidentified look.
+  data.system.identified = recipe.identified !== false;
   data.system.unidentified = naming.unidentified;
   data.system.price = { value: (base.system.price?.value ?? 0) + rules.price, denomination: "gp" };
   data.system.description = {

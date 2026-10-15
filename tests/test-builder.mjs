@@ -94,3 +94,14 @@ check("creates from a built-in base", cloak?.name === "Silent Cloak" && cloak.sy
 check("built-in item is hidden and recorded", cloak?.ownership?.default === 0 && cloak.flags["foundry-pmi"].recipe.baseUuid === "pmi-base:cloak");
 await PmiBuilder.open(new MockItem({ flags: { "foundry-pmi": { recipe: { ...newRecipe({ seed: "b", rarity: "uncommon", baseUuid: "pmi-base:nope" }), picks: [] } } } }));
 check("an unknown built-in base is refused", notes.at(-1)[1] === "PMI.Builder.BaseMissing" && app.recipe.baseUuid === null);
+
+// Identified / unidentified.
+const beforeUnid = writes.length;
+await PmiBuilder.open(new MockItem({ flags: { "foundry-pmi": { recipe: { ...newRecipe({ seed: "u", rarity: "uncommon", baseUuid: "pmi-base:cloak" }), picks: [{ id: "skilled", seed: "s", locked: false, params: { skill: { value: "ste", name: "Silent", label: "Stealth" } } }] } } } }));
+check("new items start identified", app.recipe.identified !== false);
+A.toggleIdentified.call(app);
+await A.create.call(app);
+const unid = writes.slice(beforeUnid).find((w) => w.op === "Item.create")?.data;
+check("toggle creates the item unidentified", unid?.system.identified === false && unid.system.unidentified.name.endsWith("Cloak"));
+A.toggleIdentified.call(app);
+check("toggling again goes back to identified", app.recipe.identified === true);

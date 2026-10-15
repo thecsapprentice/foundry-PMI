@@ -44,6 +44,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       rerollName: PmiBuilder.#onRerollName,
       toggleName: PmiBuilder.#onToggleName,
       editName: PmiBuilder.#onEditName,
+      toggleIdentified: PmiBuilder.#onToggleIdentified,
       lock: PmiBuilder.#onLock,
       reroll: PmiBuilder.#onReroll,
       rerollParams: PmiBuilder.#onRerollParams,
@@ -260,6 +261,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       canCreate: !!compiled.data && !this.#busy,
       busy: this.#busy,
       editingName: this.#editingName && !!compiled.data,
+      identified: this.recipe.identified !== false,
     };
   }
 
@@ -359,6 +361,11 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   static #onEditName() {
     this.#nameBeforeEdit = this.#compile().naming?.name ?? "";
     this.#editingName = true;
+    this.render();
+  }
+
+  static #onToggleIdentified() {
+    this.recipe.identified = this.recipe.identified === false;
     this.render();
   }
 

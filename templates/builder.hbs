@@ -122,6 +122,11 @@
     <div class="pmi-actions">
       <button type="button" data-action="roll" class="pmi-roll" {{#unless baseName}}disabled{{/unless}}>
         <i class="fa-solid fa-dice-d20"></i> {{localize "PMI.Builder.Roll"}}</button>
+      <button type="button" data-action="toggleIdentified" class="pmi-identify {{#unless identified}}unidentified{{/unless}}"
+              aria-pressed="{{#if identified}}false{{else}}true{{/if}}"
+              data-tooltip="{{#if identified}}PMI.Builder.MakeUnidentified{{else}}PMI.Builder.MakeIdentified{{/if}}">
+        <i class="fa-solid {{#if identified}}fa-eye{{else}}fa-eye-slash{{/if}}"></i>
+        {{#if identified}}{{localize "PMI.Builder.Identified"}}{{else}}{{localize "PMI.Builder.Unidentified"}}{{/if}}</button>
       <button type="button" data-action="create" class="pmi-create" {{#unless canCreate}}disabled{{/unless}}>
         <i class="fa-solid {{#if busy}}fa-spinner fa-spin{{else}}fa-hammer{{/if}}"></i> {{localize "PMI.Builder.Create"}}</button>
       <p class="pmi-hint">{{localize "PMI.Builder.CreateHint"}}</p>

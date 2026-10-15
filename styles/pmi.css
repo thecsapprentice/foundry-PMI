@@ -3,7 +3,7 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.8.0"; }
+:root { --pmi-css-version: "0.8.1"; }
 
 .pmi-builder {
   /* Fixed inks, not Foundry's theme variables: the builder always sits on light parchment. */
@@ -77,23 +77,6 @@
 
 /* ---------- shared bits ---------- */
 .pmi-block { display: flex; flex-direction: column; gap: 0.4rem; }
-.pmi-builder .window-content,
-.pmi-builder .pmi-layout,
-.pmi-builder .pmi-card-name,
-.pmi-builder .pmi-description,
-.pmi-builder .pmi-description p,
-.pmi-builder .pmi-description li,
-.pmi-builder button,
-.pmi-builder select {
-  color: var(--pmi-ink);
-}
-.pmi-builder .pmi-card-slot,
-.pmi-builder .pmi-card-params,
-.pmi-builder .pmi-hint,
-.pmi-builder .pmi-item-sub,
-.pmi-builder .pmi-budget-text {
-  color: var(--pmi-ink-soft);
-}
 .pmi-builder h3,
 .pmi-builder h4 {
   /* Undo Foundry's default heading look (display font, underline, shadow) inside the builder. */
@@ -271,6 +254,8 @@
   gap: 0.35rem;
 }
 .pmi-actions button { height: 2.1rem; }
+.pmi-builder .pmi-identify { height: 1.8rem; font-size: var(--font-size-12, 12px); }
+.pmi-builder .pmi-identify.unidentified { border-style: dashed; background: rgba(0, 0, 0, 0.12); }
 .pmi-builder .pmi-create { background: var(--pmi-rarity); border-color: var(--pmi-rarity); color: #fff; font-weight: bold; }
 .pmi-builder .pmi-create:disabled { background: var(--pmi-line-soft); border-color: var(--pmi-line); color: var(--pmi-ink-soft); }
 .pmi-seed { margin: 0; font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); text-align: right; }
@@ -284,3 +269,19 @@
 .pmi-sources .pmi-pack-list label { display: flex; align-items: center; gap: 0.5rem; padding: 0.15rem 0; }
 .pmi-sources .pmi-pack-label { flex: 1; }
 .pmi-sources .pmi-pack-meta { font-size: var(--font-size-11, 11px); opacity: 0.7; }
+
+/* ---------- text colour ----------
+   Every piece of text inherits the builder's ink, unless one of the rules after it says otherwise.
+   The ".pmi-builder.application .window-content" prefix outranks Foundry's own heading and paragraph
+   colours, so nothing falls back to a pale theme colour. Add new coloured text here, with this prefix. */
+.pmi-builder.application .window-content { color: var(--pmi-ink); }
+.pmi-builder.application .window-content :is(h1, h2, h3, h4, h5, h6, p, span, label, li, em, strong, b, i, small, div,
+  button, select, option, input, code, legend) { color: inherit; }
+.pmi-builder.application .window-content :is(.pmi-heading, .pmi-hint, .pmi-card-slot, .pmi-card-params, .pmi-card-name i,
+  .pmi-budget-text, .pmi-item-sub, .pmi-item-unid, .pmi-preview-empty, .pmi-seed) { color: var(--pmi-ink-soft); }
+.pmi-builder.application .window-content :is(.pmi-warn, .pmi-card-problem) { color: var(--pmi-warn); }
+.pmi-builder.application .window-content .pmi-error { color: var(--pmi-error); }
+.pmi-builder.application .window-content .pmi-item-name { color: var(--pmi-rarity); }
+.pmi-builder.application .window-content :is(.pmi-rarity.active, .pmi-create) { color: #fff; }
+.pmi-builder.application .window-content .pmi-create:disabled { color: var(--pmi-ink-soft); }
+.pmi-builder.application .window-content .pmi-identify.unidentified { color: var(--pmi-ink); }

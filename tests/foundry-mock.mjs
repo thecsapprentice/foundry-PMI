@@ -43,9 +43,16 @@ export function addPack(id, entries, { label = id, packageName = id.split(".")[0
 }
 
 export const settings = new Map();
+export const menus = new Map();
 const settingsApi = {
   register: (scope, key, cfg) => { settings.set(`${scope}.${key}`, { cfg, value: structuredClone(cfg.default) }); },
-  registerMenu: () => {},
+  // Foundry v12 refuses a menu whose type isn't an application class (FormApplication or ApplicationV2).
+  registerMenu: (scope, key, cfg) => {
+    if (!(typeof cfg?.type === "function" && cfg.type.prototype instanceof ApplicationV2)) {
+      throw new Error("You must provide a menu type that is a FormApplication or ApplicationV2 instance or subclass");
+    }
+    menus.set(`${scope}.${key}`, cfg);
+  },
   get: (scope, key) => structuredClone(settings.get(`${scope}.${key}`)?.value),
   set: async (scope, key, value) => {
     writes.push({ op: "settings.set", key: `${scope}.${key}`, value: structuredClone(value) });

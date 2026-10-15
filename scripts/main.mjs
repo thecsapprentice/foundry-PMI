@@ -7,14 +7,26 @@ import { isPmiItem } from "./util.mjs";
 import { registerSettings } from "./settings.mjs";
 import { registerTriggers } from "./runtime/triggers.mjs";
 
+// Each start-up step runs on its own: one failing must never stop the others.
+function step(label, fn) {
+  try {
+    return fn();
+  } catch (err) {
+    console.error(`${MODULE_ID} | Start-up step failed: ${label}`, err);
+    return undefined;
+  }
+}
+
 Hooks.once("init", () => {
-  registerSettings({
+  step("settings", () => registerSettings({
     onBasePacksChange: () => PmiBuilder.invalidateBases(),
     onSpellPacksChange: () => PmiBuilder.invalidateSpells(),
     openBuilder: () => PmiBuilder.open(),
+  }));
+  step("change types", () => registerBuiltinChangeTypes());
+  step("api", () => {
+    game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
   });
-  registerBuiltinChangeTypes();
-  game.modules.get(MODULE_ID).api = Object.freeze({ ...api, isPmiItem, openBuilder: (item) => PmiBuilder.open(item) });
 });
 
 Hooks.once("ready", async () => {

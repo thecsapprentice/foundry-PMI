@@ -38,58 +38,62 @@ const isSpell = safely((e) => e.type === "spell" && Number.isInteger(e.system?.l
  */
 /** Settings-menu entry that opens the builder (a second way in, whatever the sidebar looks like). */
 let openBuilderFn = null;
-export class PmiBuilderLauncher {
-  render() {
+
+/**
+ * Settings-menu entry that opens the builder (a second way in, whatever the sidebar looks like).
+ * Foundry only accepts menu classes that are real applications, so this is an ApplicationV2 that opens
+ * the builder instead of drawing a window of its own.
+ */
+export class PmiBuilderLauncher extends ApplicationV2 {
+  static DEFAULT_OPTIONS = { id: "pmi-builder-launcher", window: { title: "PMI.Settings.OpenBuilder.Name" } };
+  async render() {
     openBuilderFn?.();
     return this;
   }
-  close() { return this; }
 }
 
+/**
+ * Register PMI's settings, then its settings menus. The settings come first and each menu is registered on
+ * its own, so a problem with one menu can never leave the settings unregistered.
+ * @returns {string[]} Problems, if any (also logged).
+ */
 export function registerSettings({ onBasePacksChange, onSpellPacksChange, openBuilder } = {}) {
   openBuilderFn = openBuilder;
-  game.settings.registerMenu(MODULE_ID, "openBuilder", {
-    name: "PMI.Settings.OpenBuilder.Name",
-    label: "PMI.Settings.OpenBuilder.Label",
-    hint: "PMI.Settings.OpenBuilder.Hint",
-    icon: "fa-solid fa-wand-sparkles",
-    type: PmiBuilderLauncher,
-    restricted: true,
-  });
-  game.settings.register(MODULE_ID, "basePacks", {
-    scope: "world",
-    config: false,
-    type: Array,
-    default: [...DEFAULT_BASE_PACKS],
-    onChange: () => onBasePacksChange?.(),
-  });
-  game.settings.registerMenu(MODULE_ID, "basePacksMenu", {
-    name: "PMI.Settings.BasePacks.Name",
-    label: "PMI.Settings.BasePacks.Label",
-    hint: "PMI.Settings.BasePacks.Hint",
-    icon: "fa-solid fa-book",
-    type: PmiBaseSourcesConfig,
-    restricted: true,
-  });
-  game.settings.register(MODULE_ID, "spellPacks", {
-    scope: "world",
-    config: false,
-    type: Array,
-    default: [...DEFAULT_SPELL_PACKS],
-    onChange: () => onSpellPacksChange?.(),
-  });
-  game.settings.registerMenu(MODULE_ID, "spellPacksMenu", {
-    name: "PMI.Settings.SpellPacks.Name",
-    label: "PMI.Settings.SpellPacks.Label",
-    hint: "PMI.Settings.SpellPacks.Hint",
-    icon: "fa-solid fa-hat-wizard",
-    type: PmiSpellSourcesConfig,
-    restricted: true,
-  });
+  const problems = [];
+  const attempt = (label, fn) => {
+    try { fn(); } catch (err) { problems.push(label); console.error(`${MODULE_ID} | Couldn't register ${label}`, err); }
+  };
+
+  attempt("setting basePacks", () => game.settings.register(MODULE_ID, "basePacks", {
+    scope: "world", config: false, type: Array, default: [...DEFAULT_BASE_PACKS], onChange: () => onBasePacksChange?.(),
+  }));
+  attempt("setting spellPacks", () => game.settings.register(MODULE_ID, "spellPacks", {
+    scope: "world", config: false, type: Array, default: [...DEFAULT_SPELL_PACKS], onChange: () => onSpellPacksChange?.(),
+  }));
+
+  attempt("menu openBuilder", () => game.settings.registerMenu(MODULE_ID, "openBuilder", {
+    name: "PMI.Settings.OpenBuilder.Name", label: "PMI.Settings.OpenBuilder.Label", hint: "PMI.Settings.OpenBuilder.Hint",
+    icon: "fa-solid fa-wand-sparkles", type: PmiBuilderLauncher, restricted: true,
+  }));
+  attempt("menu basePacksMenu", () => game.settings.registerMenu(MODULE_ID, "basePacksMenu", {
+    name: "PMI.Settings.BasePacks.Name", label: "PMI.Settings.BasePacks.Label", hint: "PMI.Settings.BasePacks.Hint",
+    icon: "fa-solid fa-book", type: PmiBaseSourcesConfig, restricted: true,
+  }));
+  attempt("menu spellPacksMenu", () => game.settings.registerMenu(MODULE_ID, "spellPacksMenu", {
+    name: "PMI.Settings.SpellPacks.Name", label: "PMI.Settings.SpellPacks.Label", hint: "PMI.Settings.SpellPacks.Hint",
+    icon: "fa-solid fa-hat-wizard", type: PmiSpellSourcesConfig, restricted: true,
+  }));
+  return problems;
 }
 
+/** A saved list of compendium ids, or the defaults if it's unset, malformed or (fail safe) not registered. */
 const chosen = (key, defaults) => {
-  const saved = game.settings.get(MODULE_ID, key);
+  let saved;
+  try {
+    saved = game.settings.get(MODULE_ID, key);
+  } catch {
+    return defaults;
+  }
   return Array.isArray(saved) ? saved : defaults;
 };
 

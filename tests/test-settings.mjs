@@ -134,3 +134,27 @@ let opened = 0;
 registerSettings({ openBuilder: () => opened++ });
 new PmiBuilderLauncher().render(true);
 check("the settings launcher opens the builder", opened === 1);
+
+// Registration is robust: settings first, menus each on their own.
+const { menus } = await import("./foundry-mock.mjs");
+check("all three menus register", ["foundry-pmi.openBuilder", "foundry-pmi.basePacksMenu", "foundry-pmi.spellPacksMenu"].every((k) => menus.has(k)));
+check("every menu type is a real application class", [...menus.values()].every((m) => m.type.prototype instanceof foundry.applications.api.ApplicationV2));
+check("menus are GM-only", [...menus.values()].every((m) => m.restricted === true));
+// If menus fail to register, the settings still do.
+settings.clear();
+const realRegisterMenu = game.settings.registerMenu;
+game.settings.registerMenu = () => { throw new Error("menu boom"); };
+const errOrig = console.error; console.error = () => {};
+const problems = registerSettings({});
+console.error = errOrig;
+game.settings.registerMenu = realRegisterMenu;
+check("a failing menu doesn't stop the settings", settings.has("foundry-pmi.basePacks") && settings.has("foundry-pmi.spellPacks"));
+check("menu problems are reported", problems.length === 3 && problems.every((p) => p.startsWith("menu")));
+// If a setting is somehow missing, PMI falls back to the defaults instead of throwing.
+settings.delete("foundry-pmi.spellPacks");
+const realGet = game.settings.get;
+game.settings.get = (scope, key) => { if (!settings.has(`${scope}.${key}`)) throw new Error(`"${scope}.${key}" is not a registered game setting`); return realGet(scope, key); };
+let fellBack = null;
+try { fellBack = chosenSpellPackIds(); } catch { fellBack = "threw"; }
+game.settings.get = realGet;
+check("an unregistered setting falls back to defaults", JSON.stringify(fellBack) === JSON.stringify(["dnd5e.spells", "dnd5e.spells24"]));

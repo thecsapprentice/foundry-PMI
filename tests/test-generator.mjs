@@ -1,7 +1,7 @@
 import { Rng } from "../scripts/generator/rng.mjs";
 import { resolveParam, substitute } from "../scripts/generator/params.mjs";
 import { categorize, isMundane } from "../scripts/generator/categories.mjs";
-import { newRecipe, roll, rerollPick, rerollParams, toggleLock, tally, invalidPicks, addPick, blockReason } from "../scripts/generator/roller.mjs";
+import { newRecipe, roll, rerollPick, rerollParams, toggleLock, tally, invalidPicks, addPick, blockReason, weightFor } from "../scripts/generator/roller.mjs";
 import { loadAll, fixture, spellPool } from "./load-node.mjs";
 import { spellCandidates } from "../scripts/generator/params.mjs";
 import { kindOf } from "../scripts/generator/categories.mjs";
@@ -104,3 +104,20 @@ check("rerolling with only one possible spell keeps it", rerollParams(one, 0, { 
 check("a second level-1 spell property is blocked when the pool is used up", blockReason(getDef("spell-1"), one, categorize(fixture("wand")), getDef, { spells: tinyPool }) !== null);
 check("Abundant needs a spell on the item", blockReason(getDef("abundant"), newRecipe({ seed: "x", rarity: "rare" }), categorize(fixture("wand")), getDef, { spells }) === "requires");
 check("Abundant is allowed once there's a spell", blockReason(getDef("abundant"), one, categorize(fixture("wand")), getDef, { spells }) === null);
+
+// Worn items and 2024-style wands.
+const { getBase } = loadAll();
+check("2024 wand (trinket with identifier) is a wand", kindOf(categorize({ type: "equipment", system: { type: { value: "trinket" }, identifier: "wand", properties: [] } })) === "wand");
+check("2024 rod is a rod", kindOf(categorize({ type: "equipment", system: { type: { value: "trinket" }, identifier: "rod", properties: [] } })) === "rod");
+check("a plain trinket isn't a base", categorize({ type: "equipment", system: { type: { value: "trinket" }, identifier: "lucky-coin" } }).length === 0);
+check("an unidentified ring-type item is a worn ring", JSON.stringify(categorize({ type: "equipment", system: { type: { value: "ring" } } })) === '["worn","ring"]');
+check("boots are worn on the feet", JSON.stringify(categorize(getBase("boots"))) === '["worn","feet"]');
+check("worn kind", kindOf(categorize(getBase("circlet"))) === "worn");
+check("weightBy multiplies on matching slots", weightFor(getDef("striding"), ["worn", "feet"]) === getDef("striding").weight * 4 && weightFor(getDef("striding"), ["worn", "ring"]) === getDef("striding").weight);
+let striding = { feet: 0, ring: 0 };
+for (const slot of ["feet", "ring"]) for (let i = 0; i < 200; i++) {
+  const r = roll(newRecipe({ seed: `ws${i}`, rarity: "uncommon" }), { properties, categories: ["worn", slot], spells });
+  if (r.picks.some((p) => p.id === "striding")) striding[slot]++;
+}
+check("boots roll Striding more often than rings", striding.feet > striding.ring * 2, JSON.stringify(striding));
+check("weapon properties never land on worn items", Array.from({ length: 100 }, (_, i) => roll(newRecipe({ seed: `wn${i}`, rarity: "legendary" }), { properties, categories: ["worn", "neck"], spells })).every((r) => r.picks.every((p) => getDef(p.id).appliesTo.some((c) => ["worn", "neck"].includes(c)))));

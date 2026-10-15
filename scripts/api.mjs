@@ -4,6 +4,7 @@ import { RARITIES, SLOTS } from "./config.mjs";
 
 const changeTypes = new Map();
 const properties = new Map();
+const bases = new Map();
 
 /**
  * Register a translator for one change type.
@@ -63,10 +64,46 @@ export function listProperties(filter = () => true) {
   return [...properties.values()].filter(filter);
 }
 
+/**
+ * Register built-in base items (mundane items properties can be added to). Each is plain item source data
+ * with an `id`: { id, name, type: "equipment" | "weapon", img, system }. Offered as "pmi-base:<id>".
+ * @returns {{added: string[], errors: string[]}}
+ */
+export function registerBases(source, defs) {
+  const added = [];
+  const errors = [];
+  for (const def of defs ?? []) {
+    const id = def?.id ?? "(no id)";
+    const problems = [];
+    if (typeof def?.id !== "string" || !/^[a-z0-9][\w-]*$/i.test(def.id)) problems.push(`${id}: id must be a simple string`);
+    if (typeof def?.name !== "string" || !def.name) problems.push(`${id}: needs a name`);
+    if (!["equipment", "weapon"].includes(def?.type)) problems.push(`${id}: type must be equipment or weapon`);
+    if (!def?.system || typeof def.system !== "object") problems.push(`${id}: needs system data`);
+    if (!problems.length && bases.has(def.id)) problems.push(`${def.id}: already registered by ${bases.get(def.id).source}`);
+    if (problems.length) { errors.push(...problems); continue; }
+    bases.set(def.id, Object.freeze({ ...structuredClone(def), source }));
+    added.push(def.id);
+  }
+  return { added, errors };
+}
+
+/** Item source data for a built-in base (a fresh copy), or null. */
+export function getBase(id) {
+  const def = bases.get(id);
+  if (!def) return null;
+  const { id: _id, source, ...data } = structuredClone(def);
+  return { ...data, effects: [], flags: {} };
+}
+
+export function listBases() {
+  return [...bases.values()].map((b) => ({ id: b.id, name: b.name, source: b.source }));
+}
+
 /** Test helper: forget everything registered. */
 export function _resetRegistries() {
   changeTypes.clear();
   properties.clear();
+  bases.clear();
 }
 
 export const api = Object.freeze({
@@ -76,4 +113,7 @@ export const api = Object.freeze({
   validateProperty,
   getProperty,
   listProperties,
+  registerBases,
+  getBase,
+  listBases,
 });

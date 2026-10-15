@@ -10,6 +10,16 @@ import { resolveParams, spellSpecs, spellCandidates } from "./params.mjs";
 
 const rank = (r) => RARITIES.indexOf(r);
 
+/**
+ * A property's random weight for this base: `weight` (default 1), multiplied by any `weightBy` entry
+ * whose category the base has, e.g. { "weightBy": { "feet": 3 } } makes it three times as likely on boots.
+ */
+export function weightFor(def, categories) {
+  let w = def.weight ?? 1;
+  for (const [cat, mult] of Object.entries(def.weightBy ?? {})) if (categories.includes(cat)) w *= Number(mult) || 0;
+  return w;
+}
+
 /** A fresh recipe. */
 export function newRecipe({ seed, rarity = "uncommon", baseUuid = null } = {}) {
   return { version: RECIPE_VERSION, seed, rarity, baseUuid, rerolls: 0, picks: [] };
@@ -84,7 +94,7 @@ export function roll(recipe, { properties, categories, spells }) {
   const rng = new Rng(out.seed).fork(`roll:${out.rerolls ?? 0}`);
   for (let step = 0; step < 32; step++) {
     const candidates = properties.filter((d) => !blockReason(d, out, categories, getDef, { spells }));
-    const def = rng.fork(`step:${step}`).weighted(candidates, (d) => d.weight ?? 1);
+    const def = rng.fork(`step:${step}`).weighted(candidates, (d) => weightFor(d, categories));
     if (!def) break;
     out.picks.push(makePick(def, out.rarity, `${out.seed}/${out.rerolls ?? 0}/${step}/${def.id}`, { spells, excludeSpells: usedSpells(out) }));
   }
@@ -103,7 +113,7 @@ export function rerollPick(recipe, index, { properties, categories, spells }) {
   out.rerolls = (out.rerolls ?? 0) + 1;
   const rng = new Rng(out.seed).fork(`reroll:${out.rerolls}`);
   const candidates = properties.filter((d) => d.id !== current.id && !blockReason(d, out, categories, getDef, { ignoreIndex: index, spells }));
-  const def = rng.weighted(candidates, (d) => d.weight ?? 1);
+  const def = rng.weighted(candidates, (d) => weightFor(d, categories));
   if (!def) return null;
   out.picks[index] = makePick(def, out.rarity, `${out.seed}/r${out.rerolls}/${def.id}`, { spells, excludeSpells: usedSpells(out, index) });
   return out;

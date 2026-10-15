@@ -7,11 +7,11 @@
       "GMOnly": "Only a GM can use the Magic Item Builder.",
       "NotPmi": "That item wasn't made by the Magic Item Builder.",
       "Base": "Base item",
-      "ChooseBaseOption": "Choose a weapon, armor, shield, wand, staff or rod…",
-      "DropHint": "Or drop any mundane weapon, armor, shield, wand, staff or rod here from the sidebar or a compendium.",
+      "ChooseBaseOption": "Choose a base item…",
+      "DropHint": "Or drop any mundane weapon, armor, shield, wand, staff, rod or worn item here from the sidebar or a compendium.",
       "ChooseBase": "Choose a base item first.",
       "BaseMissing": "That base item can't be found.",
-      "BaseUnsupported": "Only weapons, armor, shields, wands, staves and rods can be used as a base so far.",
+      "BaseUnsupported": "That item can't be used as a base. Use a weapon, armor, shield, wand, staff, rod, or a worn item such as a ring or cloak.",
       "BaseMagical": "That item is already magical. Choose a mundane base item.",
       "Rarity": "Rarity",
       "Seed": "Seed",
@@ -40,7 +40,8 @@
         "shield": "Shield",
         "staff": "Staff",
         "wand": "Wand",
-        "rod": "Rod"
+        "rod": "Rod",
+        "worn": "Wondrous"
       },
       "NoBaseOfKind": {
         "any": "No base items are available. Check the base item sources in the module settings.",
@@ -49,7 +50,8 @@
         "shield": "No shields are available from the chosen sources.",
         "staff": "No staves are available from the chosen sources.",
         "wand": "No wands are available from the chosen sources.",
-        "rod": "No rods are available from the chosen sources."
+        "rod": "No rods are available from the chosen sources.",
+        "worn": "No wondrous items are available."
       },
       "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here.",
       "SpellMissing": "Can't find these spells, so nothing was created: {names}. Check the spell sources in the module settings, or reroll those properties.",
@@ -61,7 +63,8 @@
         "shield": "Random shield",
         "staff": "Random staff",
         "wand": "Random wand",
-        "rod": "Random rod"
+        "rod": "Random rod",
+        "worn": "Random wondrous item (ring, amulet, cloak, boots…)"
       },
       "BudgetUsed": "Budget",
       "PropertiesWord": "properties",
@@ -70,7 +73,8 @@
       "Locked": "Locked",
       "Unlock": "Unlock",
       "RequiresAttunement": "requires attunement",
-      "PreviewEmpty": "Roll, or add properties, to see the item here."
+      "PreviewEmpty": "Roll, or add properties, to see the item here.",
+      "BuiltIn": "Built-in"
     },
     "Folder": {
       "Name": "Procedural Magic Items"
@@ -104,7 +108,7 @@
       "BasePacks": {
         "Name": "Base item sources",
         "Label": "Choose compendiums",
-        "Hint": "Which compendiums the Magic Item Builder lists base items from. Only compendiums with mundane weapons, armor, shields, wands, staves or rods are shown; the number is how many each has. You can still drop any item onto the builder.",
+        "Hint": "Which compendiums the Magic Item Builder lists base items from, alongside PMI's built-in rings, amulets, cloaks, boots, gloves, belts, bracers, circlets, wands and rods. Only compendiums with usable mundane items are shown; the number is how many each has.",
         "None": "No compendiums with mundane weapons, armor, shields, wands, staves or rods were found."
       },
       "SpellPacks": {

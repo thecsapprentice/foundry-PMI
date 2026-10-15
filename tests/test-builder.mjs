@@ -84,3 +84,13 @@ check("after a refused base, nothing can be created from the old one", writes.le
 
 // Non-PMI items can't be opened.
 check("a non-PMI item is refused", (await PmiBuilder.open(new MockItem({ name: "Longsword", flags: {} }))) === null);
+
+// Built-in bases.
+const beforeBuiltIn = writes.length;
+await PmiBuilder.open(new MockItem({ flags: { "foundry-pmi": { recipe: { ...newRecipe({ seed: "b", rarity: "uncommon", baseUuid: "pmi-base:cloak" }), picks: [{ id: "skilled", seed: "s", locked: false, params: { skill: { value: "ste", name: "Silent", label: "Stealth" } } }] } } } }));
+await A.create.call(app);
+const cloak = writes.slice(beforeBuiltIn).find((w) => w.op === "Item.create")?.data;
+check("creates from a built-in base", cloak?.name === "Silent Cloak" && cloak.system.identifier === "cloak");
+check("built-in item is hidden and recorded", cloak?.ownership?.default === 0 && cloak.flags["foundry-pmi"].recipe.baseUuid === "pmi-base:cloak");
+await PmiBuilder.open(new MockItem({ flags: { "foundry-pmi": { recipe: { ...newRecipe({ seed: "b", rarity: "uncommon", baseUuid: "pmi-base:nope" }), picks: [] } } } }));
+check("an unknown built-in base is refused", notes.at(-1)[1] === "PMI.Builder.BaseMissing" && app.recipe.baseUuid === null);

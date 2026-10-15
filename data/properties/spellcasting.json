@@ -12,7 +12,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "uncommon",
    "params": {
@@ -35,7 +37,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -55,7 +58,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "uncommon",
    "params": {
@@ -78,7 +83,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -98,7 +104,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "rare",
    "params": {
@@ -121,7 +129,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -141,7 +150,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "rare",
    "params": {
@@ -164,7 +175,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -184,7 +196,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "veryRare",
    "params": {
@@ -207,7 +221,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -227,7 +242,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "veryRare",
    "params": {
@@ -250,7 +267,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -270,7 +288,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "legendary",
    "params": {
@@ -293,7 +313,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -313,7 +334,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "legendary",
    "params": {
@@ -336,7 +359,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -356,7 +380,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "legendary",
    "params": {
@@ -379,7 +405,8 @@
      "level": "{spell.level}",
      "chargesByKind": {
       "wand": 1,
-      "default": "level"
+      "default": "level",
+      "worn": 1
      },
      "upcast": true,
      "dc": "@dc",
@@ -497,7 +524,9 @@
    "appliesTo": [
     "wand",
     "staff",
-    "rod"
+    "rod",
+    "ring",
+    "neck"
    ],
    "minRarity": "uncommon",
    "requiresSlot": "spell",

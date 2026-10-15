@@ -3,7 +3,7 @@
 #   python3 tools/audit.py --accept
 CREATE	apps/builder.mjs	const item = await Item.implementation.create({
 CREATE	util.mjs	return findPmiFolder() ?? Folder.implementation.create({
-FILE/NET	registry/load.mjs	const res = await fetch(path, { cache: "no-cache" });
+FILE/NET	registry/load.mjs	const res = await fetch(`modules/${MODULE_ID}/data/${path}`, { cache: "no-cache" });
 GLOBAL	settings.mjs	const lists = globalThis.dnd5e?.registry?.spellLists;
 PERMISSION	apps/builder.mjs	ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE },
 PERMISSION	compiler/index.mjs	const DROP = ["_id", "folder", "sort", "ownership", "_stats", "flags"];

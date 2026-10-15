@@ -1,0 +1,365 @@
+{
+ "$comment": "Worn wondrous items: rings, amulets, cloaks, boots, gloves, belts, bracers, circlets.",
+ "properties": [
+  {
+   "id": "skilled",
+   "slot": "prefix",
+   "label": "{skill.name} ({skill.label} advantage)",
+   "name": "{skill.name}",
+   "cost": 2,
+   "weight": 8,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "cloak": 1.5,
+    "head": 1.5,
+    "hands": 1.5
+   },
+   "params": {
+    "skill": {
+     "pick": [
+      {
+       "value": "acr",
+       "name": "Acrobat's",
+       "label": "Acrobatics"
+      },
+      {
+       "value": "ani",
+       "name": "Beastfriend's",
+       "label": "Animal Handling"
+      },
+      {
+       "value": "arc",
+       "name": "Arcanist's",
+       "label": "Arcana"
+      },
+      {
+       "value": "ath",
+       "name": "Athlete's",
+       "label": "Athletics"
+      },
+      {
+       "value": "dec",
+       "name": "Deceiver's",
+       "label": "Deception"
+      },
+      {
+       "value": "his",
+       "name": "Scholar's",
+       "label": "History"
+      },
+      {
+       "value": "ins",
+       "name": "Insightful",
+       "label": "Insight"
+      },
+      {
+       "value": "itm",
+       "name": "Menacing",
+       "label": "Intimidation"
+      },
+      {
+       "value": "inv",
+       "name": "Investigator's",
+       "label": "Investigation"
+      },
+      {
+       "value": "med",
+       "name": "Healer's",
+       "label": "Medicine"
+      },
+      {
+       "value": "nat",
+       "name": "Naturalist's",
+       "label": "Nature"
+      },
+      {
+       "value": "prc",
+       "name": "Watchful",
+       "label": "Perception"
+      },
+      {
+       "value": "prf",
+       "name": "Performer's",
+       "label": "Performance"
+      },
+      {
+       "value": "per",
+       "name": "Persuasive",
+       "label": "Persuasion"
+      },
+      {
+       "value": "rel",
+       "name": "Pious",
+       "label": "Religion"
+      },
+      {
+       "value": "slt",
+       "name": "Nimble",
+       "label": "Sleight of Hand"
+      },
+      {
+       "value": "ste",
+       "name": "Silent",
+       "label": "Stealth"
+      },
+      {
+       "value": "sur",
+       "name": "Tracker's",
+       "label": "Survival"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.skills.@skill.roll.mode",
+       "mode": "add",
+       "value": 1
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you have advantage on {skill.label} checks."
+  },
+  {
+   "id": "ability-score",
+   "slot": "suffix",
+   "label": "of {ability.name} ({ability.label} @score)",
+   "name": "of {ability.name}",
+   "cost": 3,
+   "weight": 5,
+   "attunement": true,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "exclusive": "abilityScore",
+   "weightBy": {
+    "hands": 2,
+    "waist": 2,
+    "head": 2,
+    "neck": 1.5
+   },
+   "params": {
+    "ability": {
+     "pick": [
+      {
+       "value": "str",
+       "name": "Might",
+       "label": "Strength"
+      },
+      {
+       "value": "dex",
+       "name": "Grace",
+       "label": "Dexterity"
+      },
+      {
+       "value": "con",
+       "name": "Fortitude",
+       "label": "Constitution"
+      },
+      {
+       "value": "int",
+       "name": "Brilliance",
+       "label": "Intelligence"
+      },
+      {
+       "value": "wis",
+       "name": "Insight",
+       "label": "Wisdom"
+      },
+      {
+       "value": "cha",
+       "name": "Presence",
+       "label": "Charisma"
+      }
+     ]
+    },
+    "score": {
+     "byRarity": {
+      "uncommon": 19,
+      "rare": 21,
+      "veryRare": 23,
+      "legendary": 25
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.abilities.@ability.value",
+       "mode": "upgrade",
+       "value": "@score"
+      }
+     ]
+    }
+   ],
+   "text": "Your {ability.label} score is @score while you wear this item. It has no effect on you if your {ability.label} is already @score or higher."
+  },
+  {
+   "id": "winged",
+   "slot": "prefix",
+   "label": "Winged (fly @speed ft., 10 minutes)",
+   "name": "Winged",
+   "cost": 3,
+   "weight": 5,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "feet": 3,
+    "cloak": 2
+   },
+   "params": {
+    "speed": {
+     "byRarity": {
+      "uncommon": 30,
+      "rare": 60
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "activate",
+     "name": "Take Flight",
+     "activation": "bonus",
+     "perDay": 1,
+     "duration": {
+      "value": 10,
+      "units": "minute"
+     },
+     "changes": [
+      {
+       "key": "system.attributes.movement.fly",
+       "mode": "upgrade",
+       "value": "@speed"
+      }
+     ]
+    }
+   ],
+   "text": "As a bonus action, you can gain a flying speed of @speed feet for 10 minutes. Once used, this property can't be used again until the next dawn."
+  },
+  {
+   "id": "vanishing",
+   "slot": "prefix",
+   "label": "Vanishing (invisible, 1 minute)",
+   "name": "Vanishing",
+   "cost": 4,
+   "weight": 4,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "rare",
+   "weightBy": {
+    "ring": 2,
+    "cloak": 2
+   },
+   "changes": [
+    {
+     "type": "activate",
+     "name": "Vanish",
+     "activation": "action",
+     "perDay": 1,
+     "duration": {
+      "value": 1,
+      "units": "minute"
+     },
+     "statuses": [
+      "invisible"
+     ],
+     "changes": []
+    }
+   ],
+   "text": "As an action, you can become invisible for 1 minute. Once used, this property can't be used again until the next dawn."
+  },
+  {
+   "id": "warding",
+   "slot": "prefix",
+   "label": "Warding (+@ac AC, 1 minute)",
+   "name": "Warding",
+   "cost": 2,
+   "weight": 5,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "wrists": 3,
+    "neck": 1.5
+   },
+   "params": {
+    "ac": {
+     "byRarity": {
+      "uncommon": 2,
+      "veryRare": 3
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "activate",
+     "name": "Ward",
+     "activation": "reaction",
+     "perDay": 1,
+     "duration": {
+      "value": 1,
+      "units": "minute"
+     },
+     "changes": [
+      {
+       "key": "system.attributes.ac.bonus",
+       "mode": "add",
+       "value": "+@ac"
+      }
+     ]
+    }
+   ],
+   "text": "As a reaction when you are hit by an attack, you can gain a +@ac bonus to AC for 1 minute, including against the triggering attack. Once used, this property can't be used again until the next dawn."
+  },
+  {
+   "id": "striding",
+   "slot": "prefix",
+   "label": "Striding (+@speed ft. speed)",
+   "name": "Striding",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "feet": 4
+   },
+   "params": {
+    "speed": {
+     "byRarity": {
+      "uncommon": 10,
+      "rare": 15
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.movement.walk",
+       "mode": "add",
+       "value": "@speed"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, your walking speed increases by @speed feet."
+  }
+ ]
+}

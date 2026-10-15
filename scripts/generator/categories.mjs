@@ -1,5 +1,5 @@
 // What kind of thing a base item is, as category strings properties can target. Pure.
-import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS } from "../config.mjs";
+import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS, WORN_TYPES, IDENTIFIER_CATEGORIES } from "../config.mjs";
 
 /**
  * Categories for a base item's source data, e.g.
@@ -8,6 +8,7 @@ import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS } from "..
  *   Shield     → ["shield"]
  *   Staff      → ["staff", "weapon", "weapon.melee", …]   (a quarterstaff that is a spellcasting focus)
  *   Wand       → ["wand"]          Rod → ["rod"]
+ *   Ring       → ["worn", "ring"]  Cloak → ["worn", "cloak"]  (worn items by dnd5e identifier, see IDENTIFIER_CATEGORIES)
  * Returns an empty array for anything the generator doesn't support yet.
  * @param {object} base  Item source data ({type, system}).
  * @returns {string[]}
@@ -33,8 +34,14 @@ export function categorize(base) {
     return out;
   }
   if (base?.type === "equipment" && SHIELD_TYPES.includes(type)) return ["shield"];
+  // Identifier first: the 2024 Wand and Rod are "trinket" equipment, and worn items need their body slot.
+  const identifier = base?.system?.identifier ?? "";
+  if (base?.type === "equipment" && [...WORN_TYPES, ...WAND_TYPES, ...ROD_TYPES].includes(type) && IDENTIFIER_CATEGORIES[identifier]) {
+    return [...IDENTIFIER_CATEGORIES[identifier]];
+  }
   if (base?.type === "equipment" && WAND_TYPES.includes(type)) return ["wand"];
   if (base?.type === "equipment" && ROD_TYPES.includes(type)) return ["rod"];
+  if (base?.type === "equipment" && type === "ring") return ["worn", "ring"];
   return [];
 }
 

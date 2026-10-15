@@ -1,0 +1,459 @@
+{
+ "$comment": "PMI's built-in mundane base items. Icons are ones the dnd5e system's own items use.",
+ "bases": [
+  {
+   "id": "ring",
+   "name": "Ring",
+   "type": "equipment",
+   "img": "icons/equipment/finger/ring-band-engraved-scrolls-silver.webp",
+   "system": {
+    "description": {
+     "value": "<p>A plain band, ready to hold an enchantment.</p>",
+     "chat": ""
+    },
+    "identifier": "ring",
+    "quantity": 1,
+    "weight": {
+     "value": 0,
+     "units": "lb"
+    },
+    "price": {
+     "value": 25,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "ring",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "amulet",
+   "name": "Amulet",
+   "type": "equipment",
+   "img": "icons/equipment/neck/pendant-bronze-gem-blue.webp",
+   "system": {
+    "description": {
+     "value": "<p>A simple pendant on a chain.</p>",
+     "chat": ""
+    },
+    "identifier": "amulet",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 25,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "trinket",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "cloak",
+   "name": "Cloak",
+   "type": "equipment",
+   "img": "icons/equipment/back/cloak-plain-blue.webp",
+   "system": {
+    "description": {
+     "value": "<p>A sturdy traveller's cloak.</p>",
+     "chat": ""
+    },
+    "identifier": "cloak",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 10,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "clothing",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "boots",
+   "name": "Boots",
+   "type": "equipment",
+   "img": "icons/equipment/feet/boots-collared-rounded-brown.webp",
+   "system": {
+    "description": {
+     "value": "<p>A pair of well-made leather boots.</p>",
+     "chat": ""
+    },
+    "identifier": "boots",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 10,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "clothing",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "gloves",
+   "name": "Gloves",
+   "type": "equipment",
+   "img": "icons/equipment/hand/glove-tooled-leather-blue.webp",
+   "system": {
+    "description": {
+     "value": "<p>A pair of supple leather gloves.</p>",
+     "chat": ""
+    },
+    "identifier": "gloves",
+    "quantity": 1,
+    "weight": {
+     "value": 0,
+     "units": "lb"
+    },
+    "price": {
+     "value": 5,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "clothing",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "belt",
+   "name": "Belt",
+   "type": "equipment",
+   "img": "icons/equipment/waist/belt-buckle-square-leather-brown.webp",
+   "system": {
+    "description": {
+     "value": "<p>A broad leather belt with a metal buckle.</p>",
+     "chat": ""
+    },
+    "identifier": "belt",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 5,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "clothing",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "bracers",
+   "name": "Bracers",
+   "type": "equipment",
+   "img": "icons/equipment/wrist/bracer-segmented-leather.webp",
+   "system": {
+    "description": {
+     "value": "<p>A pair of leather bracers.</p>",
+     "chat": ""
+    },
+    "identifier": "bracers",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 10,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "clothing",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "circlet",
+   "name": "Circlet",
+   "type": "equipment",
+   "img": "icons/equipment/head/crown-feather-brown.webp",
+   "system": {
+    "description": {
+     "value": "<p>A thin metal circlet worn around the brow.</p>",
+     "chat": ""
+    },
+    "identifier": "circlet",
+    "quantity": 1,
+    "weight": {
+     "value": 0,
+     "units": "lb"
+    },
+    "price": {
+     "value": 25,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "trinket",
+     "baseItem": ""
+    },
+    "properties": [],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "wand",
+   "name": "Wand",
+   "type": "equipment",
+   "img": "icons/weapons/wands/wand-gem-blue.webp",
+   "system": {
+    "description": {
+     "value": "<p>A slender rod of wood, bone or crystal, about a foot long.</p>",
+     "chat": ""
+    },
+    "identifier": "wand",
+    "quantity": 1,
+    "weight": {
+     "value": 1,
+     "units": "lb"
+    },
+    "price": {
+     "value": 10,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "wand",
+     "baseItem": ""
+    },
+    "properties": [
+     "foc"
+    ],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
+   "id": "rod",
+   "name": "Rod",
+   "type": "equipment",
+   "img": "icons/weapons/staves/staff-ornate-wood-red.webp",
+   "system": {
+    "description": {
+     "value": "<p>A sturdy rod of metal or wood, about two feet long.</p>",
+     "chat": ""
+    },
+    "identifier": "rod",
+    "quantity": 1,
+    "weight": {
+     "value": 2,
+     "units": "lb"
+    },
+    "price": {
+     "value": 10,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "rod",
+     "baseItem": ""
+    },
+    "properties": [
+     "foc"
+    ],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  }
+ ]
+}

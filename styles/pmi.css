@@ -3,7 +3,7 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.5.1"; }
+:root { --pmi-css-version: "0.6.0"; }
 
 .pmi-builder {
   --pmi-ink: var(--color-text-dark-primary, #191813);

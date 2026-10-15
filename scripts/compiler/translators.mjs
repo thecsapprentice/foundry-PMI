@@ -24,6 +24,9 @@ export const EFFECT_KEYS = [
   /^system\.bonuses\.(mwak|rwak|msak|rsak)\.(attack|damage)$/,
   /^system\.bonuses\.spell\.dc$/,
   new RegExp(`^system\\.skills\\.${SKILL}\\.bonuses\\.(check|passive)$`),
+  // Advantage: dnd5e counts sources of advantage with mode "add" and value 1.
+  new RegExp(`^system\\.skills\\.${SKILL}\\.roll\\.mode$`),
+  new RegExp(`^system\\.abilities\\.${ABILITY}\\.(check|save)\\.roll\\.mode$`),
   /^flags\.dnd5e\.initiativeAdv$/,
 ];
 
@@ -70,6 +73,50 @@ export function castCharges(change, kind, level) {
 function ensurePool(data, pool) {
   if (data.system.uses?.max) return;
   data.system.uses = { max: String(pool.max), spent: 0, recovery: [{ period: "dawn", type: "formula", formula: String(pool.formula) }] };
+}
+
+/** Effect changes from property data, checked against EFFECT_KEYS. */
+function effectChanges(list) {
+  if (!Array.isArray(list)) throw new Error("effect changes must be a list");
+  return list.map((c) => {
+    if (!EFFECT_KEYS.some((re) => re.test(c.key))) throw new Error(`effect key not allowed: ${c.key}`);
+    const mode = typeof c.mode === "number" ? c.mode : EFFECT_MODES[c.mode];
+    if (mode === undefined) throw new Error(`unknown effect mode: ${c.mode}`);
+    return { key: c.key, mode, value: String(c.value), priority: null };
+  });
+}
+
+/** Active Effect duration fields for { value, units } in minutes, hours or rounds. */
+function effectDuration({ value, units } = {}) {
+  const d = { startTime: null, seconds: null, combat: null, rounds: null, turns: null, startRound: null, startTurn: null };
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return d;
+  if (units === "round") d.rounds = n;
+  else if (units === "minute") d.seconds = n * 60;
+  else if (units === "hour") d.seconds = n * 3600;
+  else throw new Error(`duration units must be round, minute or hour, got ${units}`);
+  return d;
+}
+
+function newEffect(ctx, data, { name, img, changes, statuses = [], transfer, duration }) {
+  data.effects ??= [];
+  return {
+    _id: ctx.id(`effect:${data.effects.length}`),
+    name: name ?? ctx.label,
+    img: img ?? ctx.img,
+    type: "base",
+    system: {},
+    changes,
+    disabled: false,
+    duration: duration ?? effectDuration(),
+    description: "",
+    origin: null,
+    tint: "#ffffff",
+    transfer,
+    statuses: [...statuses],
+    sort: 0,
+    flags: { [MODULE_ID]: { property: ctx.pick.id } },
+  };
 }
 
 export const BUILTIN_TRANSLATORS = {
@@ -129,30 +176,66 @@ export const BUILTIN_TRANSLATORS = {
   /** { changes: [{ key, mode, value }], name? } → one transfer Active Effect on the item. */
   effect(data, change, ctx) {
     if (!Array.isArray(change.changes) || !change.changes.length) throw new Error("effect needs changes");
-    const changes = change.changes.map((c) => {
-      if (!EFFECT_KEYS.some((re) => re.test(c.key))) throw new Error(`effect key not allowed: ${c.key}`);
-      const mode = typeof c.mode === "number" ? c.mode : EFFECT_MODES[c.mode];
-      if (mode === undefined) throw new Error(`unknown effect mode: ${c.mode}`);
-      return { key: c.key, mode, value: String(c.value), priority: null };
-    });
     data.effects ??= [];
-    data.effects.push({
-      _id: ctx.id(`effect:${data.effects.length}`),
+    data.effects.push(newEffect(ctx, data, { name: change.name, img: change.img, changes: effectChanges(change.changes), transfer: change.transfer ?? true }));
+  },
+
+  /**
+   * A power the wearer activates: a Utility activity that applies a timed effect to themselves.
+   *   { name, activation: "action" | "bonus" | "reaction", duration: { value, units: "round" | "minute" | "hour" },
+   *     changes: [{ key, mode, value }], statuses: ["invisible"], perDay: 1 | charges: 1 }
+   * `perDay` gives the activity its own uses, regained at dawn; `charges` spends the item's charges instead.
+   * The effect isn't transferred: it sits on the item until the activity applies it (dnd5e's own flow).
+   */
+  activate(data, change, ctx) {
+    const changes = effectChanges(change.changes ?? []);
+    const statuses = [].concat(change.statuses ?? []);
+    if (!changes.length && !statuses.length) throw new Error("activate needs changes or statuses");
+    if (statuses.some((st) => typeof st !== "string" || !/^[a-z][\w-]*$/.test(st))) throw new Error("activate statuses must be status ids");
+    const perDay = change.perDay != null ? Number(change.perDay) : null;
+    const charges = change.charges != null ? Number(change.charges) : null;
+    if ((perDay == null) === (charges == null)) throw new Error("activate needs exactly one of perDay or charges");
+    if (perDay != null && (!Number.isInteger(perDay) || perDay < 1)) throw new Error(`activate perDay must be a positive whole number, got ${change.perDay}`);
+    if (charges != null && (!Number.isInteger(charges) || charges < 1)) throw new Error(`activate charges must be a positive whole number, got ${change.charges}`);
+    if (charges != null) ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
+    const duration = { value: String(change.duration?.value ?? ""), units: change.duration?.units ?? "inst" };
+
+    const effect = newEffect(ctx, data, {
+      name: change.name ?? ctx.label, img: change.img, changes, statuses, transfer: false, duration: effectDuration(change.duration),
+    });
+    data.effects.push(effect);
+
+    const id = ctx.id("activate");
+    data.system.activities ??= {};
+    data.system.activities[id] = {
+      _id: id,
+      type: "utility",
       name: change.name ?? ctx.label,
       img: change.img ?? ctx.img,
-      type: "base",
-      system: {},
-      changes,
-      disabled: false,
-      duration: { startTime: null, seconds: null, combat: null, rounds: null, turns: null, startRound: null, startTurn: null },
-      description: "",
-      origin: null,
-      tint: "#ffffff",
-      transfer: change.transfer ?? true,
-      statuses: [],
-      sort: 0,
-      flags: { [MODULE_ID]: { property: ctx.pick.id } },
-    });
+      sort: 100000 + Object.keys(data.system.activities).length,
+      activation: { type: change.activation ?? "action", value: 1, condition: "", override: false },
+      consumption: {
+        targets: [perDay != null
+          ? { type: "activityUses", target: "", value: "1", scaling: { mode: "", formula: "" } }
+          : { type: "itemUses", target: "", value: String(charges), scaling: { mode: "", formula: "" } }],
+        scaling: { allowed: false, max: "" },
+        spellSlot: false,
+      },
+      description: { chatFlavor: "" },
+      duration: { concentration: false, value: duration.value, units: duration.units, special: "", override: false },
+      range: { value: "", units: "self", special: "", override: false },
+      target: {
+        template: { count: "", contiguous: false, type: "", size: "", width: "", height: "", units: "" },
+        affects: { count: "", type: "self", choice: false, special: "" },
+        prompt: false,
+        override: false,
+      },
+      uses: perDay != null
+        ? { spent: 0, max: String(perDay), recovery: [{ period: "dawn", type: "recoverAll", formula: "" }] }
+        : { spent: 0, recovery: [] },
+      effects: [{ _id: effect._id }],
+      roll: { formula: "", name: "", prompt: false, visible: false },
+    };
   },
 
   /** { max, recovery: [{ period, type, formula }] } → the item's charges. One property per item may set them. */

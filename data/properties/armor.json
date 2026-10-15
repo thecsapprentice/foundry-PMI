@@ -1,65 +1,233 @@
 {
-  "$comment": "Armor and shield properties. DMG: +1 armor is rare, +1 shield is uncommon.",
-  "properties": [
+ "$comment": "Armor and shield properties. DMG: +1 armor is rare, +1 shield is uncommon.",
+ "properties": [
+  {
+   "id": "armor-plus-1",
+   "slot": "enhancement",
+   "label": "+1 Armor",
+   "name": "+1",
+   "cost": 6,
+   "weight": 8,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "armor"
+   ],
+   "minRarity": "rare",
+   "changes": [
     {
-      "id": "armor-plus-1", "slot": "enhancement", "label": "+1 Armor", "name": "+1",
-      "cost": 6, "weight": 8, "exclusive": "enhancement", "appliesTo": ["armor"], "minRarity": "rare",
-      "changes": [{ "type": "magicalBonus", "value": 1 }],
-      "text": "You have a +1 bonus to AC while wearing this armor."
-    },
-    {
-      "id": "armor-plus-2", "slot": "enhancement", "label": "+2 Armor", "name": "+2",
-      "cost": 10, "weight": 6, "exclusive": "enhancement", "appliesTo": ["armor"], "minRarity": "veryRare",
-      "changes": [{ "type": "magicalBonus", "value": 2 }],
-      "text": "You have a +2 bonus to AC while wearing this armor."
-    },
-    {
-      "id": "armor-plus-3", "slot": "enhancement", "label": "+3 Armor", "name": "+3",
-      "cost": 15, "weight": 4, "exclusive": "enhancement", "appliesTo": ["armor"], "minRarity": "legendary",
-      "changes": [{ "type": "magicalBonus", "value": 3 }],
-      "text": "You have a +3 bonus to AC while wearing this armor."
-    },
-    {
-      "id": "shield-plus-1", "slot": "enhancement", "label": "+1 Shield", "name": "+1",
-      "cost": 3, "weight": 8, "exclusive": "enhancement", "appliesTo": ["shield"], "minRarity": "uncommon",
-      "changes": [{ "type": "magicalBonus", "value": 1 }],
-      "text": "While holding this shield, you have a +1 bonus to AC in addition to the shield's normal bonus."
-    },
-    {
-      "id": "shield-plus-2", "slot": "enhancement", "label": "+2 Shield", "name": "+2",
-      "cost": 6, "weight": 6, "exclusive": "enhancement", "appliesTo": ["shield"], "minRarity": "rare",
-      "changes": [{ "type": "magicalBonus", "value": 2 }],
-      "text": "While holding this shield, you have a +2 bonus to AC in addition to the shield's normal bonus."
-    },
-    {
-      "id": "shield-plus-3", "slot": "enhancement", "label": "+3 Shield", "name": "+3",
-      "cost": 10, "weight": 4, "exclusive": "enhancement", "appliesTo": ["shield"], "minRarity": "veryRare",
-      "changes": [{ "type": "magicalBonus", "value": 3 }],
-      "text": "While holding this shield, you have a +3 bonus to AC in addition to the shield's normal bonus."
-    },
-    {
-      "id": "of-resistance", "slot": "suffix", "label": "of {damage.label} Resistance", "name": "of {damage.label} Resistance",
-      "cost": 6, "weight": 6, "attunement": true, "appliesTo": ["armor", "shield"], "minRarity": "rare",
-      "params": {
-        "damage": { "pick": [
-          { "value": "acid", "label": "Acid" }, { "value": "cold", "label": "Cold" }, { "value": "fire", "label": "Fire" },
-          { "value": "force", "label": "Force" }, { "value": "lightning", "label": "Lightning" }, { "value": "necrotic", "label": "Necrotic" },
-          { "value": "poison", "label": "Poison" }, { "value": "psychic", "label": "Psychic" }, { "value": "radiant", "label": "Radiant" },
-          { "value": "thunder", "label": "Thunder" }
-        ] }
-      },
-      "changes": [{ "type": "effect", "changes": [{ "key": "system.traits.dr.value", "mode": "add", "value": "@damage" }] }],
-      "text": "While attuned to this item, you have resistance to @damage damage."
-    },
-    {
-      "id": "featherlight", "slot": "prefix", "label": "Featherlight", "name": "Featherlight",
-      "cost": 2, "weight": 6, "appliesTo": ["armor.medium", "armor.heavy"], "minRarity": "uncommon",
-      "changes": [
-        { "type": "itemField", "path": "system.properties", "mode": "removeFromSet", "value": "stealthDisadvantage" },
-        { "type": "itemField", "path": "system.strength", "mode": "set", "value": 0 },
-        { "type": "itemField", "path": "system.weight.value", "mode": "multiply", "value": 0.5 }
-      ],
-      "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much."
+     "type": "magicalBonus",
+     "value": 1
     }
-  ]
+   ],
+   "text": "You have a +1 bonus to AC while wearing this armor."
+  },
+  {
+   "id": "armor-plus-2",
+   "slot": "enhancement",
+   "label": "+2 Armor",
+   "name": "+2",
+   "cost": 10,
+   "weight": 6,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "armor"
+   ],
+   "minRarity": "veryRare",
+   "changes": [
+    {
+     "type": "magicalBonus",
+     "value": 2
+    }
+   ],
+   "text": "You have a +2 bonus to AC while wearing this armor."
+  },
+  {
+   "id": "armor-plus-3",
+   "slot": "enhancement",
+   "label": "+3 Armor",
+   "name": "+3",
+   "cost": 15,
+   "weight": 4,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "armor"
+   ],
+   "minRarity": "legendary",
+   "changes": [
+    {
+     "type": "magicalBonus",
+     "value": 3
+    }
+   ],
+   "text": "You have a +3 bonus to AC while wearing this armor."
+  },
+  {
+   "id": "shield-plus-1",
+   "slot": "enhancement",
+   "label": "+1 Shield",
+   "name": "+1",
+   "cost": 3,
+   "weight": 8,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "shield"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "magicalBonus",
+     "value": 1
+    }
+   ],
+   "text": "While holding this shield, you have a +1 bonus to AC in addition to the shield's normal bonus."
+  },
+  {
+   "id": "shield-plus-2",
+   "slot": "enhancement",
+   "label": "+2 Shield",
+   "name": "+2",
+   "cost": 6,
+   "weight": 6,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "shield"
+   ],
+   "minRarity": "rare",
+   "changes": [
+    {
+     "type": "magicalBonus",
+     "value": 2
+    }
+   ],
+   "text": "While holding this shield, you have a +2 bonus to AC in addition to the shield's normal bonus."
+  },
+  {
+   "id": "shield-plus-3",
+   "slot": "enhancement",
+   "label": "+3 Shield",
+   "name": "+3",
+   "cost": 10,
+   "weight": 4,
+   "exclusive": "enhancement",
+   "appliesTo": [
+    "shield"
+   ],
+   "minRarity": "veryRare",
+   "changes": [
+    {
+     "type": "magicalBonus",
+     "value": 3
+    }
+   ],
+   "text": "While holding this shield, you have a +3 bonus to AC in addition to the shield's normal bonus."
+  },
+  {
+   "id": "of-resistance",
+   "slot": "suffix",
+   "label": "of {damage.label} Resistance",
+   "name": "of {damage.label} Resistance",
+   "cost": 6,
+   "weight": 6,
+   "attunement": true,
+   "appliesTo": [
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "rare",
+   "params": {
+    "damage": {
+     "pick": [
+      {
+       "value": "acid",
+       "label": "Acid"
+      },
+      {
+       "value": "cold",
+       "label": "Cold"
+      },
+      {
+       "value": "fire",
+       "label": "Fire"
+      },
+      {
+       "value": "force",
+       "label": "Force"
+      },
+      {
+       "value": "lightning",
+       "label": "Lightning"
+      },
+      {
+       "value": "necrotic",
+       "label": "Necrotic"
+      },
+      {
+       "value": "poison",
+       "label": "Poison"
+      },
+      {
+       "value": "psychic",
+       "label": "Psychic"
+      },
+      {
+       "value": "radiant",
+       "label": "Radiant"
+      },
+      {
+       "value": "thunder",
+       "label": "Thunder"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.dr.value",
+       "mode": "add",
+       "value": "@damage"
+      }
+     ]
+    }
+   ],
+   "text": "While attuned to this item, you have resistance to @damage damage."
+  },
+  {
+   "id": "featherlight",
+   "slot": "prefix",
+   "label": "Featherlight",
+   "name": "Featherlight",
+   "cost": 2,
+   "weight": 6,
+   "appliesTo": [
+    "armor.medium",
+    "armor.heavy"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "itemField",
+     "path": "system.properties",
+     "mode": "removeFromSet",
+     "value": "stealthDisadvantage"
+    },
+    {
+     "type": "itemField",
+     "path": "system.strength",
+     "mode": "set",
+     "value": 0
+    },
+    {
+     "type": "itemField",
+     "path": "system.weight.value",
+     "mode": "multiply",
+     "value": 0.5
+    }
+   ],
+   "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much."
+  }
+ ]
 }

@@ -49,7 +49,31 @@ export const DEFAULT_BASE_PACKS = ["dnd5e.items", "dnd5e.equipment24"];
 export const DEFAULT_SPELL_PACKS = ["dnd5e.spells", "dnd5e.spells24"];
 
 /** Kinds of base item, most specific first (a staff is also a weapon). The random-base buttons use these. */
-export const BASE_KINDS = ["staff", "wand", "rod", "shield", "armor", "weapon"];
+export const BASE_KINDS = ["staff", "wand", "rod", "worn", "shield", "armor", "weapon"];
+
+/** Equipment types a worn wondrous item can have. */
+export const WORN_TYPES = ["ring", "trinket", "clothing", "wondrous"];
+
+/**
+ * Equipment identifiers (dnd5e's `system.identifier`) that mark a base item's kind and body slot, for
+ * items whose type alone doesn't say: PMI's built-in bases, and the 2024 compendium's Wand and Rod,
+ * which are plain "trinket" equipment.
+ */
+export const IDENTIFIER_CATEGORIES = {
+  wand: ["wand"],
+  rod: ["rod"],
+  ring: ["worn", "ring"],
+  amulet: ["worn", "neck"], necklace: ["worn", "neck"], pendant: ["worn", "neck"],
+  cloak: ["worn", "cloak"], cape: ["worn", "cloak"],
+  boots: ["worn", "feet"],
+  gloves: ["worn", "hands"], gauntlets: ["worn", "hands"],
+  belt: ["worn", "waist"],
+  bracers: ["worn", "wrists"],
+  circlet: ["worn", "head"], headband: ["worn", "head"],
+};
+
+/** UUID-like prefix for PMI's built-in base items (they live in data/bases/, not in a compendium). */
+export const BUILTIN_BASE_PREFIX = "pmi-base:";
 
 /**
  * The charge pool a spell property creates when the item has none yet, by base kind (DMG-style:
@@ -59,5 +83,6 @@ export const CHARGE_POOLS = {
   wand: { max: 7, formula: "1d6 + 1" },
   staff: { max: 10, formula: "1d6 + 4" },
   rod: { max: 5, formula: "1d4 + 1" },
+  worn: { max: 3, formula: "1d3" },
   default: { max: 3, formula: "1d3" },
 };

@@ -1,5 +1,5 @@
 // The DM-guided builder. Drafts live only in this window until the DM clicks Create.
-import { MODULE_ID, RARITIES, SLOTS } from "../config.mjs";
+import { MODULE_ID, RARITIES, SLOTS, BUILTIN_BASE_PREFIX } from "../config.mjs";
 import { newSeed, Rng } from "../generator/rng.mjs";
 import { randomBase, randomRarity } from "../generator/random.mjs";
 import { categorize, isMundane, appliesTo, kindOf } from "../generator/categories.mjs";
@@ -8,7 +8,7 @@ import {
 } from "../generator/roller.mjs";
 import { substitute, plain, spellSpecs } from "../generator/params.mjs";
 import { compile } from "../compiler/index.mjs";
-import { getChangeType, getProperty, listProperties } from "../api.mjs";
+import { getChangeType, getProperty, listProperties, getBase, listBases } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
 import { BASE_INDEX_FIELDS, loadSpellPool } from "../settings.mjs";
 
@@ -23,6 +23,7 @@ const KIND_ICONS = {
   weapon: "fa-solid fa-sword",
   armor: "fa-solid fa-helmet-battle",
   shield: "fa-solid fa-shield-halved",
+  worn: "fa-solid fa-ring",
   staff: "fa-solid fa-staff",
   wand: "fa-solid fa-wand-magic-sparkles",
   rod: "fa-solid fa-wand",
@@ -120,6 +121,13 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   async #loadBaseIndex() {
     if (this.#baseIndex) return this.#baseIndex;
     const out = [];
+    // PMI's built-in bases are always offered, whatever compendiums are chosen.
+    const builtIn = game.i18n.localize("PMI.Builder.BuiltIn");
+    for (const b of listBases()) {
+      const data = getBase(b.id);
+      const kind = kindOf(categorize(data));
+      if (kind) out.push({ uuid: `${BUILTIN_BASE_PREFIX}${b.id}`, name: data.name, group: builtIn, kind });
+    }
     for (const pack of basePacks()) {
       const index = await pack.getIndex({ fields: BASE_INDEX_FIELDS });
       for (const e of index) {
@@ -138,10 +146,16 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Load a base item by UUID. Only mundane weapons, armor and shields are accepted. */
   async #setBase(uuid, { quiet = true } = {}) {
     if (!uuid) { this.#base = null; this.recipe.baseUuid = null; return false; }
-    const doc = await fromUuid(uuid);
     const reject = (key) => { if (!quiet) ui.notifications.warn(game.i18n.localize(key)); return false; };
-    if (!(doc instanceof Item)) return reject("PMI.Builder.BaseMissing");
-    const data = doc.toObject();
+    let data;
+    if (uuid.startsWith(BUILTIN_BASE_PREFIX)) {
+      data = getBase(uuid.slice(BUILTIN_BASE_PREFIX.length));
+      if (!data) return reject("PMI.Builder.BaseMissing");
+    } else {
+      const doc = await fromUuid(uuid);
+      if (!(doc instanceof Item)) return reject("PMI.Builder.BaseMissing");
+      data = doc.toObject();
+    }
     if (!categorize(data).length) return reject("PMI.Builder.BaseUnsupported");
     if (!isMundane(data)) return reject("PMI.Builder.BaseMagical");
     this.#base = data;
@@ -214,7 +228,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       recipe: this.recipe,
       rarities: RARITIES.map((key) => ({ key, label: sentenceCase(L(CONFIG.DND5E?.itemRarity?.[key] ?? key)), selected: key === this.recipe.rarity })),
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
-      baseKinds: ["any", "weapon", "armor", "shield", "staff", "wand", "rod"].map((kind) => ({
+      baseKinds: ["any", "weapon", "armor", "shield", "worn", "staff", "wand", "rod"].map((kind) => ({
         kind,
         icon: KIND_ICONS[kind],
         label: L(`PMI.Builder.Kind.${kind}`),

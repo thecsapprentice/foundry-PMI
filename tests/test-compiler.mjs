@@ -6,13 +6,15 @@ import { RARITIES } from "../scripts/config.mjs";
 import { loadAll, fixture, spellPool } from "./load-node.mjs";
 import { check } from "./check.mjs";
 
-const { properties, getDef, getTranslator } = loadAll();
+const { properties, getDef, getTranslator, getBase, listBases } = loadAll();
+// A base by name: a test fixture (real SRD item) or one of PMI's built-ins ("builtin:ring").
+const baseData = (name) => name.startsWith("builtin:") ? getBase(name.slice(8)) : fixture(name);
 const opts = { getDef, getTranslator };
 const spells = spellPool();
 const build = (base, rarity, ids, seed = "test-seed") => {
   let r = newRecipe({ seed, rarity, baseUuid: `Compendium.dnd5e.items.Item.${base}` });
   for (const id of ids) r = addPick(r, getDef(id), { spells });
-  return compile(r, fixture(base), opts);
+  return compile(r, baseData(base), opts);
 };
 
 check("damagePart simple dice", JSON.stringify(damagePart("2d6", ["fire"])).includes('"number":2,"denomination":6'));
@@ -20,11 +22,12 @@ check("damagePart dice + bonus", damagePart("1d8+3").bonus === "3");
 check("damagePart custom formula", damagePart("1d4 + @prof").custom.enabled === true);
 
 // Every property compiles on every base it applies to, at every rarity it allows.
-const bases = ["longsword", "dagger", "shortbow", "greataxe", "chain-mail", "leather-armor", "shield", "wand", "staff", "rod"];
+const bases = ["longsword", "dagger", "shortbow", "greataxe", "chain-mail", "leather-armor", "shield", "wand", "staff", "rod",
+  ...listBases().map((b) => `builtin:${b.id}`)];
 let all = true, why = "";
 for (const def of properties) {
   for (const base of bases) {
-    if (!def.appliesTo.some((c) => categorize(fixture(base)).includes(c))) continue;
+    if (!def.appliesTo.some((c) => categorize(baseData(base)).includes(c))) continue;
     for (const rarity of RARITIES.slice(RARITIES.indexOf(def.minRarity ?? "common"), RARITIES.indexOf(def.maxRarity ?? "artifact") + 1)) {
       // Properties that need another slot filled (Abundant needs a spell) get a level-1 spell first.
       const ids = def.requiresSlot ? ["spell-1", def.id] : [def.id];
@@ -39,11 +42,11 @@ check("every property compiles everywhere it applies", all, why);
 // Random rolls compile.
 let rolled = true, rwhy = "";
 for (const base of bases) for (const rarity of ["uncommon", "rare", "veryRare", "legendary"]) for (let i = 0; i < 25; i++) {
-  const r = roll(newRecipe({ seed: `c${i}`, rarity }), { properties, categories: categorize(fixture(base)), spells });
-  const { errors } = compile(r, fixture(base), opts);
+  const r = roll(newRecipe({ seed: `c${i}`, rarity }), { properties, categories: categorize(baseData(base)), spells });
+  const { errors } = compile(r, baseData(base), opts);
   if (errors.length) { rolled = false; rwhy = `${base} ${rarity} c${i}: ${errors.join("; ")}`; }
 }
-check("1,000 random rolls compile without errors", rolled, rwhy);
+check(`${bases.length * 100} random rolls compile without errors`, rolled, rwhy);
 
 // A specific item, checked field by field.
 const { data } = build("longsword", "rare", ["elemental", "weapon-plus-1", "of-the-beast"], "fixed-seed");
@@ -148,3 +151,46 @@ check("a weapon charge property and spells share one pool", thunderStaff.system.
 
 const badSpell = pinned("wand", "rare", [{ ...spellPick("spell-3", fireball), params: { spell: { value: "not-a-uuid", uuid: "not-a-uuid", name: "X", level: 3 } } }]);
 check("a malformed spell UUID fails safely", badSpell.data === null && /UUID/.test(badSpell.errors[0]));
+
+// Worn items on PMI's built-in bases.
+check("ten built-in bases", listBases().length === 10);
+for (const b of listBases()) check(`built-in ${b.id} is a usable mundane base`, categorize(getBase(b.id)).length > 0);
+check("built-in bases are copies", (getBase("ring").name = "X", getBase("ring").name === "Ring"));
+
+const pinnedB = (base, rarity, picks) => compile({ ...newRecipe({ seed: "wb", rarity, baseUuid: `pmi-base:${base}` }), picks }, getBase(base), opts);
+const silent = pinnedB("cloak", "uncommon", [{ id: "skilled", seed: "s", locked: false, params: { skill: { value: "ste", name: "Silent", label: "Stealth" } } }]).data;
+check("skill advantage effect", silent.effects[0].changes[0].key === "system.skills.ste.roll.mode" && silent.effects[0].changes[0].mode === 2 && silent.effects[0].changes[0].value === "1");
+check("worn item is named prefix + base", silent.name === "Silent Cloak", silent.name);
+check("worn item keeps its equipment type", silent.type === "equipment" && silent.system.type.value === "clothing");
+
+const boots = pinnedB("boots", "rare", [{ id: "winged", seed: "w", locked: false, params: { speed: 60 } }]).data;
+const fly = Object.values(boots.system.activities).find((a) => a.type === "utility");
+const flyFx = boots.effects.find((e) => e._id === fly?.effects[0]?._id);
+check("activated power is a utility activity", !!fly && fly.activation.type === "bonus");
+check("once per day, regained at dawn", fly?.uses.max === "1" && fly.uses.recovery[0].period === "dawn" && fly.consumption.targets[0].type === "activityUses");
+check("activity applies the item's own effect", !!flyFx && flyFx.transfer === false);
+check("effect lasts 10 minutes", flyFx?.duration.seconds === 600);
+check("effect grants the flying speed", flyFx?.changes[0].key === "system.attributes.movement.fly" && flyFx.changes[0].value === "60" && flyFx.changes[0].mode === 4);
+check("activity targets self", fly?.target.affects.type === "self" && fly.range.units === "self");
+check("no charge pool for a per-day power", !boots.system.uses?.max);
+
+const ring = pinnedB("ring", "rare", [{ id: "vanishing", seed: "v", locked: false, params: {} }]).data;
+const vfx = ring.effects[0];
+check("status-only power: invisible for 1 minute", JSON.stringify(vfx.statuses) === '["invisible"]' && vfx.changes.length === 0 && vfx.duration.seconds === 60);
+
+const belt = pinnedB("belt", "veryRare", [{ id: "ability-score", seed: "a", locked: false, params: { ability: { value: "str", name: "Might", label: "Strength" }, score: 23 } }]).data;
+check("ability score raised, never lowered (upgrade)", belt.effects[0].changes[0].key === "system.abilities.str.value" && belt.effects[0].changes[0].mode === 4 && belt.effects[0].changes[0].value === "23");
+check("ability-score item needs attunement", belt.system.attunement === "required");
+check("belt named after its suffix", belt.name === "Belt of Might", belt.name);
+
+const amulet = pinnedB("amulet", "rare", [spellPick("spell-3", fireball)]).data;
+const acast = Object.values(amulet.system.activities).find((a) => a.type === "cast");
+check("amulet with a spell gets a worn charge pool", amulet.system.uses.max === "3" && amulet.system.uses.recovery[0].formula === "1d3");
+check("worn items spend 1 charge per spell", acast?.consumption.targets[0].value === "1");
+check("amulet named after its spell", amulet.name === "Amulet of Fireball", amulet.name);
+
+const prot = pinnedB("ring", "veryRare", [{ id: "of-protection", seed: "p", locked: false, params: { bonus: 2 } }]).data;
+check("of Protection scales with rarity", prot.effects[0].changes.every((c) => c.value === "+2"));
+
+const bw = pinnedB("wand", "rare", [spellPick("spell-3", fireball)]).data;
+check("built-in wand works like the SRD wand", bw.system.uses.max === "7" && bw.name === "Wand of Fireball");

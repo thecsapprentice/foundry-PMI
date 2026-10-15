@@ -23,7 +23,8 @@ const missing = new Set();
 substitute(["@nope", "x {nope.k}"], vars, missing);
 check("unknown variables are reported", missing.has("nope") && missing.has("nope.k"));
 
-check("longsword categories", JSON.stringify(categorize(fixture("longsword"))) === JSON.stringify(["weapon", "weapon.melee", "weapon.martial", "weapon.longsword"]));
+check("longsword categories", JSON.stringify(categorize(fixture("longsword"))) === JSON.stringify(["weapon", "weapon.melee", "weapon.martial", "weapon.longsword", "weapon.prop.ver"]));
+check("weapon properties become categories", categorize(fixture("greataxe")).includes("weapon.prop.hvy") && categorize(fixture("dagger")).includes("weapon.prop.fin"));
 check("shortbow is ranged", categorize(fixture("shortbow")).includes("weapon.ranged"));
 check("chain mail is heavy armor", categorize(fixture("chain-mail")).includes("armor.heavy"));
 check("shield is a shield", JSON.stringify(categorize(fixture("shield"))) === '["shield"]');

@@ -3,7 +3,8 @@ import { ARMOR_TYPES, SHIELD_TYPES, WAND_TYPES, ROD_TYPES, BASE_KINDS, WORN_TYPE
 
 /**
  * Categories for a base item's source data, e.g.
- *   Longsword  → ["weapon", "weapon.melee", "weapon.martial", "weapon.longsword"]
+ *   Longsword  → ["weapon", "weapon.melee", "weapon.martial", "weapon.longsword", "weapon.prop.ver"]
+ *                (weapon properties appear as "weapon.prop.<key>": hvy, fin, thr, two, lgt, amm, …)
  *   Chain Mail → ["armor", "armor.heavy", "armor.chainmail"]
  *   Shield     → ["shield"]
  *   Staff      → ["staff", "weapon", "weapon.melee", …]   (a quarterstaff that is a spellcasting focus)
@@ -26,6 +27,7 @@ export function categorize(base) {
     if (type.startsWith("simple")) out.push("weapon.simple");
     if (type.startsWith("martial")) out.push("weapon.martial");
     if (baseItem) out.push(`weapon.${baseItem}`);
+    for (const p of Array.isArray(props) ? props : [...(props ?? [])]) if (p !== "mgc" && p !== "foc") out.push(`weapon.prop.${p}`);
     return out;
   }
   if (base?.type === "equipment" && ARMOR_TYPES.includes(type)) {
@@ -45,8 +47,9 @@ export function categorize(base) {
   return [];
 }
 
-/** Does a property's `appliesTo` list match any of these categories? */
+/** Does a property fit these categories: something in `appliesTo` matches, and nothing in `notFor` does? */
 export function appliesTo(def, categories) {
+  if ((def.notFor ?? []).some((c) => categories.includes(c))) return false;
   return (def.appliesTo ?? []).some((c) => categories.includes(c));
 }
 

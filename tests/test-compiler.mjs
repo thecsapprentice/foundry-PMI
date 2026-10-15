@@ -1,7 +1,7 @@
 import { compile } from "../scripts/compiler/index.mjs";
 import { damagePart } from "../scripts/compiler/damage.mjs";
-import { categorize } from "../scripts/generator/categories.mjs";
-import { newRecipe, addPick, roll } from "../scripts/generator/roller.mjs";
+import { categorize, appliesTo } from "../scripts/generator/categories.mjs";
+import { newRecipe, addPick, roll, blockReason } from "../scripts/generator/roller.mjs";
 import { RARITIES } from "../scripts/config.mjs";
 import { loadAll, fixture, spellPool } from "./load-node.mjs";
 import { check } from "./check.mjs";
@@ -30,7 +30,7 @@ for (const def of properties) {
     if (!def.appliesTo.some((c) => categorize(baseData(base)).includes(c))) continue;
     for (const rarity of RARITIES.slice(RARITIES.indexOf(def.minRarity ?? "common"), RARITIES.indexOf(def.maxRarity ?? "artifact") + 1)) {
       // Properties that need another slot filled (Abundant needs a spell) get a level-1 spell first.
-      const ids = def.requiresSlot ? ["spell-1", def.id] : [def.id];
+      const ids = def.requiresSlot || def.requiresCharges ? ["spell-1", def.id] : [def.id];
       const { data, errors, warnings } = build(base, rarity, ids);
       if (!data || errors.length || warnings.length) { all = false; why = `${def.id} on ${base} at ${rarity}: ${[...errors, ...warnings].join("; ")}`; }
       if (data && /@\w|\{\w+(\.\w+)?\}/.test(JSON.stringify(data).replace(/@UUID\[[^\]]*\]\{[^}]*\}/g, "").replace(/@UUID|@Embed|@scale|@item|@prof|@mod/g, ""))) { all = false; why = `${def.id} on ${base}: unsubstituted variable left in data`; }
@@ -194,3 +194,52 @@ check("of Protection scales with rarity", prot.effects[0].changes.every((c) => c
 
 const bw = pinnedB("wand", "rare", [spellPick("spell-3", fireball)]).data;
 check("built-in wand works like the SRD wand", bw.system.uses.max === "7" && bw.name === "Wand of Fireball");
+
+// ---- 0.7 properties
+const pick = (id, params = {}) => ({ id, seed: `p-${id}`, locked: false, params });
+const one = (base, rarity, p) => compile({ ...newRecipe({ seed: "n7", rarity, baseUuid: "x" }), picks: [p] }, baseData(base), opts);
+const attackOf = (d) => Object.values(d.system.activities).find((a) => a.type === "attack");
+
+check("Balanced isn't offered on heavy or finesse weapons", !appliesTo(getDef("balanced"), categorize(fixture("greataxe"))) && !appliesTo(getDef("balanced"), categorize(fixture("dagger"))));
+const bal = one("longsword", "uncommon", pick("balanced")).data;
+check("Balanced adds finesse", bal.system.properties.includes("fin"));
+const thr = one("longsword", "uncommon", pick("throwing")).data;
+check("Throwing adds thrown with 20/60 range", thr.system.properties.includes("thr") && thr.system.range.value === 20 && thr.system.range.long === 60);
+check("Far-Reaching fits bows and thrown weapons, not swords", appliesTo(getDef("far-reaching"), categorize(fixture("shortbow"))) && appliesTo(getDef("far-reaching"), categorize(fixture("dagger"))) && !appliesTo(getDef("far-reaching"), categorize(fixture("longsword"))));
+const far = one("shortbow", "uncommon", pick("far-reaching", { near: 20, far: 60 })).data;
+check("Far-Reaching extends range", far.system.range.value === fixture("shortbow").system.range.value + 20 && far.system.range.long === fixture("shortbow").system.range.long + 60);
+const prec = one("longsword", "rare", pick("precise", { bonus: 2 })).data;
+check("Precise adds to attack rolls only", attackOf(prec).attack.bonus === "2" && !prec.system.magicalBonus);
+
+const terror = one("longsword", "rare", pick("of-terror")).data;
+const tsave = Object.values(terror.system.activities).find((a) => a.type === "save");
+const tfx = terror.effects.find((e) => e._id === tsave?.effects[0]?._id);
+check("of Terror: Wis save at the rarity's DC", tsave?.save.ability[0] === "wis" && tsave.save.dc.formula === "15");
+check("of Terror: frightened for 1 minute on a failed save", JSON.stringify(tfx?.statuses) === '["frightened"]' && tfx.duration.seconds === 60 && tsave.effects[0].onSave === false && tfx.transfer === false);
+check("of Terror: once per day, 30 ft, one creature", tsave?.uses.max === "1" && tsave.range.value === "30" && tsave.target.affects.count === "1");
+check("of Terror: no damage, no charge pool", tsave?.damage.parts.length === 0 && !terror.system.uses?.max);
+check("of Terror text uses a save enricher", terror.system.description.value.includes("[[/save wis 15]]"));
+
+const vit = one("builtin:amulet", "rare", pick("of-vitality", { heal: "4d4 + 4" })).data;
+const heal = Object.values(vit.system.activities).find((a) => a.type === "heal");
+check("of Vitality: self-heal once per day", heal?.healing.number === 4 && heal.healing.denomination === 4 && heal.healing.bonus === "4" && JSON.stringify(heal.healing.types) === '["healing"]' && heal.uses.max === "1" && heal.target.affects.type === "self");
+const bw2 = one("shield", "uncommon", pick("bulwark", { thp: "2d6" })).data;
+check("Bulwark grants temporary hit points", JSON.stringify(Object.values(bw2.system.activities).find((a) => a.type === "heal")?.healing.types) === '["temphp"]');
+
+const fireBolt = spells.find((sp) => sp.name === "Fire Bolt");
+const can = compile({ ...newRecipe({ seed: "c0", rarity: "uncommon", baseUuid: "x" }), picks: [spellPick("spell-0", fireBolt)] }, getBase("wand"), opts).data;
+const ccast = Object.values(can.system.activities).find((a) => a.type === "cast");
+check("cantrip: cast at will, no charges, no pool", ccast?.spell.level === 0 && ccast.consumption.targets.length === 0 && !can.system.uses?.max);
+check("cantrip text says at will", /at will/.test(can.system.description.value));
+check("Abundant isn't offered with only a cantrip", blockReason(getDef("abundant"), { ...newRecipe({ seed: "x", rarity: "rare" }), picks: [spellPick("spell-0", fireBolt)] }, categorize(getBase("wand")), getDef, { spells }) === "requires");
+check("Abundant is offered with a charged spell", blockReason(getDef("abundant"), { ...newRecipe({ seed: "x", rarity: "rare" }), picks: [spellPick("spell-1", mm)] }, categorize(getBase("wand")), getDef, { spells }) === null);
+
+const pot = one("builtin:ring", "rare", pick("potent", { bonus: 1 })).data;
+check("Potent raises spell save DC", pot.effects[0].changes[0].key === "system.bonuses.spell.dc" && pot.effects[0].changes[0].value === "+1");
+const tongue = one("builtin:circlet", "uncommon", pick("of-tongues", { lang: { value: "draconic", label: "Draconic" } })).data;
+check("of Tongues adds a language", tongue.effects[0].changes[0].key === "system.traits.languages.value" && tongue.effects[0].changes[0].value === "draconic");
+const pur = one("builtin:amulet", "rare", pick("of-purity")).data;
+check("of Purity: poison immunity and poisoned immunity", pur.effects[0].changes.map((c) => `${c.key}=${c.value}`).join() === "system.traits.di.value=poison,system.traits.ci.value=poisoned");
+const sa = one("chain-mail", "rare", pick("save-advantage", { ability: { value: "con", name: "Enduring", label: "Constitution" } })).data;
+check("save advantage effect", sa.effects[0].changes[0].key === "system.abilities.con.save.roll.mode" && sa.effects[0].changes[0].value === "1");
+check("save-advantage name", sa.name === "Enduring Chain Mail", sa.name);

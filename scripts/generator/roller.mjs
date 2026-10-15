@@ -47,6 +47,17 @@ export function usedSpells(recipe, ignoreIndex = -1) {
   return out;
 }
 
+/**
+ * Does a property's requirement hold, given the other properties on the item?
+ *   requiresSlot: "spell"     another property in that slot
+ *   requiresCharges: true     another property that gives the item charges (providesCharges)
+ */
+export function requirementsMet(def, otherDefs) {
+  if (def.requiresSlot && !otherDefs.some((d) => d.slot === def.requiresSlot)) return false;
+  if (def.requiresCharges && !otherDefs.some((d) => d.providesCharges)) return false;
+  return true;
+}
+
 export function blockReason(def, recipe, categories, getDef, { ignoreIndex = -1, ignoreBudget = false, spells } = {}) {
   if (!appliesTo(def, categories)) return "category";
   if (def.minRarity && rank(recipe.rarity) < rank(def.minRarity)) return "rarityLow";
@@ -57,7 +68,7 @@ export function blockReason(def, recipe, categories, getDef, { ignoreIndex = -1,
   if (otherDefs.filter((d) => d.slot === def.slot).length >= (SLOT_LIMITS[def.slot] ?? 1)) return "slotFull";
   const groups = new Set(otherDefs.flatMap((d) => [].concat(d.exclusive ?? [])));
   if ([].concat(def.exclusive ?? []).some((g) => groups.has(g))) return "exclusive";
-  if (def.requiresSlot && !otherDefs.some((d) => d.slot === def.requiresSlot)) return "requires";
+  if (!requirementsMet(def, otherDefs)) return "requires";
   const rules = RARITY_RULES[recipe.rarity] ?? RARITY_RULES.uncommon;
   if (others.length >= rules.maxProperties) return "maxProperties";
   if (!ignoreBudget) {
@@ -171,7 +182,7 @@ export function invalidPicks(recipe, { properties, categories }) {
     const partial = { ...recipe, picks: recipe.picks.slice(0, i) };
     let reason = blockReason(def, partial, categories, getDef, { ignoreBudget: true, spells: null });
     // Picks are checked in the order they were added, but a requirement may be met by a later pick.
-    if (reason === "requires" && recipe.picks.some((q, j) => j !== i && getDef(q.id)?.slot === def.requiresSlot)) reason = null;
+    if (reason === "requires" && requirementsMet(def, recipe.picks.filter((_, j) => j !== i).map((q) => getDef(q.id)).filter(Boolean))) reason = null;
     if (reason === "noSpells") reason = null; // a pick keeps the spell it already rolled
     if (reason) out.push({ index: i, reason });
   });

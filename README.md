@@ -54,13 +54,13 @@ PMI never edits or deletes existing items (including the ones it made), actors, 
 
 ## Property files
 
-Properties live in `data/properties/*.json`. Each has an `id`, a `slot` (`enhancement`, `prefix`, `suffix` or `spell`), a `cost` against the rarity's budget, a `weight` for random picks, the categories it `appliesTo` (`weapon`, `weapon.melee`, `armor.heavy`, `shield`, …), optional `minRarity`/`maxRarity`, an `exclusive` group, `requiresSlot`, `weightBy` (weight multipliers by category, e.g. `{ "feet": 3 }`), `attunement`, `params`, `changes` and `text`.
+Properties live in `data/properties/*.json`. Each has an `id`, a `slot` (`enhancement`, `prefix`, `suffix` or `spell`), a `cost` against the rarity's budget, a `weight` for random picks, the categories it `appliesTo` (`weapon`, `weapon.melee`, `armor.heavy`, `shield`, …), optional `minRarity`/`maxRarity`, `notFor` (categories it never applies to, e.g. `weapon.prop.hvy` for heavy weapons), an `exclusive` group, `requiresSlot` or `requiresCharges` (needs another property that `providesCharges`), `weightBy` (weight multipliers by category, e.g. `{ "feet": 3 }`), `attunement`, `params`, `changes` and `text`.
 
 A parameter can roll a spell: `{ "spell": { "minLevel": 3, "maxLevel": 3, "school": ["evo"], "classes": ["wizard"], "concentration": false } }` picks a matching spell from the chosen spell sources, never one already on the item.
 
 Built-in bases live in `data/bases/builtin.json`.
 
-Change types so far: `magicalBonus`, `itemField`, `activityDamage`, `attackCritical`, `effect`, `activate`, `uses`, `usesBonus`, `saveActivity` and `castSpell`. Other modules can add bases, properties and change types through `game.modules.get("foundry-pmi").api` in the `foundry-pmi.ready` hook.
+Change types so far: `magicalBonus`, `itemField`, `activityDamage`, `attackCritical`, `attackBonus`, `effect`, `activate`, `healActivity`, `uses`, `usesBonus`, `saveActivity` (damage and/or a condition on a failed save, optionally once per day) and `castSpell` (0 charges for at-will cantrips). Other modules can add bases, properties and change types through `game.modules.get("foundry-pmi").api` in the `foundry-pmi.ready` hook.
 
 | Rarity | Budget | Max properties | Save DC |
 |---|---|---|---|

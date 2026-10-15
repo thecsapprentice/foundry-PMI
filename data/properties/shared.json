@@ -188,6 +188,279 @@
     "ring": 2,
     "cloak": 2
    }
+  },
+  {
+   "id": "save-advantage",
+   "slot": "prefix",
+   "label": "{ability.name} ({ability.label} save advantage)",
+   "name": "{ability.name}",
+   "cost": 3,
+   "weight": 5,
+   "attunement": true,
+   "appliesTo": [
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "rare",
+   "params": {
+    "ability": {
+     "pick": [
+      {
+       "value": "str",
+       "name": "Unyielding",
+       "label": "Strength"
+      },
+      {
+       "value": "dex",
+       "name": "Evasive",
+       "label": "Dexterity"
+      },
+      {
+       "value": "con",
+       "name": "Enduring",
+       "label": "Constitution"
+      },
+      {
+       "value": "int",
+       "name": "Lucid",
+       "label": "Intelligence"
+      },
+      {
+       "value": "wis",
+       "name": "Steadfast",
+       "label": "Wisdom"
+      },
+      {
+       "value": "cha",
+       "name": "Defiant",
+       "label": "Charisma"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.abilities.@ability.save.roll.mode",
+       "mode": "add",
+       "value": 1
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you have advantage on {ability.label} saving throws."
+  },
+  {
+   "id": "vigilant",
+   "slot": "prefix",
+   "label": "Vigilant (+@bonus initiative)",
+   "name": "Vigilant",
+   "cost": 1,
+   "weight": 5,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "head": 2
+   },
+   "params": {
+    "bonus": {
+     "byRarity": {
+      "uncommon": 2,
+      "rare": 3,
+      "veryRare": 5
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.init.bonus",
+       "mode": "add",
+       "value": "+@bonus"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, you have a +@bonus bonus to initiative rolls."
+  },
+  {
+   "id": "hearty",
+   "slot": "prefix",
+   "label": "Hearty (+@hp HP per level)",
+   "name": "Hearty",
+   "cost": 4,
+   "weight": 4,
+   "attunement": true,
+   "appliesTo": [
+    "armor",
+    "worn"
+   ],
+   "minRarity": "rare",
+   "weightBy": {
+    "neck": 2,
+    "waist": 2
+   },
+   "params": {
+    "hp": {
+     "byRarity": {
+      "rare": 1,
+      "legendary": 2
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.hp.bonuses.level",
+       "mode": "add",
+       "value": "+@hp"
+      }
+     ]
+    }
+   ],
+   "text": "While attuned to this item, your hit point maximum increases by @hp for each level you have."
+  },
+  {
+   "id": "fearless",
+   "slot": "prefix",
+   "label": "Fearless (immune to frightened)",
+   "name": "Fearless",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.ci.value",
+       "mode": "add",
+       "value": "frightened"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you can't be frightened."
+  },
+  {
+   "id": "clear-minded",
+   "slot": "prefix",
+   "label": "Clear-Minded (immune to charmed)",
+   "name": "Clear-Minded",
+   "cost": 3,
+   "weight": 3,
+   "appliesTo": [
+    "head",
+    "neck",
+    "ring"
+   ],
+   "minRarity": "rare",
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.ci.value",
+       "mode": "add",
+       "value": "charmed"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you can't be charmed."
+  },
+  {
+   "id": "of-vitality",
+   "slot": "suffix",
+   "label": "of Vitality (heal @heal, 1/day)",
+   "name": "of Vitality",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "neck": 2
+   },
+   "params": {
+    "heal": {
+     "byRarity": {
+      "uncommon": "2d4 + 2",
+      "rare": "4d4 + 4",
+      "veryRare": "8d4 + 8"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "healActivity",
+     "name": "Renew",
+     "formula": "@heal",
+     "healType": "healing",
+     "perDay": 1,
+     "activation": "bonus"
+    }
+   ],
+   "text": "As a bonus action, you can regain [[/heal @heal]] hit points. Once used, this property can't be used again until the next dawn."
+  },
+  {
+   "id": "bulwark",
+   "slot": "prefix",
+   "label": "Bulwark (@thp temporary HP, 1/day)",
+   "name": "Bulwark",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "armor",
+    "shield",
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "waist": 2,
+    "wrists": 2,
+    "shield": 1.5
+   },
+   "params": {
+    "thp": {
+     "byRarity": {
+      "uncommon": "2d6",
+      "rare": "4d6",
+      "veryRare": "6d6"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "healActivity",
+     "name": "Brace",
+     "formula": "@thp",
+     "healType": "temphp",
+     "perDay": 1,
+     "activation": "bonus"
+    }
+   ],
+   "text": "As a bonus action, you can gain [[/heal @thp temp]] temporary hit points. Once used, this property can't be used again until the next dawn."
   }
  ]
 }

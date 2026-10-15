@@ -360,6 +360,233 @@
     }
    ],
    "text": "While you wear this item, your walking speed increases by @speed feet."
+  },
+  {
+   "id": "of-tongues",
+   "slot": "suffix",
+   "label": "of Tongues ({lang.label})",
+   "name": "of Tongues",
+   "cost": 1,
+   "weight": 4,
+   "appliesTo": [
+    "head",
+    "neck",
+    "ring"
+   ],
+   "minRarity": "uncommon",
+   "params": {
+    "lang": {
+     "pick": [
+      {
+       "value": "draconic",
+       "label": "Draconic"
+      },
+      {
+       "value": "dwarvish",
+       "label": "Dwarvish"
+      },
+      {
+       "value": "elvish",
+       "label": "Elvish"
+      },
+      {
+       "value": "giant",
+       "label": "Giant"
+      },
+      {
+       "value": "gnomish",
+       "label": "Gnomish"
+      },
+      {
+       "value": "goblin",
+       "label": "Goblin"
+      },
+      {
+       "value": "orc",
+       "label": "Orc"
+      },
+      {
+       "value": "abyssal",
+       "label": "Abyssal"
+      },
+      {
+       "value": "celestial",
+       "label": "Celestial"
+      },
+      {
+       "value": "deep",
+       "label": "Deep Speech"
+      },
+      {
+       "value": "infernal",
+       "label": "Infernal"
+      },
+      {
+       "value": "primordial",
+       "label": "Primordial"
+      },
+      {
+       "value": "sylvan",
+       "label": "Sylvan"
+      },
+      {
+       "value": "undercommon",
+       "label": "Undercommon"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.languages.value",
+       "mode": "add",
+       "value": "@lang"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you can speak, read and write {lang.label}."
+  },
+  {
+   "id": "of-the-bat",
+   "slot": "suffix",
+   "label": "of the Bat (blindsight @range ft.)",
+   "name": "of the Bat",
+   "cost": 3,
+   "weight": 3,
+   "attunement": true,
+   "appliesTo": [
+    "head",
+    "neck"
+   ],
+   "minRarity": "rare",
+   "params": {
+    "range": {
+     "byRarity": {
+      "rare": 10,
+      "veryRare": 30
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.senses.blindsight",
+       "mode": "upgrade",
+       "value": "@range"
+      }
+     ]
+    }
+   ],
+   "text": "While attuned to this item, you have blindsight out to a range of @range feet."
+  },
+  {
+   "id": "of-purity",
+   "slot": "suffix",
+   "label": "of Purity (poison immunity)",
+   "name": "of Purity",
+   "cost": 4,
+   "weight": 3,
+   "appliesTo": [
+    "neck",
+    "ring",
+    "head"
+   ],
+   "minRarity": "rare",
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.di.value",
+       "mode": "add",
+       "value": "poison"
+      },
+      {
+       "key": "system.traits.ci.value",
+       "mode": "add",
+       "value": "poisoned"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you are immune to poison damage and the poisoned condition."
+  },
+  {
+   "id": "amphibious",
+   "slot": "prefix",
+   "label": "Amphibious (swim @speed ft.)",
+   "name": "Amphibious",
+   "cost": 1,
+   "weight": 4,
+   "appliesTo": [
+    "worn"
+   ],
+   "minRarity": "uncommon",
+   "weightBy": {
+    "feet": 2,
+    "cloak": 2,
+    "hands": 1.5
+   },
+   "params": {
+    "speed": {
+     "byRarity": {
+      "uncommon": 30,
+      "rare": 40
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.movement.swim",
+       "mode": "upgrade",
+       "value": "@speed"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you have a swimming speed of @speed feet."
+  },
+  {
+   "id": "clinging",
+   "slot": "prefix",
+   "label": "Clinging (climb @speed ft.)",
+   "name": "Clinging",
+   "cost": 2,
+   "weight": 4,
+   "appliesTo": [
+    "feet",
+    "hands"
+   ],
+   "minRarity": "uncommon",
+   "params": {
+    "speed": {
+     "byRarity": {
+      "uncommon": 30
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.movement.climb",
+       "mode": "upgrade",
+       "value": "@speed"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you have a climbing speed of @speed feet."
   }
  ]
 }

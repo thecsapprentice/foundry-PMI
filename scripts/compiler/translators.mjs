@@ -119,6 +119,51 @@ function newEffect(ctx, data, { name, img, changes, statuses = [], transfer, dur
   };
 }
 
+/**
+ * How often an activity can be used: { perDay } gives it its own uses regained at dawn, { charges } spends
+ * the item's charges (creating the kind's pool if the item has none). With `required`, one must be given.
+ * @returns {{ uses: object, targets: object[] }}
+ */
+function limits(change, data, ctx, { required = true } = {}) {
+  const perDay = change.perDay != null ? Number(change.perDay) : null;
+  const charges = change.charges != null ? Number(change.charges) : null;
+  if (perDay != null && charges != null) throw new Error("use either perDay or charges, not both");
+  if (required && perDay == null && charges == null) throw new Error("needs perDay or charges");
+  if (perDay != null && (!Number.isInteger(perDay) || perDay < 1)) throw new Error(`perDay must be a positive whole number, got ${change.perDay}`);
+  if (charges != null && (!Number.isInteger(charges) || charges < 1)) throw new Error(`charges must be a positive whole number, got ${change.charges}`);
+  if (charges != null) ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
+  const target = (type, value) => ({ type, target: "", value: String(value), scaling: { mode: "", formula: "" } });
+  if (perDay != null) {
+    return { uses: { spent: 0, max: String(perDay), recovery: [{ period: "dawn", type: "recoverAll", formula: "" }] }, targets: [target("activityUses", 1)] };
+  }
+  return { uses: { spent: 0, recovery: [] }, targets: charges != null ? [target("itemUses", charges)] : [] };
+}
+
+/** Fields every activity needs, with sensible defaults; `extra` overrides or adds. */
+function baseActivity(id, type, ctx, change, data, extra) {
+  return {
+    _id: id,
+    type,
+    name: change.name ?? ctx.label,
+    img: change.img ?? ctx.img,
+    sort: 100000 + Object.keys(data.system.activities ?? {}).length,
+    activation: { type: change.activation ?? "action", value: 1, condition: "", override: false },
+    consumption: { targets: [], scaling: { allowed: false, max: "" }, spellSlot: false },
+    description: { chatFlavor: "" },
+    duration: { concentration: false, value: "", units: "inst", special: "", override: false },
+    range: { value: "", units: "self", special: "", override: false },
+    target: {
+      template: { count: "", contiguous: false, type: "", size: "", width: "", height: "", units: "" },
+      affects: { count: "", type: "self", choice: false, special: "" },
+      prompt: false,
+      override: false,
+    },
+    uses: { spent: 0, recovery: [] },
+    effects: [],
+    ...extra,
+  };
+}
+
 export const BUILTIN_TRANSLATORS = {
   /** { value: 1|2|3 } → weapon `magicalBonus`, or armor/shield `armor.magicalBonus`. Never lowers it. */
   magicalBonus(data, change) {
@@ -171,6 +216,36 @@ export const BUILTIN_TRANSLATORS = {
         act.damage.critical.bonus = cur ? `${cur} + ${change.bonus}` : String(change.bonus);
       }
     }
+  },
+
+  /** { bonus } → an extra attack-roll bonus (not damage) on every attack activity. */
+  attackBonus(data, change) {
+    const b = String(change.bonus ?? "").trim();
+    if (!/^[+-]?\d+$/.test(b)) throw new Error(`attackBonus needs a whole number, got ${change.bonus}`);
+    const n = Number(b);
+    for (const act of attackActivities(data)) {
+      act.attack ??= {};
+      const cur = String(act.attack.bonus ?? "").trim();
+      act.attack.bonus = cur ? `${cur} ${n < 0 ? "-" : "+"} ${Math.abs(n)}` : String(n);
+    }
+  },
+
+  /**
+   * A Heal activity the wearer uses on themselves:
+   *   { name, formula, healType: "healing" | "temphp", activation, perDay | charges }
+   */
+  healActivity(data, change, ctx) {
+    if (!change.formula) throw new Error("healActivity needs a formula");
+    const type = change.healType ?? "healing";
+    if (!["healing", "temphp"].includes(type)) throw new Error(`healActivity type must be healing or temphp, got ${type}`);
+    const { uses, targets } = limits(change, data, ctx);
+    const id = ctx.id("heal");
+    data.system.activities ??= {};
+    data.system.activities[id] = baseActivity(id, "heal", ctx, change, data, {
+      consumption: { targets, scaling: { allowed: false, max: "" }, spellSlot: false },
+      uses,
+      healing: damagePart(change.formula, [type]),
+    });
   },
 
   /** { changes: [{ key, mode, value }], name? } → one transfer Active Effect on the item. */
@@ -266,7 +341,8 @@ export const BUILTIN_TRANSLATORS = {
     const level = Number(change.level);
     if (!Number.isInteger(level) || level < 0 || level > 9) throw new Error(`castSpell needs a spell level 0–9, got ${change.level}`);
     const charges = castCharges(change, ctx.kind, level);
-    ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
+    // 0 charges means "at will" (cantrips): no pool needed.
+    if (charges > 0) ensurePool(data, change.pool ?? CHARGE_POOLS[ctx.kind] ?? CHARGE_POOLS.default);
     const dc = change.dc != null ? Number(change.dc) : null;
     const attack = change.attack != null ? Number(change.attack) : null;
     const id = ctx.id("cast");
@@ -321,21 +397,26 @@ export const BUILTIN_TRANSLATORS = {
     if (!abilities.length) throw new Error("saveActivity needs an ability");
     const dc = Number(change.dc);
     if (!Number.isInteger(dc) || dc < 1) throw new Error(`saveActivity needs a whole-number DC, got ${change.dc}`);
-    if (change.charges && !data.system.uses?.max) throw new Error("saveActivity spends charges but the item has none (add a uses change first)");
+    const statuses = [].concat(change.statuses ?? []);
+    if (statuses.some((st) => typeof st !== "string" || !/^[a-z][\w-]*$/.test(st))) throw new Error("saveActivity statuses must be status ids");
+    if (!(change.damage ?? []).length && !statuses.length) throw new Error("saveActivity needs damage or statuses");
+    const { uses, targets } = limits(change, data, ctx, { required: false });
+
+    // A condition on a failed save: an effect on the item that the activity applies to targets.
+    const applied = [];
+    if (statuses.length) {
+      const effect = newEffect(ctx, data, {
+        name: change.effectName ?? ctx.label, img: change.img, changes: [], statuses, transfer: false, duration: effectDuration(change.duration),
+      });
+      data.effects.push(effect);
+      applied.push({ _id: effect._id, onSave: false });
+    }
+
     const id = ctx.id("save");
     data.system.activities ??= {};
-    data.system.activities[id] = {
-      _id: id,
-      type: "save",
-      name: change.name ?? ctx.label,
-      img: change.img ?? ctx.img,
-      sort: 100000 + Object.keys(data.system.activities).length,
-      activation: { type: change.activation ?? "action", value: 1, condition: "", override: false },
-      consumption: {
-        targets: change.charges ? [{ type: "itemUses", target: "", value: String(change.charges), scaling: { mode: "", formula: "" } }] : [],
-        scaling: { allowed: false, max: "" },
-        spellSlot: false,
-      },
+    data.system.activities[id] = baseActivity(id, "save", ctx, change, data, {
+      consumption: { targets, scaling: { allowed: false, max: "" }, spellSlot: false },
+      uses,
       range: { value: change.range?.value != null ? String(change.range.value) : "", units: change.range?.units ?? (change.range ? "ft" : "self"), special: "", override: false },
       target: {
         template: { count: "", contiguous: false, type: change.target?.template?.type ?? "", size: change.target?.template?.size != null ? String(change.target.template.size) : "", width: "", height: "", units: "ft" },
@@ -343,12 +424,12 @@ export const BUILTIN_TRANSLATORS = {
         prompt: true,
         override: false,
       },
+      duration: change.duration
+        ? { concentration: false, value: String(change.duration.value), units: change.duration.units, special: "", override: false }
+        : { concentration: false, value: "", units: "inst", special: "", override: false },
       damage: { onSave: change.onSave ?? "half", parts: (change.damage ?? []).map((d) => damagePart(d.formula, [].concat(d.types ?? []))) },
       save: { ability: abilities, dc: { calculation: "", formula: String(dc) } },
-      effects: [],
-      uses: { spent: 0, recovery: [] },
-      description: { chatFlavor: "" },
-      duration: { concentration: false, value: "", units: "inst", special: "", override: false },
-    };
+      effects: applied,
+    });
   },
 };

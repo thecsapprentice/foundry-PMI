@@ -34,6 +34,7 @@ export function validateProperty(def) {
   if (def?.minRarity !== undefined && !RARITIES.includes(def.minRarity)) errors.push(`${id}: unknown minRarity ${def.minRarity}`);
   if (def?.maxRarity !== undefined && !RARITIES.includes(def.maxRarity)) errors.push(`${id}: unknown maxRarity ${def.maxRarity}`);
   if (!Array.isArray(def?.appliesTo) || !def.appliesTo.length) errors.push(`${id}: appliesTo must list item types`);
+  if (def?.notFor !== undefined && !Array.isArray(def.notFor)) errors.push(`${id}: notFor must be a list of categories`);
   if (!Array.isArray(def?.changes)) errors.push(`${id}: changes must be an array`);
   return errors;
 }

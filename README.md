@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/thecsapprentice/foundry-PMI/main/module.json
 
 **Triggers.** Some weapon properties happen by themselves in play. On a critical hit: *of Staggering* (Con save or stunned), *Blinding* (Con save or blinded), *Bloodthirsty* (temporary HP). On a kill: *Reaping* (heal), *Exultant* (+2 to hit and +10 ft. speed until your next turn), *Hungering* (regain a charge). Each is a normal dnd5e activity on the item, marked *Special* with its condition written on it. PMI uses it automatically when the event happens, which posts dnd5e's usual chat card, and you apply damage, healing or conditions with dnd5e's own buttons. Kills are counted when damage is applied with dnd5e's apply-damage buttons on the weapon's own damage roll, and need libWrapper. Without PMI, players can still use these activities by hand.
 
-**Sapient weapons.** Very rare and legendary weapons can roll *Sapient*: a personality, a voice, a quirk, an alignment, mental scores and a purpose (*Slay every elf it meets*, *Destroy every chest it finds*, …). Very rare weapons communicate by empathy; legendary ones speak and see in the dark. When the weapon's desires conflict with its wielder's, its *Conflict of Wills* activity calls for a Wisdom save against the item's DC.
+**Sapient weapons.** Very rare and legendary weapons can roll *Sapient*: a personality, a voice, a quirk, an alignment, mental scores and a purpose. Purposes that name a target roll it from a list, so *Slay all [people] it meets* might be elves, dwarves or dragonborn, and *Destroy all [objects] it finds* might be chests, doors or artworks. Very rare weapons communicate by empathy; legendary ones speak and see in the dark. When the weapon's desires conflict with its wielder's, its *Conflict of Wills* activity calls for a Wisdom save against the item's DC.
 
 **Unidentified items.** The *Created identified* button above *Create item* switches to *Created unidentified*, so players see only the item's plain look until you identify it.
 
@@ -65,6 +65,8 @@ Apart from restoring a PMI item's own charges, PMI never edits or deletes existi
 ## Property files
 
 Properties live in `data/properties/*.json`. Each has an `id`, a `slot` (`enhancement`, `prefix`, `suffix` or `spell`), a `cost` against the rarity's budget, a `weight` for random picks, the categories it `appliesTo` (`weapon`, `weapon.melee`, `armor.heavy`, `shield`, …), an optional `menuLabel` (for the Add menu), `theme` and `themeWeight` (for true names), optional `minRarity`/`maxRarity`, `notFor` (categories it never applies to, e.g. `weapon.prop.hvy` for heavy weapons), an `exclusive` group, `requiresSlot` or `requiresCharges` (needs another property that `providesCharges`), `weightBy` (weight multipliers by category, e.g. `{ "feet": 3 }`), `attunement`, `params`, `changes` and `text`.
+
+A `pick` parameter can fill `[key]` placeholders in the picked entry's label from lists in a `fill` object, e.g. `{ "pick": [{ "value": "slay", "label": "Slay all [people] it meets" }], "fill": { "people": ["elves", "dwarves"] } }`.
 
 A parameter can roll a spell: `{ "spell": { "minLevel": 3, "maxLevel": 3, "school": ["evo"], "classes": ["wizard"], "concentration": false } }` picks a matching spell from the chosen spell sources, never one already on the item.
 

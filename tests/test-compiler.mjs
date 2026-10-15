@@ -288,3 +288,15 @@ check("sapient: mental scores 10-18", (() => { const p = sapR.picks[0].params; r
 const goals = new Set();
 for (let i = 0; i < 60; i++) goals.add(addPick(newRecipe({ seed: `g${i}`, rarity: "veryRare" }), getDef("sapient")).picks[0].params.goal.value);
 check("sapient purposes vary", goals.size >= 25, `${goals.size}`);
+
+// Sapient purposes: specific targets are rolled from lists.
+const purposes = [];
+for (let i = 0; i < 300; i++) purposes.push(addPick(newRecipe({ seed: `pf${i}`, rarity: "veryRare" }), getDef("sapient")).picks[0].params.goal);
+check("every purpose placeholder gets filled", purposes.every((g) => !/\[|\]/.test(g.label)), purposes.find((g) => /\[/.test(g.label))?.label);
+const slay = purposes.filter((g) => g.value === "people");
+check("'Slay all [people]' varies its target", new Set(slay.map((g) => g.label)).size >= Math.min(5, slay.length) && slay.every((g) => /^Slay all \w[\w-]* it meets$/.test(g.label)), slay.map((g) => g.label).join(" | "));
+check("filled purposes record what was chosen", slay.every((g) => g.fills?.people && g.label.includes(g.fills.people)));
+check("situation-specific purposes stay as written", purposes.filter((g) => g.value === "fiends").every((g) => g.label === "Banish fiends back to the Hells" && !g.fills));
+check("purposes vary widely (≥ 60 distinct in 300)", new Set(purposes.map((g) => g.label)).size >= 60, `${new Set(purposes.map((g) => g.label)).size}`);
+const sapText = compile(addPick(newRecipe({ seed: "pf7", rarity: "veryRare", baseUuid: "x" }), getDef("sapient")), fixture("longsword"), opts).data.system.description.value;
+check("the filled purpose reaches the description", !/\[\w+\]/.test(sapText));

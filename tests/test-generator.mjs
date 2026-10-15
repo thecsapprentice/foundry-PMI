@@ -122,3 +122,11 @@ for (const slot of ["feet", "ring"]) for (let i = 0; i < 200; i++) {
 }
 check("boots roll Striding more often than rings", striding.feet > striding.ring * 2, JSON.stringify(striding));
 check("weapon properties never land on worn items", Array.from({ length: 100 }, (_, i) => roll(newRecipe({ seed: `wn${i}`, rarity: "legendary" }), { properties, categories: ["worn", "neck"], spells })).every((r) => r.picks.every((p) => getDef(p.id).appliesTo.some((c) => ["worn", "neck"].includes(c)))));
+
+// Placeholder fills in pick parameters.
+const filled = resolveParam({ pick: [{ value: "x", label: "Break all [things] and [things]" }], fill: { things: ["doors", "pots"] } }, "rare", new Rng("f1"));
+check("a placeholder used twice gets the same fill", /^Break all (doors|pots) and \1$/.test(filled.label), filled.label);
+let threw = false;
+try { resolveParam({ pick: [{ value: "x", label: "Find [nope]" }], fill: {} }, "rare", new Rng("f2")); } catch { threw = true; }
+check("an unknown placeholder fails loudly", threw);
+check("plain strings are untouched by fills", resolveParam({ pick: ["a"], fill: { x: ["y"] } }, "rare", new Rng("f3")) === "a");

@@ -118,24 +118,24 @@
     "goal": {
      "pick": [
       {
-       "value": "elves",
-       "label": "Slay every elf it meets"
+       "value": "people",
+       "label": "Slay all [people] it meets"
       },
       {
-       "value": "chests",
-       "label": "Destroy every chest it finds"
+       "value": "objects",
+       "label": "Destroy all [objects] it finds"
       },
       {
        "value": "undead",
        "label": "Hunt down and destroy the undead"
       },
       {
-       "value": "dragons",
-       "label": "Slay dragons, wherever they lair"
+       "value": "monsters",
+       "label": "Hunt [monsters] wherever they lair"
       },
       {
-       "value": "goblins",
-       "label": "Kill every goblinoid it meets"
+       "value": "creatures",
+       "label": "Kill all [creatures] it sees"
       },
       {
        "value": "fiends",
@@ -146,8 +146,8 @@
        "label": "Free every captive it comes across"
       },
       {
-       "value": "gold",
-       "label": "Hoard gold, the more the better"
+       "value": "treasure",
+       "label": "Hoard [treasure], the more the better"
       },
       {
        "value": "lore",
@@ -178,12 +178,8 @@
        "label": "Win glory in single combat"
       },
       {
-       "value": "giants",
-       "label": "Spill the blood of giants"
-      },
-      {
-       "value": "bards",
-       "label": "Silence every bard it hears"
+       "value": "professions",
+       "label": "Thwart all [professions] it meets"
       },
       {
        "value": "retreat",
@@ -206,10 +202,6 @@
        "label": "Hunt lycanthropes under the full moon"
       },
       {
-       "value": "spiders",
-       "label": "Slay every spider it sees"
-      },
-      {
        "value": "locks",
        "label": "Break every lock and chain it finds"
       },
@@ -226,8 +218,8 @@
        "label": "Find a worthy heir and pass to them"
       },
       {
-       "value": "royalty",
-       "label": "Taste the blood of royalty"
+       "value": "notables",
+       "label": "Taste the blood of [notables]"
       },
       {
        "value": "ships",
@@ -252,8 +244,110 @@
       {
        "value": "survival",
        "label": "Keep its wielder alive, no matter what"
+      },
+      {
+       "value": "hated",
+       "label": "Make [people] pay for an ancient betrayal"
+      },
+      {
+       "value": "relics",
+       "label": "Gather every [objects] that bears its maker's mark"
       }
-     ]
+     ],
+     "fill": {
+      "people": [
+       "elves",
+       "dwarves",
+       "dragonborn",
+       "halflings",
+       "gnomes",
+       "orcs",
+       "tieflings",
+       "humans",
+       "goliaths",
+       "half-elves",
+       "half-orcs",
+       "aasimar",
+       "goblins",
+       "kobolds"
+      ],
+      "objects": [
+       "chests",
+       "doors",
+       "artworks",
+       "books",
+       "statues",
+       "mirrors",
+       "musical instruments",
+       "holy symbols",
+       "maps",
+       "banners",
+       "crowns",
+       "coins",
+       "candles",
+       "wagons"
+      ],
+      "monsters": [
+       "dragons",
+       "giants",
+       "beholders",
+       "trolls",
+       "hags",
+       "vampires",
+       "mind flayers",
+       "demons",
+       "medusas",
+       "basilisks",
+       "manticores",
+       "ogres"
+      ],
+      "creatures": [
+       "spiders",
+       "wolves",
+       "snakes",
+       "rats",
+       "bats",
+       "oozes",
+       "crows",
+       "cats",
+       "horses",
+       "owlbears"
+      ],
+      "treasure": [
+       "gold",
+       "gems",
+       "silver",
+       "magic rings",
+       "ancient coins",
+       "pearls",
+       "crowns",
+       "enchanted blades"
+      ],
+      "professions": [
+       "bards",
+       "priests",
+       "wizards",
+       "merchants",
+       "tax collectors",
+       "nobles",
+       "knights",
+       "thieves",
+       "sailors",
+       "scholars",
+       "guards",
+       "innkeepers"
+      ],
+      "notables": [
+       "royalty",
+       "nobles",
+       "archmages",
+       "high priests",
+       "generals",
+       "dragons",
+       "guildmasters",
+       "heroes"
+      ]
+     }
     },
     "voice": {
      "pick": [

@@ -40,9 +40,28 @@ export function spellCandidates(spec, rarity, pool, exclude = new Set()) {
 }
 
 /**
+ * Fill "[key]" placeholders in a picked entry's label from `fill[key]` lists, each from its own stream:
+ *   { pick: [{ value: "slay", label: "Slay all [people] it meets" }], fill: { people: ["elves", "dwarves", …] } }
+ *   → { value: "slay", label: "Slay all dwarves it meets", fills: { people: "dwarves" } }
+ * Unknown placeholders are an error, so a typo in a data file fails loudly.
+ */
+function fillPlaceholders(entry, fill, rng) {
+  if (!entry || typeof entry !== "object" || typeof entry.label !== "string") return entry;
+  const fills = {};
+  const label = entry.label.replace(/\[([a-z][\w]*)\]/g, (m, key) => {
+    const list = fill[key];
+    if (!Array.isArray(list) || !list.length) throw new Error(`No fill list for [${key}]`);
+    fills[key] ??= rng.fork(`fill:${key}`).pick(list);
+    return fills[key];
+  });
+  return Object.keys(fills).length ? { ...entry, label, fills } : entry;
+}
+
+/**
  * Resolve one parameter spec for a rarity.
  *   { pick: [a, b, …] }               one entry, uniformly (entries may be values or objects with `value`)
  *   { pick: [...], weights: [...] }   one entry, weighted
+ *   { pick: [...], fill: { key: [...] } }  then fill "[key]" placeholders in the entry's label from those lists
  *   { byRarity: { rare: x, … } }      the value for this rarity, or the nearest lower rarity that has one
  *   { range: [min, max] }             an integer in that range
  *   { value: x }                      a constant
@@ -63,13 +82,14 @@ export function resolveParam(spec, rarity, rng, ctx = {}) {
     return { value: sp.uuid, uuid: sp.uuid, name: sp.name, label: sp.name, level: sp.level, school: sp.school };
   }
   if (Array.isArray(spec.pick)) {
+    let picked;
     if (Array.isArray(spec.weights)) {
       const entries = spec.pick.map((v, i) => ({ v, weight: spec.weights[i] ?? 0 }));
       const hit = rng.weighted(entries);
       if (!hit) throw new Error("Parameter weights are all zero");
-      return hit.v;
-    }
-    return rng.pick(spec.pick);
+      picked = hit.v;
+    } else picked = rng.pick(spec.pick);
+    return spec.fill ? fillPlaceholders(picked, spec.fill, rng) : picked;
   }
   if (spec.byRarity && typeof spec.byRarity === "object") {
     const idx = RARITIES.indexOf(rarity);

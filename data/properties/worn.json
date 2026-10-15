@@ -22,32 +22,32 @@
      "pick": [
       {
        "value": "acr",
-       "name": "Acrobat's",
+       "name": "Agile",
        "label": "Acrobatics"
       },
       {
        "value": "ani",
-       "name": "Beastfriend's",
+       "name": "Soothing",
        "label": "Animal Handling"
       },
       {
        "value": "arc",
-       "name": "Arcanist's",
+       "name": "Mystic",
        "label": "Arcana"
       },
       {
        "value": "ath",
-       "name": "Athlete's",
+       "name": "Athletic",
        "label": "Athletics"
       },
       {
        "value": "dec",
-       "name": "Deceiver's",
+       "name": "Beguiling",
        "label": "Deception"
       },
       {
        "value": "his",
-       "name": "Scholar's",
+       "name": "Learned",
        "label": "History"
       },
       {
@@ -62,17 +62,17 @@
       },
       {
        "value": "inv",
-       "name": "Investigator's",
+       "name": "Searching",
        "label": "Investigation"
       },
       {
        "value": "med",
-       "name": "Healer's",
+       "name": "Steady-Handed",
        "label": "Medicine"
       },
       {
        "value": "nat",
-       "name": "Naturalist's",
+       "name": "Verdant",
        "label": "Nature"
       },
       {
@@ -82,12 +82,12 @@
       },
       {
        "value": "prf",
-       "name": "Performer's",
+       "name": "Dazzling",
        "label": "Performance"
       },
       {
        "value": "per",
-       "name": "Persuasive",
+       "name": "Silver-Tongued",
        "label": "Persuasion"
       },
       {
@@ -97,7 +97,7 @@
       },
       {
        "value": "slt",
-       "name": "Nimble",
+       "name": "Deft",
        "label": "Sleight of Hand"
       },
       {
@@ -107,7 +107,7 @@
       },
       {
        "value": "sur",
-       "name": "Tracker's",
+       "name": "Trailwise",
        "label": "Survival"
       }
      ]
@@ -171,7 +171,7 @@
       },
       {
        "value": "wis",
-       "name": "Insight",
+       "name": "Wisdom",
        "label": "Wisdom"
       },
       {
@@ -246,7 +246,8 @@
      ]
     }
    ],
-   "text": "As a bonus action, you can gain a flying speed of @speed feet for 10 minutes. Once used, this property can't be used again until the next dawn."
+   "text": "As a bonus action, you can gain a flying speed of @speed feet for 10 minutes. Once used, this property can't be used again until the next dawn.",
+   "nameOrder": 2
   },
   {
    "id": "vanishing",
@@ -279,7 +280,8 @@
      "changes": []
     }
    ],
-   "text": "As an action, you can become invisible for 1 minute. Once used, this property can't be used again until the next dawn."
+   "text": "As an action, you can become invisible for 1 minute. Once used, this property can't be used again until the next dawn.",
+   "nameOrder": 2
   },
   {
    "id": "warding",
@@ -359,7 +361,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, your walking speed increases by @speed feet."
+   "text": "While you wear this item, your walking speed increases by @speed feet.",
+   "nameOrder": 2
   },
   {
    "id": "of-tongues",
@@ -553,7 +556,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, you have a swimming speed of @speed feet."
+   "text": "While you wear this item, you have a swimming speed of @speed feet.",
+   "nameOrder": 2
   },
   {
    "id": "clinging",
@@ -586,7 +590,8 @@
      ]
     }
    ],
-   "text": "While you wear this item, you have a climbing speed of @speed feet."
+   "text": "While you wear this item, you have a climbing speed of @speed feet.",
+   "nameOrder": 2
   }
  ]
 }

@@ -426,8 +426,8 @@
   {
    "id": "bulwark",
    "slot": "prefix",
-   "label": "Bulwark (@thp temporary HP, 1/day)",
-   "name": "Bulwark",
+   "label": "Bolstering (@thp temporary HP, 1/day)",
+   "name": "Bolstering",
    "cost": 2,
    "weight": 4,
    "appliesTo": [

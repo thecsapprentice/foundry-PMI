@@ -84,7 +84,7 @@
       },
       {
        "value": "cold",
-       "name": "Frost",
+       "name": "Icy",
        "label": "Cold"
       },
       {
@@ -124,7 +124,7 @@
       },
       {
        "value": "force",
-       "name": "Arcane",
+       "name": "Forceful",
        "label": "Force"
       }
      ]
@@ -146,7 +146,8 @@
      ]
     }
    ],
-   "text": "A creature hit by this weapon takes an extra [[/damage @die @element]] damage."
+   "text": "A creature hit by this weapon takes an extra [[/damage @die @element]] damage.",
+   "nameOrder": 3
   },
   {
    "id": "keen",
@@ -385,7 +386,8 @@
      "value": 60
     }
    ],
-   "text": "This weapon has the thrown property, with a normal range of 20 feet and a long range of 60 feet."
+   "text": "This weapon has the thrown property, with a normal range of 20 feet and a long range of 60 feet.",
+   "nameOrder": 2
   },
   {
    "id": "far-reaching",
@@ -427,7 +429,8 @@
      "value": "@far"
     }
    ],
-   "text": "This weapon's normal range increases by @near feet and its long range by @far feet."
+   "text": "This weapon's normal range increases by @near feet and its long range by @far feet.",
+   "nameOrder": 2
   },
   {
    "id": "of-terror",

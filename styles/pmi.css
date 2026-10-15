@@ -3,22 +3,24 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.7.0"; }
+:root { --pmi-css-version: "0.7.1"; }
 
 .pmi-builder {
-  --pmi-ink: var(--color-text-dark-primary, #191813);
-  --pmi-ink-soft: var(--color-text-dark-secondary, #4b4a44);
+  /* Fixed inks, not Foundry's theme variables: the builder always sits on light parchment. */
+  --pmi-ink: #1b1a16;
+  --pmi-ink-soft: #3f3d36;
   --pmi-line: var(--color-border-light-tertiary, #b5b3a4);
   --pmi-line-soft: rgba(0, 0, 0, 0.12);
   --pmi-surface: rgba(255, 255, 255, 0.35);
   --pmi-warn: #8a5300;
   --pmi-error: #a1261d;
-  --pmi-r-common: #5f5f5a;
-  --pmi-r-uncommon: #1f7a3a;
-  --pmi-r-rare: #2160a8;
-  --pmi-r-veryRare: #7a3fb0;
-  --pmi-r-legendary: #b45f12;
-  --pmi-r-artifact: #a8322d;
+  /* Dark enough for text on parchment (at least 4.5:1 against #e8e3d5). */
+  --pmi-r-common: #4f4e49;
+  --pmi-r-uncommon: #17652f;
+  --pmi-r-rare: #1b4f8c;
+  --pmi-r-veryRare: #66309a;
+  --pmi-r-legendary: #8f4a0b;
+  --pmi-r-artifact: #922a26;
 }
 
 /* ---------- window: let the layout, not the content, decide the size ---------- */
@@ -75,6 +77,23 @@
 
 /* ---------- shared bits ---------- */
 .pmi-block { display: flex; flex-direction: column; gap: 0.4rem; }
+.pmi-builder .window-content,
+.pmi-builder .pmi-layout,
+.pmi-builder .pmi-card-name,
+.pmi-builder .pmi-description,
+.pmi-builder .pmi-description p,
+.pmi-builder .pmi-description li,
+.pmi-builder button,
+.pmi-builder select {
+  color: var(--pmi-ink);
+}
+.pmi-builder .pmi-card-slot,
+.pmi-builder .pmi-card-params,
+.pmi-builder .pmi-hint,
+.pmi-builder .pmi-item-sub,
+.pmi-builder .pmi-budget-text {
+  color: var(--pmi-ink-soft);
+}
 .pmi-builder h3,
 .pmi-builder h4 {
   /* Undo Foundry's default heading look (display font, underline, shadow) inside the builder. */
@@ -143,7 +162,7 @@
 .pmi-rarity.rarity-veryRare  { --pmi-swatch: var(--pmi-r-veryRare); }
 .pmi-rarity.rarity-legendary { --pmi-swatch: var(--pmi-r-legendary); }
 .pmi-rarity.rarity-artifact  { --pmi-swatch: var(--pmi-r-artifact); }
-.pmi-rarity.active { background: var(--pmi-swatch); border-color: var(--pmi-swatch); color: #fff; font-weight: bold; }
+.pmi-builder .pmi-rarity.active { background: var(--pmi-swatch); border-color: var(--pmi-swatch); color: #fff; font-weight: bold; }
 .pmi-rarity-random { flex: 0 0 2.2rem; padding: 0.25rem 0; border-left-width: 1px; }
 .pmi-rarity-random i { margin: 0; }
 
@@ -220,7 +239,7 @@
 }
 .pmi-preview-head { display: flex; align-items: flex-start; gap: 0.5rem; }
 .pmi-preview-head img { width: 48px; height: 48px; flex: 0 0 48px; border: none; border-radius: 4px; }
-.pmi-item-name {
+.pmi-builder .pmi-item-name {
   margin: 0;
   border: none;
   font-size: var(--font-size-18, 18px);
@@ -244,9 +263,9 @@
   gap: 0.35rem;
 }
 .pmi-actions button { height: 2.1rem; }
-.pmi-create { background: var(--pmi-rarity); border-color: var(--pmi-rarity); color: #fff; font-weight: bold; }
-.pmi-create:disabled { background: var(--pmi-line-soft); border-color: var(--pmi-line); color: var(--pmi-ink-soft); }
-.pmi-seed { margin: 0; font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); opacity: 0.7; text-align: right; }
+.pmi-builder .pmi-create { background: var(--pmi-rarity); border-color: var(--pmi-rarity); color: #fff; font-weight: bold; }
+.pmi-builder .pmi-create:disabled { background: var(--pmi-line-soft); border-color: var(--pmi-line); color: var(--pmi-ink-soft); }
+.pmi-seed { margin: 0; font-size: var(--font-size-11, 11px); color: var(--pmi-ink-soft); text-align: right; }
 
 /* ---------- Items sidebar button ---------- */
 #items .header-actions .pmi-open-builder { flex: 1 0 100%; }

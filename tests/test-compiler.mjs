@@ -243,3 +243,10 @@ check("of Purity: poison immunity and poisoned immunity", pur.effects[0].changes
 const sa = one("chain-mail", "rare", pick("save-advantage", { ability: { value: "con", name: "Enduring", label: "Constitution" } })).data;
 check("save advantage effect", sa.effects[0].changes[0].key === "system.abilities.con.save.roll.mode" && sa.effects[0].changes[0].value === "1");
 check("save-advantage name", sa.name === "Enduring Chain Mail", sa.name);
+
+// Naming: prefixes in adjective order, whatever order they were rolled in.
+const keenFlaming = compile({ ...newRecipe({ seed: "nm", rarity: "rare", baseUuid: "x" }), picks: [
+  pick("elemental", { element: { value: "fire", name: "Flaming", label: "Fire" }, die: "1d6" }), pick("keen", { threshold: 19 })] }, fixture("longsword"), opts).data;
+check("quality prefixes come before elemental ones", keenFlaming.name === "Keen Flaming Longsword", keenFlaming.name);
+check("no possessive prefixes", properties.filter((d) => d.slot === "prefix").every((d) => !String(d.name).includes("'s")) && properties.filter((d) => d.slot === "prefix").flatMap((d) => Object.values(d.params ?? {}).flatMap((sp) => (sp.pick ?? []).map((e) => e?.name))).every((n) => !String(n ?? "").includes("'s")));
+check("cold weapons are Icy", getDef("elemental").params.element.pick.find((e) => e.value === "cold").name === "Icy");

@@ -227,7 +227,8 @@
      "value": 0.5
     }
    ],
-   "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much."
+   "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much.",
+   "nameOrder": 2
   }
  ]
 }

@@ -20,7 +20,7 @@ import { MODULE_ID } from "../config.mjs";
 import { isPmiItem } from "../util.mjs";
 
 /** Written by tools/build.py. main.mjs compares it with the module version to spot stale cached scripts. */
-export const RUNTIME_VERSION = "0.10.3";
+export const RUNTIME_VERSION = "0.10.4";
 
 /** Console tracing for triggers, switched on by the "Log triggers" client setting (see settings.mjs). */
 let tracing = () => false;
@@ -181,21 +181,52 @@ export function selfTargets(actor) {
 }
 
 /**
- * Use a triggered activity without its configuration dialog. An activity aimed at the user (a drawback's
- * self-damage) has its card, and the damage roll that follows, aimed at the wielder instead of whatever the
- * player has targeted, so dnd5e's apply-damage tray lists the wielder.
+ * Use a triggered activity without its configuration dialog.
+ *
+ * Self-damage (a drawback's spines) skips the activity's usage card and goes straight to one damage roll aimed
+ * at the wielder: no second copy of the item's description in chat, and nothing that would ask other modules
+ * to retarget. dnd5e would otherwise write the player's current targets (the enemy) onto the card. Only
+ * activities that spend nothing take this path; anything with uses or charges goes through dnd5e's normal use.
+ * The player's own targets are left as they were (and put back if another module changed them meanwhile).
  */
 export async function useActivity(item, activity) {
-  const self = activity.target?.affects?.type === "self" && typeof activity.rollDamage === "function"
-    && activity.type === "damage";
+  const spends = (activity.consumption?.targets?.length ?? 0) > 0 || !!activity.uses?.max;
+  const self = activity.type === "damage" && activity.target?.affects?.type === "self"
+    && typeof activity.rollDamage === "function" && !spends;
   if (!self) return activity.use({}, { configure: false });
-  const targets = selfTargets(item.actor);
-  const results = await activity.use({ subsequentActions: false }, { configure: false }, { data: { "flags.dnd5e.targets": targets } });
-  if (!results) return results;
-  await activity.rollDamage({}, { configure: false }, {
-    data: { "flags.dnd5e.targets": targets, "flags.dnd5e.originatingMessage": results.message?.id },
-  });
-  return results;
+  const keep = currentTargetIds();
+  try {
+    const rolls = await activity.rollDamage({}, { configure: false }, {
+      data: {
+        "flags.dnd5e.targets": selfTargets(item.actor),
+        flavor: `${item.name}: ${activity.name}`,
+      },
+    });
+    return rolls ?? null;
+  } finally {
+    restoreTargets(keep);
+  }
+}
+
+/** The ids of the tokens this user has targeted, or null if targeting isn't available. */
+function currentTargetIds() {
+  try {
+    const t = game.user?.targets;
+    return t ? [...t].map((tok) => tok.id) : null;
+  } catch { return null; }
+}
+
+/** Put this user's targets back if something changed them. Client-side only: no document changes. */
+function restoreTargets(ids) {
+  if (!ids) return;
+  try {
+    const now = currentTargetIds() ?? [];
+    if (now.length === ids.length && now.every((id) => ids.includes(id))) return;
+    trace(`targets changed during the trigger; restoring ${ids.length} target(s)`);
+    game.user.updateTokenTargets?.(ids);
+  } catch (err) {
+    console.warn(`${MODULE_ID} | Couldn't restore your targets`, err);
+  }
 }
 
 /** Give back charges on the PMI item itself, and say so in chat. */

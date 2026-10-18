@@ -135,36 +135,43 @@ const notMine = makeItem({ triggers: [{ on: "dawn", activity: "act1" }], owner: 
 await T.onRestCompleted({ items: [notMine] }, { newDay: true });
 check("dawn triggers fire only for the item's owner", uses.length === 3);
 
-// Self-aimed damage (Spined, Treacherous): the card and its damage roll target the wielder, not the enemy.
+// Self-aimed damage (Spined, Treacherous): one damage card aimed at the wielder; no usage card; targets kept.
 const calls = [];
 const spineAct = {
-  type: "damage", target: { affects: { type: "self" } },
+  type: "damage", name: "Spines Bite", target: { affects: { type: "self" } }, consumption: { targets: [] }, uses: { max: "" },
   use: async (...a) => { calls.push(["use", a]); return { message: { id: "msg1" } }; },
-  rollDamage: async (...a) => { calls.push(["rollDamage", a]); },
+  rollDamage: async (...a) => { calls.push(["rollDamage", a]); game.user.targets = new Set([{ id: "heroToken" }]); return [{}]; },
 };
 const wielder = { uuid: "Actor.hero", name: "Hero", img: "hero.png", system: { attributes: { ac: { value: 16 } } }, getActiveTokens: () => [{ name: "Hero (token)" }] };
 const spined = makeItem({ triggers: [{ on: "hit", activity: "spine" }] });
 spined.actor = wielder;
 spined.system.activities.set("spine", spineAct);
-await T.onDamageRoll([{}], { subject: { type: "attack", item: spined } });
-const [useCall, rollCall] = calls;
+let restored = null;
+game.user = { id: "me", targets: new Set([{ id: "goblin" }]), updateTokenTargets: (ids) => { restored = ids; } };
+await T.onDamageRoll([{ formula: "1d8", total: 5 }], { subject: { type: "attack", item: spined } });
 const self = [{ name: "Hero (token)", img: "hero.png", uuid: "Actor.hero", ac: 16 }];
-check("the self-damage card targets the wielder", useCall?.[0] === "use" && JSON.stringify(useCall[1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self));
-check("…without its usual automatic roll (which would target the enemy)", useCall[1][0].subsequentActions === false && useCall[1][1].configure === false);
-check("PMI rolls the damage itself, aimed at the wielder, with no dialog", rollCall?.[0] === "rollDamage"
-  && JSON.stringify(rollCall[1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self)
-  && rollCall[1][2].data["flags.dnd5e.originatingMessage"] === "msg1" && rollCall[1][1].configure === false);
+check("no usage card: the item's description isn't posted again", !calls.some(([k]) => k === "use"));
+const rollCall = calls.find(([k]) => k === "rollDamage");
+check("one damage card, aimed at the wielder, with no dialog", calls.length === 1 && rollCall
+  && JSON.stringify(rollCall[1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self) && rollCall[1][1].configure === false);
+check("…flavoured with the item and the drawback", rollCall[1][2].data.flavor === "Emberfang: Spines Bite");
+check("the player's own target (the enemy) is put back if something changed it", JSON.stringify(restored) === '["goblin"]');
+restored = null;
 calls.length = 0;
-spineAct.use = async () => undefined;
-await T.onDamageRoll([{}], { subject: { type: "attack", item: spined } });
-check("if the card isn't posted, no damage is rolled", calls.length === 0);
+spineAct.rollDamage = async (...a) => { calls.push(["rollDamage", a]); return [{}]; };
+await T.onDamageRoll([{ formula: "1d8", total: 6 }], { subject: { type: "attack", item: spined } });
+check("targets nobody changed are left alone", restored === null && calls.length === 1);
+calls.length = 0;
+spineAct.consumption = { targets: [{ type: "itemUses" }] };
+await T.onDamageRoll([{ formula: "1d8", total: 7 }], { subject: { type: "attack", item: spined } });
+check("self-damage that spends charges goes through dnd5e's normal use", calls.length === 1 && calls[0][0] === "use");
 uses.length = 0;
 await T.fire(makeItem({ triggers: [] }), [{ on: "crit", activity: "act1" }], 1);
 check("other activities are used the usual way", uses.length === 1 && uses[0][1][1]?.configure === false);
 
 // Hits seen through the damage roll's chat message (for roll-automation modules that skip dnd5e's hook),
 // fired once even when both the message and the hook arrive.
-game.user = { id: "me" };
+game.user = { id: "me", targets: new Set() };
 uses.length = 0;
 const msgItem = makeItem({ triggers: [{ on: "hit", activity: "act1" }] });
 const damageMsg = (item, { roll = "damage", act = "attack", total = 7 } = {}) => ({

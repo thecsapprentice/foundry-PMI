@@ -62,7 +62,7 @@ check("uncommon items still get an unidentified look", unc.data.system.unidentif
 const rare = flaming("rare");
 check("rare items take their true name", rare.data.name === rare.naming.trueName && rare.data.name !== "Flaming Longsword +1", rare.data.name);
 check("the descriptive name leads the description", rare.data.system.description.value.startsWith('<p class="pmi-full-name"><strong>Flaming Longsword +1</strong></p>'));
-check("unidentified description hints at fire", /smoke|warm/i.test(rare.data.system.unidentified.description), rare.data.system.unidentified.description);
+check("unidentified description hints at fire", /smok|warm|spark|burn|fire|flame|ember/i.test(rare.data.system.unidentified.description), rare.data.system.unidentified.description);
 check("names are reproducible", flaming("rare").data.name === rare.data.name);
 const rerolled = flaming("rare", { mode: "auto", custom: "", rerolls: 1 });
 check("rerolling the name changes it", rerolled.data.name !== rare.data.name, `${rare.data.name} / ${rerolled.data.name}`);

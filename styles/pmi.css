@@ -3,7 +3,7 @@
    which runs through the rarity control, the budget bar and the preview's item name. */
 
 /* Written by tools/build.py. PMI compares it with the module version to spot a stale cached stylesheet. */
-:root { --pmi-css-version: "0.9.3"; }
+:root { --pmi-css-version: "0.10.0"; }
 
 .pmi-builder {
   /* Fixed inks, not Foundry's theme variables: the builder always sits on light parchment. */
@@ -207,8 +207,15 @@
 .pmi-card-controls button i { margin: 0; }
 .pmi-card-controls button:disabled { opacity: 0.35; }
 
+/* Drawbacks: marked by a red edge and the skull in their slot label, never by text colour alone. */
+.pmi-card.curse { border-left: 4px solid var(--pmi-error); }
+.pmi-card.curse .pmi-card-slot { color: var(--pmi-error); font-weight: bold; }
+
 .pmi-card-add { border-style: dashed; background: transparent; justify-content: center; }
 .pmi-card-add select { width: 100%; min-width: 0; }
+.pmi-add-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem; }
+.pmi-add-buttons button { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmi-add-buttons button:disabled { opacity: 0.35; }
 
 /* ---------- sidebar: preview + actions ---------- */
 .pmi-preview {

@@ -1,5 +1,5 @@
 // Module settings, and the GM-only forms for choosing base-item and spell compendiums.
-import { MODULE_ID, DEFAULT_BASE_PACKS, DEFAULT_SPELL_PACKS } from "./config.mjs";
+import { MODULE_ID, DEFAULT_BASE_PACKS, DEFAULT_SPELL_PACKS, DEFAULT_LIMITS, DEFAULT_CURSE_CHANCE, RARITIES } from "./config.mjs";
 import { categorize, isMundane, propertyList } from "./generator/categories.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -57,7 +57,7 @@ export class PmiBuilderLauncher extends ApplicationV2 {
  * its own, so a problem with one menu can never leave the settings unregistered.
  * @returns {string[]} Problems, if any (also logged).
  */
-export function registerSettings({ onBasePacksChange, onSpellPacksChange, openBuilder } = {}) {
+export function registerSettings({ onBasePacksChange, onSpellPacksChange, onGenerationChange, openBuilder } = {}) {
   openBuilderFn = openBuilder;
   const problems = [];
   const attempt = (label, fn) => {
@@ -69,6 +69,29 @@ export function registerSettings({ onBasePacksChange, onSpellPacksChange, openBu
   }));
   attempt("setting spellPacks", () => game.settings.register(MODULE_ID, "spellPacks", {
     scope: "world", config: false, type: Array, default: [...DEFAULT_SPELL_PACKS], onChange: () => onSpellPacksChange?.(),
+  }));
+
+  // How strong and how cursed generated items are. Read when rolling, so changes apply to the next roll.
+  attempt("setting powerTier", () => game.settings.register(MODULE_ID, "powerTier", {
+    name: "PMI.Settings.PowerTier.Name", hint: "PMI.Settings.PowerTier.Hint",
+    scope: "world", config: true, type: String, default: DEFAULT_LIMITS.tier,
+    choices: Object.fromEntries(TIER_CHOICES.map((r) => [r, `PMI.Settings.PowerTier.${r}`])),
+    onChange: () => onGenerationChange?.(),
+  }));
+  attempt("setting maxAbilityScore", () => game.settings.register(MODULE_ID, "maxAbilityScore", {
+    name: "PMI.Settings.MaxAbilityScore.Name", hint: "PMI.Settings.MaxAbilityScore.Hint",
+    scope: "world", config: true, type: Number, default: DEFAULT_LIMITS.abilityScore,
+    range: { min: 19, max: 30, step: 1 }, onChange: () => onGenerationChange?.(),
+  }));
+  attempt("setting maxBonus", () => game.settings.register(MODULE_ID, "maxBonus", {
+    name: "PMI.Settings.MaxBonus.Name", hint: "PMI.Settings.MaxBonus.Hint",
+    scope: "world", config: true, type: Number, default: DEFAULT_LIMITS.bonus,
+    range: { min: 1, max: 3, step: 1 }, onChange: () => onGenerationChange?.(),
+  }));
+  attempt("setting curseChance", () => game.settings.register(MODULE_ID, "curseChance", {
+    name: "PMI.Settings.CurseChance.Name", hint: "PMI.Settings.CurseChance.Hint",
+    scope: "world", config: true, type: Number, default: Math.round(DEFAULT_CURSE_CHANCE * 100),
+    range: { min: 0, max: 100, step: 5 }, onChange: () => onGenerationChange?.(),
   }));
 
   attempt("menu openBuilder", () => game.settings.registerMenu(MODULE_ID, "openBuilder", {
@@ -84,6 +107,34 @@ export function registerSettings({ onBasePacksChange, onSpellPacksChange, openBu
     icon: "fa-solid fa-hat-wizard", type: PmiSpellSourcesConfig, restricted: true,
   }));
   return problems;
+}
+
+/** Rarities the strongest-effects setting offers. */
+const TIER_CHOICES = ["uncommon", "rare", "veryRare", "legendary"];
+
+/** A setting's saved value, or `fallback` if it's unregistered, unreadable or fails `ok` (fail safe). */
+function read(key, fallback, ok) {
+  try {
+    const v = game.settings.get(MODULE_ID, key);
+    return ok(v) ? v : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+/** The GM's power limits for generation (see DEFAULT_LIMITS). */
+export function powerLimits() {
+  const whole = (lo, hi) => (v) => Number.isInteger(v) && v >= lo && v <= hi;
+  return {
+    tier: read("powerTier", DEFAULT_LIMITS.tier, (v) => TIER_CHOICES.includes(v) && RARITIES.includes(v)),
+    abilityScore: read("maxAbilityScore", DEFAULT_LIMITS.abilityScore, whole(19, 30)),
+    bonus: read("maxBonus", DEFAULT_LIMITS.bonus, whole(1, 3)),
+  };
+}
+
+/** The chance (0–1) that a random roll adds a drawback. */
+export function curseChance() {
+  return read("curseChance", Math.round(DEFAULT_CURSE_CHANCE * 100), (v) => Number.isFinite(v) && v >= 0 && v <= 100) / 100;
 }
 
 /** A saved list of compendium ids, or the defaults if it's unset, malformed or (fail safe) not registered. */

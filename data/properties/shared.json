@@ -20,37 +20,61 @@
      "pick": [
       {
        "value": "str",
-       "name": "Bear",
+       "name": [
+        "Bear",
+        "Bull",
+        "Mammoth"
+       ],
        "label": "Strength",
        "theme": "strength"
       },
       {
        "value": "dex",
-       "name": "Cat",
+       "name": [
+        "Cat",
+        "Hare",
+        "Lynx"
+       ],
        "label": "Dexterity",
        "theme": "grace"
       },
       {
        "value": "con",
-       "name": "Ox",
+       "name": [
+        "Ox",
+        "Tortoise",
+        "Badger"
+       ],
        "label": "Constitution",
        "theme": "endurance"
       },
       {
        "value": "int",
-       "name": "Fox",
+       "name": [
+        "Fox",
+        "Raven",
+        "Serpent"
+       ],
        "label": "Intelligence",
        "theme": "mind"
       },
       {
        "value": "wis",
-       "name": "Owl",
+       "name": [
+        "Owl",
+        "Stag",
+        "Hound"
+       ],
        "label": "Wisdom",
        "theme": "wisdom"
       },
       {
        "value": "cha",
-       "name": "Eagle",
+       "name": [
+        "Eagle",
+        "Lion",
+        "Peacock"
+       ],
        "label": "Charisma",
        "theme": "presence"
       }
@@ -60,7 +84,8 @@
      "byRarity": {
       "uncommon": 1,
       "veryRare": 2
-     }
+     },
+     "cap": "bonus"
     }
    },
    "changes": [
@@ -83,7 +108,11 @@
    "id": "of-swiftness",
    "slot": "suffix",
    "label": "of Swiftness",
-   "name": "of Swiftness",
+   "name": [
+    "of Swiftness",
+    "of Haste",
+    "of the Fleet"
+   ],
    "cost": 2,
    "weight": 5,
    "appliesTo": [
@@ -114,13 +143,20 @@
     }
    ],
    "text": "While you carry this item, your walking speed increases by @speed feet.",
-   "theme": "swift"
+   "theme": "swift",
+   "tags": [
+    "walkSpeed"
+   ]
   },
   {
    "id": "of-the-night",
    "slot": "suffix",
    "label": "of the Night",
-   "name": "of the Night",
+   "name": [
+    "of the Night",
+    "of Gloaming",
+    "of the Dark"
+   ],
    "cost": 1,
    "weight": 5,
    "appliesTo": [
@@ -152,13 +188,20 @@
    ],
    "text": "While you carry this item, you have darkvision out to a range of @range feet.",
    "theme": "night",
-   "themeWeight": 1
+   "themeWeight": 1,
+   "tags": [
+    "darkvision"
+   ]
   },
   {
    "id": "of-protection",
    "slot": "suffix",
    "label": "of Protection (+@bonus AC and saves)",
-   "name": "of Protection",
+   "name": [
+    "of Protection",
+    "of Safeguarding",
+    "of Shelter"
+   ],
    "cost": 4,
    "weight": 3,
    "attunement": true,
@@ -192,7 +235,8 @@
      "byRarity": {
       "rare": 1,
       "veryRare": 2
-     }
+     },
+     "cap": "bonus"
     }
    },
    "weightBy": {
@@ -220,37 +264,61 @@
      "pick": [
       {
        "value": "str",
-       "name": "Unyielding",
+       "name": [
+        "Unyielding",
+        "Immovable",
+        "Stalwart"
+       ],
        "label": "Strength",
        "theme": "strength"
       },
       {
        "value": "dex",
-       "name": "Evasive",
+       "name": [
+        "Evasive",
+        "Elusive",
+        "Nimble"
+       ],
        "label": "Dexterity",
        "theme": "grace"
       },
       {
        "value": "con",
-       "name": "Enduring",
+       "name": [
+        "Enduring",
+        "Indomitable",
+        "Tireless"
+       ],
        "label": "Constitution",
        "theme": "endurance"
       },
       {
        "value": "int",
-       "name": "Lucid",
+       "name": [
+        "Lucid",
+        "Clear-Eyed",
+        "Keen-Witted"
+       ],
        "label": "Intelligence",
        "theme": "mind"
       },
       {
        "value": "wis",
-       "name": "Steadfast",
+       "name": [
+        "Steadfast",
+        "Resolute",
+        "Unwavering"
+       ],
        "label": "Wisdom",
        "theme": "wisdom"
       },
       {
        "value": "cha",
-       "name": "Defiant",
+       "name": [
+        "Defiant",
+        "Proud",
+        "Unbowed"
+       ],
        "label": "Charisma",
        "theme": "presence"
       }
@@ -271,13 +339,20 @@
    ],
    "text": "While you wear this item, you have advantage on {ability.label} saving throws.",
    "theme": "{ability.theme}",
-   "menuLabel": "Save advantage (ability)"
+   "menuLabel": "Save advantage (ability)",
+   "tags": [
+    "rollMode"
+   ]
   },
   {
    "id": "vigilant",
    "slot": "prefix",
    "label": "Vigilant (+@bonus initiative)",
-   "name": "Vigilant",
+   "name": [
+    "Vigilant",
+    "Alert",
+    "Wakeful"
+   ],
    "cost": 1,
    "weight": 5,
    "appliesTo": [
@@ -313,13 +388,20 @@
    ],
    "text": "While you carry this item, you have a +@bonus bonus to initiative rolls.",
    "theme": "watch",
-   "themeWeight": -2
+   "themeWeight": -2,
+   "tags": [
+    "initiative"
+   ]
   },
   {
    "id": "hearty",
    "slot": "prefix",
    "label": "Hearty (+@hp HP per level)",
-   "name": "Hearty",
+   "name": [
+    "Hearty",
+    "Hale",
+    "Robust"
+   ],
    "cost": 4,
    "weight": 4,
    "attunement": true,
@@ -353,13 +435,20 @@
     }
    ],
    "text": "While attuned to this item, your hit point maximum increases by @hp for each level you have.",
-   "theme": "life"
+   "theme": "life",
+   "tags": [
+    "hpMax"
+   ]
   },
   {
    "id": "fearless",
    "slot": "prefix",
    "label": "Fearless (immune to frightened)",
-   "name": "Fearless",
+   "name": [
+    "Fearless",
+    "Dauntless",
+    "Undaunted"
+   ],
    "cost": 2,
    "weight": 4,
    "appliesTo": [
@@ -387,7 +476,11 @@
    "id": "clear-minded",
    "slot": "prefix",
    "label": "Clear-Minded (immune to charmed)",
-   "name": "Clear-Minded",
+   "name": [
+    "Clear-Minded",
+    "Unclouded",
+    "Serene"
+   ],
    "cost": 3,
    "weight": 3,
    "appliesTo": [
@@ -415,7 +508,11 @@
    "id": "of-vitality",
    "slot": "suffix",
    "label": "of Vitality (heal @heal, 1/day)",
-   "name": "of Vitality",
+   "name": [
+    "of Vitality",
+    "of Renewal",
+    "of Mending"
+   ],
    "cost": 2,
    "weight": 4,
    "appliesTo": [
@@ -454,7 +551,11 @@
    "id": "bulwark",
    "slot": "prefix",
    "label": "Bolstering (@thp temporary HP, 1/day)",
-   "name": "Bolstering",
+   "name": [
+    "Bolstering",
+    "Steeling",
+    "Fortifying"
+   ],
    "cost": 2,
    "weight": 4,
    "appliesTo": [

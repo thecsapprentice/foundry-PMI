@@ -1,5 +1,5 @@
 // Item names from property name fragments. Pure.
-//   prefixes + base + suffix + enhancement → "Keen Flaming Longsword of the Owl +1"
+//   drawback + prefixes + base + suffix + enhancement → "Leaden Keen Flaming Longsword of the Owl +1"
 // Spell properties name the item ("Wand of Fireball") only when there's no suffix, and only the first one does.
 
 /**
@@ -17,7 +17,8 @@ export function buildName(baseName, resolved) {
     .filter(Boolean);
   const suffix = frag("suffix");
   const ending = suffix.length ? suffix : frag("spell").slice(0, 1);
-  const parts = [...frag("prefix"), baseName, ...ending];
+  // A drawback's word leads ("Leaden Keen Longsword"); only the first, so names stay short.
+  const parts = [...frag("curse").slice(0, 1), ...frag("prefix"), baseName, ...ending];
   const enhancement = frag("enhancement");
   return [parts.join(" "), ...enhancement].join(" ").replace(/\s+/g, " ").trim();
 }

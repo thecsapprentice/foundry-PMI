@@ -1,0 +1,893 @@
+{
+ "$comment": "Drawbacks (the curse slot). Their cost is zero or negative: each gives budget back. Rolled only by the drawback-chance setting or the builder's Drawback button.",
+ "properties": [
+  {
+   "id": "curse-feeble",
+   "slot": "curse",
+   "label": "{ability.name} (−@malus {ability.label})",
+   "name": "{ability.name}",
+   "menuLabel": "Lowered ability score",
+   "cost": -1,
+   "weight": 5,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "conflicts": [
+    "abilityScore"
+   ],
+   "params": {
+    "ability": {
+     "pick": [
+      {
+       "value": "str",
+       "name": [
+        "Feeble",
+        "Enfeebling",
+        "Wilting"
+       ],
+       "label": "Strength"
+      },
+      {
+       "value": "dex",
+       "name": [
+        "Clumsy",
+        "Fumbling",
+        "Palsied"
+       ],
+       "label": "Dexterity"
+      },
+      {
+       "value": "con",
+       "name": [
+        "Sickly",
+        "Ailing",
+        "Wasting"
+       ],
+       "label": "Constitution"
+      },
+      {
+       "value": "int",
+       "name": [
+        "Addling",
+        "Muddling",
+        "Dulling"
+       ],
+       "label": "Intelligence"
+      },
+      {
+       "value": "wis",
+       "name": [
+        "Befuddling",
+        "Bewildering",
+        "Clouding"
+       ],
+       "label": "Wisdom"
+      },
+      {
+       "value": "cha",
+       "name": [
+        "Repellent",
+        "Off-Putting",
+        "Graceless"
+       ],
+       "label": "Charisma"
+      }
+     ]
+    },
+    "malus": {
+     "byRarity": {
+      "uncommon": 1,
+      "legendary": 2
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.abilities.@ability.value",
+       "mode": "add",
+       "value": "-@malus"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, your {ability.label} score is reduced by @malus."
+  },
+  {
+   "id": "curse-leaden",
+   "slot": "curse",
+   "label": "Leaden (−@slow ft. speed)",
+   "name": [
+    "Leaden",
+    "Plodding",
+    "Dragging"
+   ],
+   "cost": -1,
+   "weight": 5,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "conflicts": [
+    "walkSpeed"
+   ],
+   "params": {
+    "slow": {
+     "byRarity": {
+      "uncommon": 5,
+      "veryRare": 10
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.movement.walk",
+       "mode": "add",
+       "value": "-@slow"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, your walking speed is reduced by @slow feet."
+  },
+  {
+   "id": "curse-noisy",
+   "slot": "curse",
+   "label": "{noise.name} (Stealth disadvantage)",
+   "name": "{noise.name}",
+   "menuLabel": "Never silent (music, whispers, chimes)",
+   "cost": -1,
+   "weight": 5,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "exclusive": "stealthCurse",
+   "params": {
+    "noise": {
+     "pick": [
+      {
+       "value": "music",
+       "name": [
+        "Singing",
+        "Humming",
+        "Crooning"
+       ],
+       "label": "plays a faint, endless tune"
+      },
+      {
+       "value": "whisper",
+       "name": [
+        "Whispering",
+        "Muttering",
+        "Murmuring"
+       ],
+       "label": "whispers to itself without pause"
+      },
+      {
+       "value": "chime",
+       "name": [
+        "Chiming",
+        "Tinkling",
+        "Ringing"
+       ],
+       "label": "chimes softly at the slightest movement"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.skills.ste.roll.mode",
+       "mode": "add",
+       "value": -1
+      }
+     ]
+    }
+   ],
+   "text": "This item {noise.label}, and nothing silences it. While you carry it, you have disadvantage on Dexterity (Stealth) checks."
+  },
+  {
+   "id": "curse-benighted",
+   "slot": "curse",
+   "label": "Benighted (no darkvision)",
+   "name": [
+    "Benighted",
+    "Gloom-Blind",
+    "Dusk-Dimmed"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "conflicts": [
+    "darkvision"
+   ],
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.senses.darkvision",
+       "mode": "override",
+       "value": 0
+      }
+     ]
+    }
+   ],
+   "text": "This item hates the dark and drinks it from your eyes: while you carry it, you lose any darkvision you have."
+  },
+  {
+   "id": "curse-spined",
+   "slot": "curse",
+   "label": "Spined (hits hurt you, @dmg)",
+   "name": [
+    "Spined",
+    "Barbed",
+    "Thorned"
+   ],
+   "menuLabel": "Spined (hurts you on a hit)",
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "uncommon",
+   "params": {
+    "dmg": {
+     "byRarity": {
+      "uncommon": "1d4",
+      "veryRare": "1d6"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "hit",
+     "do": {
+      "type": "damageActivity",
+      "name": "Spines Bite",
+      "formula": "@dmg",
+      "types": [
+       "piercing"
+      ],
+      "target": "self"
+     }
+    }
+   ],
+   "text": "Spines grow from the grip. Whenever you hit with this weapon, they bite into your hand: you take [[/damage @dmg piercing]] damage."
+  },
+  {
+   "id": "curse-treacherous",
+   "slot": "curse",
+   "label": "Treacherous (a 1 hurts you, @dmg)",
+   "name": [
+    "Treacherous",
+    "Traitorous",
+    "Faithless"
+   ],
+   "menuLabel": "Treacherous (hurts you on a 1)",
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "uncommon",
+   "params": {
+    "dmg": {
+     "byRarity": {
+      "uncommon": "1d6",
+      "veryRare": "2d6"
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "fumble",
+     "do": {
+      "type": "damageActivity",
+      "name": "Turns on You",
+      "formula": "@dmg",
+      "types": [
+       "force"
+      ],
+      "target": "self"
+     }
+    }
+   ],
+   "text": "When you roll a 1 on the d20 for an attack with this weapon, it twists in your grip and strikes you: you take [[/damage @dmg force]] damage."
+  },
+  {
+   "id": "curse-ponderous",
+   "slot": "curse",
+   "label": "Ponderous (4× weight)",
+   "name": [
+    "Ponderous",
+    "Cumbersome",
+    "Hulking"
+   ],
+   "cost": -1,
+   "weight": 3,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "itemField",
+     "path": "system.weight.value",
+     "mode": "multiply",
+     "value": 4
+    }
+   ],
+   "text": "This item weighs four times as much as it should.",
+   "conflicts": [
+    "weight"
+   ]
+  },
+  {
+   "id": "curse-recalcitrant",
+   "slot": "curse",
+   "label": "Recalcitrant (coax it each dawn, DC @dc)",
+   "name": [
+    "Recalcitrant",
+    "Wilful",
+    "Sullen"
+   ],
+   "menuLabel": "Recalcitrant (check at dawn)",
+   "cost": -2,
+   "weight": 3,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "trigger",
+     "on": "dawn",
+     "do": {
+      "type": "checkActivity",
+      "name": "Coax or Cow",
+      "skills": [
+       "per",
+       "itm"
+      ],
+      "dc": "@dc"
+     }
+    }
+   ],
+   "text": "This item has a will of its own. Each dawn, its bearer must coax or cow it with a DC @dc Charisma (Persuasion or Intimidation) check. On a failure, it refuses to work for that bearer until the next dawn: they can't attack with it or use its properties. PMI posts the check when the bearer finishes a long rest."
+  },
+  {
+   "id": "curse-neutral",
+   "slot": "curse",
+   "label": "Neutral (no advantage or disadvantage)",
+   "name": [
+    "Neutral",
+    "Even-Handed",
+    "Unswayed"
+   ],
+   "cost": -1,
+   "weight": 3,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "conflicts": [
+    "rollMode"
+   ],
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.abilities.str.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.str.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.dex.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.dex.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.con.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.con.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.int.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.int.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.wis.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.wis.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.cha.check.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.abilities.cha.save.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.acr.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.ani.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.arc.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.ath.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.dec.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.his.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.ins.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.itm.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.inv.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.med.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.nat.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.prc.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.prf.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.per.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.rel.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.slt.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.ste.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.skills.sur.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.attributes.init.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.attributes.concentration.roll.mode",
+       "mode": "override",
+       "value": 0
+      },
+      {
+       "key": "system.attributes.death.roll.mode",
+       "mode": "override",
+       "value": 0
+      }
+     ]
+    }
+   ],
+   "text": "Fortune neither favours nor fails you. While you carry this item, your ability checks, saving throws, initiative rolls, concentration saves and death saves never have advantage or disadvantage."
+  },
+  {
+   "id": "curse-brittle",
+   "slot": "curse",
+   "label": "Brittle ({damage.label} vulnerability)",
+   "name": [
+    "Brittle",
+    "Fragile",
+    "Frail"
+   ],
+   "menuLabel": "Brittle (damage vulnerability)",
+   "cost": -2,
+   "weight": 3,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "rare",
+   "params": {
+    "damage": {
+     "pick": [
+      {
+       "value": "fire",
+       "label": "fire"
+      },
+      {
+       "value": "cold",
+       "label": "cold"
+      },
+      {
+       "value": "lightning",
+       "label": "lightning"
+      },
+      {
+       "value": "thunder",
+       "label": "thunder"
+      },
+      {
+       "value": "necrotic",
+       "label": "necrotic"
+      },
+      {
+       "value": "radiant",
+       "label": "radiant"
+      },
+      {
+       "value": "poison",
+       "label": "poison"
+      }
+     ]
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.traits.dv.value",
+       "mode": "add",
+       "value": "@damage"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, you have vulnerability to {damage.label} damage."
+  },
+  {
+   "id": "curse-ill-omened",
+   "slot": "curse",
+   "label": "Ill-Omened (−1 to saves)",
+   "name": [
+    "Ill-Omened",
+    "Jinxed",
+    "Hexed"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.bonuses.abilities.save",
+       "mode": "add",
+       "value": "-1"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, you take a −1 penalty to saving throws."
+  },
+  {
+   "id": "curse-sluggish",
+   "slot": "curse",
+   "label": "Sluggish (−@n initiative)",
+   "name": [
+    "Sluggish",
+    "Drowsy",
+    "Torpid"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "conflicts": [
+    "initiative",
+    "rollMode"
+   ],
+   "params": {
+    "n": {
+     "byRarity": {
+      "uncommon": 2,
+      "veryRare": 3
+     }
+    }
+   },
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.init.bonus",
+       "mode": "add",
+       "value": "-@n"
+      }
+     ]
+    }
+   ],
+   "text": "While you carry this item, you take a −@n penalty to initiative rolls."
+  },
+  {
+   "id": "curse-draining",
+   "slot": "curse",
+   "label": "Draining (−1 HP per level)",
+   "name": [
+    "Draining",
+    "Leeching",
+    "Parasitic"
+   ],
+   "cost": -2,
+   "weight": 3,
+   "attunement": true,
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "rare",
+   "conflicts": [
+    "hpMax"
+   ],
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.hp.bonuses.level",
+       "mode": "add",
+       "value": "-1"
+      }
+     ]
+    }
+   ],
+   "text": "This item feeds on its bearer. While you are attuned to it, your hit point maximum is reduced by 1 for each level you have."
+  },
+  {
+   "id": "curse-clanking",
+   "slot": "curse",
+   "label": "Clanking (Stealth disadvantage)",
+   "name": [
+    "Clanking",
+    "Clattering",
+    "Creaking"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "armor"
+   ],
+   "minRarity": "uncommon",
+   "exclusive": "stealthCurse",
+   "changes": [
+    {
+     "type": "itemField",
+     "path": "system.properties",
+     "mode": "addToSet",
+     "value": "stealthDisadvantage"
+    }
+   ],
+   "text": "This armor is loud however well it's fitted. The wearer has disadvantage on Dexterity (Stealth) checks.",
+   "conflicts": [
+    "stealth"
+   ]
+  },
+  {
+   "id": "curse-unwieldy",
+   "slot": "curse",
+   "label": "Unwieldy (−1 to attack)",
+   "name": [
+    "Unwieldy",
+    "Ill-Balanced",
+    "Lopsided"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "weapon"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "attackBonus",
+     "bonus": "-1"
+    }
+   ],
+   "text": "This weapon fights its wielder: attack rolls with it take a −1 penalty."
+  },
+  {
+   "id": "curse-flimsy",
+   "slot": "curse",
+   "label": "Flimsy (−1 AC)",
+   "name": [
+    "Flimsy",
+    "Threadbare",
+    "Dented"
+   ],
+   "cost": -1,
+   "weight": 4,
+   "appliesTo": [
+    "armor",
+    "shield"
+   ],
+   "minRarity": "uncommon",
+   "changes": [
+    {
+     "type": "effect",
+     "changes": [
+      {
+       "key": "system.attributes.ac.bonus",
+       "mode": "add",
+       "value": "-1"
+      }
+     ]
+    }
+   ],
+   "text": "While you wear this item, you take a −1 penalty to AC."
+  },
+  {
+   "id": "curse-bound",
+   "slot": "curse",
+   "label": "Bound (can't be put aside)",
+   "name": [
+    "Bound",
+    "Grasping",
+    "Possessive"
+   ],
+   "cost": 0,
+   "weight": 2,
+   "attunement": true,
+   "requiresSlot": "curse",
+   "appliesTo": [
+    "weapon",
+    "armor",
+    "shield",
+    "worn",
+    "wand",
+    "rod"
+   ],
+   "minRarity": "uncommon",
+   "changes": [],
+   "text": "Once you attune to this item, you can't end the attunement willingly, and the item finds its way back to you if you discard it. A <em>remove curse</em> spell or similar magic ends the attunement and frees you."
+  }
+ ]
+}

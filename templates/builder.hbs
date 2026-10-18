@@ -37,7 +37,7 @@
     <div class="pmi-block">
       <div class="pmi-budget {{#if tally.over}}over{{/if}}">
         <h3 class="pmi-heading">{{localize "PMI.Builder.Properties"}}</h3>
-        <span class="pmi-budget-text">{{localize "PMI.Builder.BudgetUsed"}} {{tally.spent}}/{{tally.budget}}, {{tally.count}}/{{tally.maxProperties}} {{localize "PMI.Builder.PropertiesWord"}}</span>
+        <span class="pmi-budget-text">{{localize "PMI.Builder.BudgetUsed"}} {{tally.spent}}/{{tally.budget}}{{#if tally.refund}} ({{localize "PMI.Builder.Refund"}} +{{tally.refund}}){{/if}}, {{tally.count}}/{{tally.maxProperties}} {{localize "PMI.Builder.PropertiesWord"}}</span>
         <div class="pmi-meter" role="meter" aria-valuemin="0" aria-valuemax="{{tally.budget}}" aria-valuenow="{{tally.spent}}"
              aria-label="{{localize "PMI.Builder.Budget"}}"><div style="width: {{tally.percent}}%"></div></div>
       </div>
@@ -45,9 +45,9 @@
 
       <div class="pmi-cards">
         {{#each picks}}
-        <article class="pmi-card slot-{{slotKey}} {{#if locked}}locked{{/if}} {{#if problem}}problem{{/if}}">
+        <article class="pmi-card slot-{{slotKey}} {{#if curse}}curse{{/if}} {{#if locked}}locked{{/if}} {{#if problem}}problem{{/if}}">
           <header class="pmi-card-head">
-            <span class="pmi-card-slot">{{slot}}</span>
+            <span class="pmi-card-slot">{{#if curse}}<i class="fa-solid fa-skull" aria-hidden="true"></i> {{/if}}{{slot}}</span>
             <span class="pmi-card-cost" data-tooltip="PMI.Builder.Cost">{{cost}}</span>
           </header>
           <h4 class="pmi-card-name">{{#if locked}}<i class="fa-solid fa-lock" aria-label="{{localize "PMI.Builder.Locked"}}"></i> {{/if}}{{label}}</h4>
@@ -74,7 +74,11 @@
           <select id="pmi-add-property" name="addProperty">
             {{#each addable}}<option value="{{id}}">{{label}}{{#if over}} ⚠{{/if}}</option>{{/each}}
           </select>
-          <button type="button" data-action="add"><i class="fa-solid fa-plus"></i> {{localize "PMI.Builder.Add"}}</button>
+          <div class="pmi-add-buttons">
+            <button type="button" data-action="add"><i class="fa-solid fa-plus"></i> {{localize "PMI.Builder.Add"}}</button>
+            <button type="button" data-action="addCurse" data-tooltip="PMI.Builder.AddCurseHint" {{#unless canCurse}}disabled{{/unless}}>
+              <i class="fa-solid fa-skull"></i> {{localize "PMI.Builder.AddCurse"}}</button>
+          </div>
           {{else}}
           <p class="pmi-hint">{{#if baseName}}{{localize "PMI.Builder.NothingToAdd"}}{{else}}{{localize "PMI.Builder.ChooseBase"}}{{/if}}</p>
           {{/if}}

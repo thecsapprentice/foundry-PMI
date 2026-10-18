@@ -8,27 +8,66 @@
     "Pyre",
     "Blaze",
     "Flame",
-    "Ash"
+    "Ash",
+    "Brand",
+    "Kindle",
+    "Scorch",
+    "Char",
+    "Sear",
+    "Smoulder",
+    "Flare",
+    "Smelt",
+    "Coal",
+    "Furnace",
+    "Hearth",
+    "Wildfire",
+    "Sunfire",
+    "Tinder"
    ],
    "figures": [
     "Dragon's",
     "Phoenix's",
     "Forge's",
-    "Sun's"
+    "Sun's",
+    "Salamander's",
+    "Efreeti's",
+    "Smith's",
+    "Volcano's",
+    "Balor's",
+    "Hellhound's",
+    "Firebird's",
+    "Chimera's"
    ],
    "singles": [
     "Cinder",
     "Ember",
     "Pyre",
-    "Kindle"
+    "Kindle",
+    "Smoulder",
+    "Wildfire",
+    "Flashpoint",
+    "Brimstone",
+    "Firebrand",
+    "Inferno",
+    "Hearthfire",
+    "Tinderbox",
+    "Scorch"
    ],
    "looks": [
     "Warm",
     "Soot-Streaked",
-    "Ember-Bright"
+    "Ember-Bright",
+    "Charred",
+    "Smouldering",
+    "Heat-Blued",
+    "Flame-Kissed",
+    "Cinder-Flecked",
+    "Fire-Forged"
    ],
    "auras": [
-    "warm to the touch, with a faint smell of smoke"
+    "warm to the touch, with a faint smell of smoke",
+    "faintly smoking, though nothing burns",
+    "flecked with sparks that never land"
    ]
   },
   "cold": {
@@ -38,25 +77,60 @@
     "Ice",
     "Hoar",
     "Winter",
-    "Sleet"
+    "Sleet",
+    "Snow",
+    "Chill",
+    "Glacier",
+    "Floe",
+    "Drift",
+    "Shiver",
+    "Hail",
+    "Boreal",
+    "Blizzard",
+    "Icefang",
+    "Northwind",
+    "Pale"
    ],
    "figures": [
     "Winter's",
     "Glacier's",
-    "Frost Giant's"
+    "Frost Giant's",
+    "Yeti's",
+    "Remorhaz's",
+    "Ice Queen's",
+    "Wendigo's",
+    "Mammoth's",
+    "North Wind's"
    ],
    "singles": [
     "Rime",
     "Icicle",
-    "Hoarfrost"
+    "Hoarfrost",
+    "Shiver",
+    "Snowfall",
+    "Permafrost",
+    "Whiteout",
+    "Coldsnap",
+    "Glacier",
+    "Frostbite",
+    "Wintertide",
+    "Floe"
    ],
    "looks": [
     "Frost-Rimed",
     "Chill",
-    "Pale"
+    "Pale",
+    "Ice-Bound",
+    "Snow-Dusted",
+    "Blue-Frosted",
+    "Winter-Pale",
+    "Glacial",
+    "Hoar-Crusted"
    ],
    "auras": [
-    "cold to the touch, and its breath fogs the air"
+    "cold to the touch, and its breath fogs the air",
+    "rimed with frost that never melts",
+    "so cold it numbs the fingers"
    ]
   },
   "lightning": {
@@ -65,24 +139,58 @@
     "Spark",
     "Bolt",
     "Arc",
-    "Tempest"
+    "Tempest",
+    "Thunderbolt",
+    "Flash",
+    "Volt",
+    "Skyfire",
+    "Levin",
+    "Fulgur",
+    "Static",
+    "Squall",
+    "Crack",
+    "Jolt",
+    "Strike",
+    "Thrum"
    ],
    "figures": [
     "Storm's",
     "Tempest's",
-    "Sky's"
+    "Sky's",
+    "Thunderbird's",
+    "Blue Dragon's",
+    "Storm Giant's",
+    "Djinni's",
+    "Squall's",
+    "Heaven's"
    ],
    "singles": [
     "Spark",
     "Thunderhead",
-    "Arc"
+    "Arc",
+    "Levin",
+    "Skyfire",
+    "Wildbolt",
+    "Stormcall",
+    "Flashfire",
+    "Fulgur",
+    "Sparkfall",
+    "Cloudburst"
    ],
    "looks": [
     "Crackling",
-    "Humming"
+    "Humming",
+    "Sparking",
+    "Storm-Scarred",
+    "Blue-Veined",
+    "Static-Charged",
+    "Jagged",
+    "Bright-Forked"
    ],
    "auras": [
-    "faintly crackling, and it makes your hair stand on end"
+    "faintly crackling, and it makes your hair stand on end",
+    "trailing tiny sparks when moved",
+    "smelling of the air before a storm"
    ]
   },
   "thunder": {
@@ -90,22 +198,56 @@
     "Thunder",
     "Boom",
     "Roar",
-    "Peal"
+    "Peal",
+    "Rumble",
+    "Clap",
+    "Crash",
+    "Drum",
+    "Quake",
+    "Clang",
+    "Bellow",
+    "Clarion",
+    "Gong",
+    "Echo",
+    "Tremor",
+    "Stormbell"
    ],
    "figures": [
     "Giant's",
-    "Storm's"
+    "Storm's",
+    "Titan's",
+    "Earthshaker's",
+    "Drummer's",
+    "Thunderbird's",
+    "War God's",
+    "Avalanche's"
    ],
    "singles": [
     "Clamor",
-    "Peal"
+    "Peal",
+    "Rumble",
+    "Thunderclap",
+    "Clangor",
+    "Boom",
+    "Tremor",
+    "Earthshake",
+    "Warcry",
+    "Clarion"
    ],
    "looks": [
     "Thrumming",
-    "Resonant"
+    "Resonant",
+    "Booming",
+    "Rumbling",
+    "Drum-Bound",
+    "Bell-Toned",
+    "Reverberating",
+    "Thunder-Struck"
    ],
    "auras": [
-    "thrumming softly, like a distant drum"
+    "thrumming softly, like a distant drum",
+    "humming with a deep, low note when struck",
+    "ringing like a bell at the lightest touch"
    ]
   },
   "acid": {
@@ -113,22 +255,57 @@
     "Gall",
     "Bile",
     "Etch",
-    "Rot"
+    "Rot",
+    "Sour",
+    "Blister",
+    "Gnaw",
+    "Seethe",
+    "Rust",
+    "Fume",
+    "Mire",
+    "Ooze",
+    "Corrode",
+    "Canker",
+    "Slake",
+    "Scour"
    ],
    "figures": [
     "Wyrm's",
-    "Ooze's"
+    "Ooze's",
+    "Black Dragon's",
+    "Bog Hag's",
+    "Jelly's",
+    "Bullywug's",
+    "Swamp's",
+    "Alchemist's"
    ],
    "singles": [
     "Gall",
-    "Caustic"
+    "Caustic",
+    "Canker",
+    "Blister",
+    "Seether",
+    "Rustbite",
+    "Fume",
+    "Mire",
+    "Vitriol",
+    "Corrosion",
+    "Acrid"
    ],
    "looks": [
     "Pitted",
-    "Acrid"
+    "Acrid",
+    "Corroded",
+    "Blistered",
+    "Stained",
+    "Eaten",
+    "Fuming",
+    "Bog-Dark"
    ],
    "auras": [
-    "pitted and etched, with an acrid smell"
+    "pitted and etched, with an acrid smell",
+    "pocked as if by drops of acid",
+    "leaving a faint stain on whatever it rests on"
    ]
   },
   "radiant": {
@@ -137,24 +314,59 @@
     "Sun",
     "Glory",
     "Halo",
-    "Light"
+    "Light",
+    "Gleam",
+    "Shine",
+    "Aurora",
+    "Morning",
+    "Bright",
+    "Star",
+    "Glim",
+    "Solar",
+    "Lumen",
+    "Zenith",
+    "Seraph",
+    "Beacon"
    ],
    "figures": [
     "Dawn's",
     "Saint's",
-    "Angel's"
+    "Angel's",
+    "Seraph's",
+    "Solar's",
+    "Paladin's",
+    "Morning Star's",
+    "Pilgrim's",
+    "Unicorn's"
    ],
    "singles": [
     "Dawn",
     "Glimmer",
-    "Halo"
+    "Halo",
+    "Daybreak",
+    "Lumen",
+    "Aurora",
+    "Zenith",
+    "Beacon",
+    "Sunburst",
+    "Radiance",
+    "Morningstar",
+    "Gleam"
    ],
    "looks": [
     "Gleaming",
-    "Glowing"
+    "Glowing",
+    "Shining",
+    "Sunlit",
+    "Silver-Bright",
+    "Haloed",
+    "Luminous",
+    "Golden"
    ],
    "auras": [
-    "softly glowing, even in darkness"
+    "softly glowing, even in darkness",
+    "warm, as if it has sat in the sun",
+    "glinting with light from no source"
    ]
   },
   "necrotic": {
@@ -163,24 +375,59 @@
     "Dusk",
     "Wither",
     "Bone",
-    "Doom"
+    "Doom",
+    "Wraith",
+    "Shroud",
+    "Tomb",
+    "Crypt",
+    "Ghast",
+    "Barrow",
+    "Wight",
+    "Blight",
+    "Pallor",
+    "Mourn",
+    "Ruin",
+    "Corpse"
    ],
    "figures": [
     "Widow's",
     "Lich's",
-    "Reaper's"
+    "Reaper's",
+    "Wraith's",
+    "Banshee's",
+    "Necromancer's",
+    "Mourner's",
+    "Ghoul's",
+    "Hangman's"
    ],
    "singles": [
     "Dirge",
     "Pall",
-    "Gravesend"
+    "Gravesend",
+    "Barrow",
+    "Shroud",
+    "Mourning",
+    "Blight",
+    "Nightshade",
+    "Tombstone",
+    "Lament",
+    "Ruin",
+    "Pallor"
    ],
    "looks": [
     "Ashen",
-    "Grave-Cold"
+    "Grave-Cold",
+    "Bone-White",
+    "Tarnished",
+    "Shroud-Wrapped",
+    "Withered",
+    "Corpse-Pale",
+    "Death-Dark"
    ],
    "auras": [
-    "cold and lifeless, and flowers wilt near it"
+    "cold and lifeless, and flowers wilt near it",
+    "chill and still, like a tomb",
+    "giving off the faint, sweet smell of decay"
    ]
   },
   "poison": {
@@ -188,24 +435,59 @@
     "Venom",
     "Viper",
     "Adder",
-    "Nettle"
+    "Nettle",
+    "Asp",
+    "Toxin",
+    "Bane",
+    "Blight",
+    "Hemlock",
+    "Wolfsbane",
+    "Fang",
+    "Mamba",
+    "Cobra",
+    "Scorpion",
+    "Belladonna",
+    "Wasp"
    ],
    "figures": [
     "Serpent's",
     "Spider's",
-    "Asp's"
+    "Asp's",
+    "Scorpion's",
+    "Wyvern's",
+    "Assassin's",
+    "Yuan-ti's",
+    "Poisoner's",
+    "Green Dragon's"
    ],
    "singles": [
     "Sting",
     "Adder",
-    "Nightshade"
+    "Nightshade",
+    "Hemlock",
+    "Wolfsbane",
+    "Belladonna",
+    "Bane",
+    "Scorpion",
+    "Toxin",
+    "Bitterroot",
+    "Mamba",
+    "Asp"
    ],
    "looks": [
     "Green-Tinged",
-    "Oily"
+    "Oily",
+    "Venom-Stained",
+    "Bile-Green",
+    "Sickly",
+    "Serpent-Scaled",
+    "Envenomed",
+    "Mottled"
    ],
    "auras": [
-    "slick with a faint green sheen"
+    "slick with a faint green sheen",
+    "beaded with a clear, bitter oil",
+    "giving off a faint, bitter-almond smell"
    ]
   },
   "psychic": {
@@ -213,23 +495,57 @@
     "Dream",
     "Whisper",
     "Mind",
-    "Madness"
+    "Madness",
+    "Thought",
+    "Murmur",
+    "Echo",
+    "Nightmare",
+    "Phantom",
+    "Trance",
+    "Lunar",
+    "Rave",
+    "Mirage",
+    "Delirium",
+    "Muse"
    ],
    "figures": [
     "Dreamer's",
-    "Madman's"
+    "Madman's",
+    "Mind Flayer's",
+    "Oracle's",
+    "Sleeper's",
+    "Aboleth's",
+    "Prophet's",
+    "Lunatic's"
    ],
    "singles": [
     "Whisper",
     "Reverie",
-    "Lunacy"
+    "Lunacy",
+    "Murmur",
+    "Delirium",
+    "Trance",
+    "Echo",
+    "Daydream",
+    "Nightmare",
+    "Rapture",
+    "Muse",
+    "Babel"
    ],
    "looks": [
     "Whispering",
-    "Uncanny"
+    "Uncanny",
+    "Murmuring",
+    "Dream-Touched",
+    "Strange",
+    "Unsettling",
+    "Haunting",
+    "Wistful"
    ],
    "auras": [
-    "murmuring at the edge of hearing"
+    "murmuring at the edge of hearing",
+    "faintly whispering a name you almost know",
+    "leaving a dreamlike haze on those who hold it"
    ]
   },
   "force": {
@@ -237,45 +553,115 @@
     "Will",
     "Might",
     "Titan",
-    "Star"
+    "Star",
+    "Shard",
+    "Prism",
+    "Aether",
+    "Void",
+    "Rift",
+    "Bolt",
+    "Strike",
+    "Ram",
+    "Hammer",
+    "Eldritch",
+    "Arc",
+    "Nova"
    ],
    "figures": [
     "Titan's",
-    "Wizard's"
+    "Wizard's",
+    "Archon's",
+    "Starborn's",
+    "Mage's",
+    "Aether's",
+    "Void's",
+    "Colossus's"
    ],
    "singles": [
     "Resolve",
-    "Starfall"
+    "Starfall",
+    "Aether",
+    "Prism",
+    "Nova",
+    "Shard",
+    "Riftborn",
+    "Bulwark",
+    "Impact",
+    "Shockwave",
+    "Starshard"
    ],
    "looks": [
     "Shimmering",
-    "Rune-Etched"
+    "Rune-Etched",
+    "Prismatic",
+    "Glimmering",
+    "Star-Flecked",
+    "Aether-Touched",
+    "Translucent",
+    "Warping"
    ],
    "auras": [
-    "shimmering faintly, as if seen through heat haze"
+    "shimmering faintly, as if seen through heat haze",
+    "subtly warping the air around it",
+    "pushing faintly against your palm"
    ]
   },
   "keen": {
    "roots": [
     "Razor",
     "Keen",
-    "Hair"
+    "Hair",
+    "Edge",
+    "Whet",
+    "Hone",
+    "Shear",
+    "Sliver",
+    "Needle",
+    "Splinter",
+    "Thorn",
+    "Glass",
+    "Rapier",
+    "Shard",
+    "Scalpel"
    ],
    "figures": [
     "Duelist's",
-    "Executioner's"
+    "Executioner's",
+    "Swordsaint's",
+    "Barber's",
+    "Surgeon's",
+    "Fencer's",
+    "Assassin's",
+    "Headsman's"
    ],
    "singles": [
     "Needle",
     "Sliver",
-    "Whisker"
+    "Whisker",
+    "Shear",
+    "Splinter",
+    "Glasscut",
+    "Thorn",
+    "Hairline",
+    "Edge",
+    "Whisper",
+    "Paper",
+    "Quill"
    ],
    "looks": [
     "Razor-Edged",
-    "Gleaming"
+    "Gleaming",
+    "Whetted",
+    "Hair-Fine",
+    "Mirror-Bright",
+    "Thin-Edged",
+    "Wicked",
+    "Polished"
    ],
    "auras": [
-    "impossibly sharp"
+    "impossibly sharp",
+    "keen enough to split a falling hair",
+    "singing softly when drawn"
    ]
   },
   "cruel": {
@@ -283,110 +669,281 @@
     "Gore",
     "Grim",
     "Cruel",
-    "Red"
+    "Red",
+    "Rend",
+    "Flay",
+    "Maim",
+    "Gut",
+    "Hack",
+    "Wound",
+    "Rake",
+    "Bleed",
+    "Scar",
+    "Slash",
+    "Mangle",
+    "Hook"
    ],
    "figures": [
     "Butcher's",
-    "Wolf's"
+    "Wolf's",
+    "Torturer's",
+    "Ogre's",
+    "Raider's",
+    "Warlord's",
+    "Slaver's",
+    "Beast's"
    ],
    "singles": [
     "Ripper",
-    "Gash"
+    "Gash",
+    "Flayer",
+    "Maim",
+    "Rend",
+    "Bloodletter",
+    "Gutter",
+    "Scar",
+    "Hook",
+    "Mangler",
+    "Ruin"
    ],
    "looks": [
     "Cruel",
-    "Barbed"
+    "Barbed",
+    "Jagged",
+    "Serrated",
+    "Blood-Stained",
+    "Notched",
+    "Hooked",
+    "Savage"
    ],
    "auras": [
-    "with a subtle aura of menace"
+    "with a subtle aura of menace",
+    "notched by many cruel uses",
+    "stained a red that won't wash out"
    ]
   },
   "sure": {
    "roots": [
     "True",
     "Sure",
-    "Straight"
+    "Straight",
+    "Plumb",
+    "Mark",
+    "Aim",
+    "Steady",
+    "Arrow",
+    "Level",
+    "Trust",
+    "Center",
+    "Line",
+    "Bow",
+    "Sight",
+    "Pin"
    ],
    "figures": [
     "Hunter's",
-    "Archer's"
+    "Archer's",
+    "Marksman's",
+    "Ranger's",
+    "Sniper's",
+    "Falconer's",
+    "Champion's",
+    "Tracker's"
    ],
    "singles": [
     "Truth",
-    "Bullseye"
+    "Bullseye",
+    "Mark",
+    "Steadfast",
+    "Pinpoint",
+    "Centre",
+    "Plumbline",
+    "Aim",
+    "Sureshot",
+    "Trueflight"
    ],
    "looks": [
     "Balanced",
-    "Well-Made"
+    "Well-Made",
+    "Steady",
+    "True-Made",
+    "Trusty",
+    "Plumb-Straight",
+    "Fine-Tuned",
+    "Crafted"
    ],
    "auras": [
-    "perfectly balanced in the hand"
+    "perfectly balanced in the hand",
+    "steady as stone in the hand",
+    "fitted with a tiny, perfect sight-mark"
    ]
   },
   "watch": {
    "roots": [
     "Watch",
     "Wake",
-    "Vigil"
+    "Vigil",
+    "Ward",
+    "Warden",
+    "Guard",
+    "Sentry",
+    "Lantern",
+    "Beacon",
+    "Alert",
+    "Eye",
+    "Look",
+    "Herald",
+    "Picket"
    ],
    "figures": [
     "Sentinel's",
-    "Watchman's"
+    "Watchman's",
+    "Lookout's",
+    "Gatekeeper's",
+    "Shepherd's",
+    "Scout's",
+    "Guardian's",
+    "Owl's"
    ],
    "singles": [
     "Vigil",
-    "Wakeful"
+    "Wakeful",
+    "Lookout",
+    "Sentry",
+    "Lantern",
+    "Beacon",
+    "Alarm",
+    "Herald",
+    "Picket",
+    "Nightwatch"
    ],
    "looks": [
     "Watchful",
-    "Eye-Engraved"
+    "Eye-Engraved",
+    "Alert",
+    "Open-Eyed",
+    "Lantern-Bright",
+    "Keen-Eyed",
+    "Wakeful",
+    "Eyed"
    ],
    "auras": [
-    "engraved with a single open eye"
+    "engraved with a single open eye",
+    "with an eye-shaped jewel that seems to follow you",
+    "faintly warm whenever danger is near"
    ]
   },
   "fear": {
    "roots": [
     "Dread",
     "Fear",
-    "Terror"
+    "Terror",
+    "Panic",
+    "Horror",
+    "Shudder",
+    "Fright",
+    "Grim",
+    "Gloom",
+    "Bogey",
+    "Haunt",
+    "Wail",
+    "Scream",
+    "Dire",
+    "Nightmare"
    ],
    "figures": [
     "Nightmare's",
-    "Tyrant's"
+    "Tyrant's",
+    "Bogeyman's",
+    "Lich King's",
+    "Hag's",
+    "Banshee's",
+    "Dread Lord's",
+    "Ghost's"
    ],
    "singles": [
     "Dread",
-    "Horror"
+    "Horror",
+    "Panic",
+    "Shudder",
+    "Fright",
+    "Wail",
+    "Scream",
+    "Haunt",
+    "Bogey",
+    "Gloom",
+    "Grimace"
    ],
    "looks": [
     "Menacing",
-    "Dark"
+    "Dark",
+    "Grim",
+    "Ghastly",
+    "Skull-Marked",
+    "Fearsome",
+    "Shadow-Wreathed",
+    "Haunting"
    ],
    "auras": [
-    "with a subtle aura of menace"
+    "with a subtle aura of menace",
+    "making the hairs on your neck rise",
+    "giving every shadow near it a face"
    ]
   },
   "chain": {
    "roots": [
     "Chain",
     "Bind",
-    "Shackle"
+    "Shackle",
+    "Fetter",
+    "Manacle",
+    "Bond",
+    "Link",
+    "Hold",
+    "Lock",
+    "Snare",
+    "Iron",
+    "Yoke",
+    "Tether",
+    "Hook",
+    "Grip"
    ],
    "figures": [
     "Jailer's",
-    "Warden's"
+    "Warden's",
+    "Gaoler's",
+    "Inquisitor's",
+    "Slaver's",
+    "Hangman's",
+    "Turnkey's",
+    "Iron Golem's"
    ],
    "singles": [
     "Shackle",
-    "Fetter"
+    "Fetter",
+    "Manacle",
+    "Bond",
+    "Tether",
+    "Yoke",
+    "Lockfast",
+    "Snare",
+    "Grip",
+    "Ironbound"
    ],
    "looks": [
     "Chain-Wrapped",
-    "Heavy"
+    "Heavy",
+    "Iron-Bound",
+    "Linked",
+    "Manacled",
+    "Chain-Scored",
+    "Heavy-Linked",
+    "Shackled"
    ],
    "auras": [
-    "wrapped in a fine, unbreakable chain"
+    "wrapped in a fine, unbreakable chain",
+    "faintly clinking, as if chains rattle inside it",
+    "bound with iron hoops that never rust"
    ]
   },
   "guard": {
@@ -394,23 +951,58 @@
     "Haven",
     "Ward",
     "Bastion",
-    "Aegis"
+    "Aegis",
+    "Shield",
+    "Rampart",
+    "Bulwark",
+    "Keep",
+    "Wall",
+    "Tower",
+    "Fort",
+    "Sentinel",
+    "Shelter",
+    "Stead",
+    "Hold",
+    "Gate"
    ],
    "figures": [
     "Warden's",
     "Paladin's",
-    "Sentinel's"
+    "Sentinel's",
+    "Castellan's",
+    "Templar's",
+    "Guardsman's",
+    "Knight's",
+    "Bodyguard's",
+    "Shieldmaiden's"
    ],
    "singles": [
     "Bastion",
-    "Haven"
+    "Haven",
+    "Rampart",
+    "Bulwark",
+    "Keep",
+    "Shelter",
+    "Sanctuary",
+    "Stronghold",
+    "Aegis",
+    "Steadfast",
+    "Citadel"
    ],
    "looks": [
     "Sturdy",
-    "Rune-Warded"
+    "Rune-Warded",
+    "Steadfast",
+    "Well-Guarded",
+    "Iron-Bossed",
+    "Shield-Marked",
+    "Fortified",
+    "Stalwart"
    ],
    "auras": [
-    "inscribed with protective runes"
+    "inscribed with protective runes",
+    "steady and solid in the hand",
+    "marked with a small, worn shield sigil"
    ]
   },
   "swift": {
@@ -418,23 +1010,58 @@
     "Swift",
     "Wind",
     "Gale",
-    "Fleet"
+    "Fleet",
+    "Dash",
+    "Flit",
+    "Rush",
+    "Dart",
+    "Hurry",
+    "Quick",
+    "Breeze",
+    "Wing",
+    "Hare",
+    "Sprint",
+    "Flick",
+    "Race"
    ],
    "figures": [
     "Wind's",
     "Hare's",
-    "Messenger's"
+    "Messenger's",
+    "Courier's",
+    "Greyhound's",
+    "Stag's",
+    "Cheetah's",
+    "Swallow's",
+    "Runner's"
    ],
    "singles": [
     "Zephyr",
-    "Gust"
+    "Gust",
+    "Breeze",
+    "Dart",
+    "Flicker",
+    "Dash",
+    "Sprint",
+    "Whirlwind",
+    "Hurry",
+    "Tailwind",
+    "Quickstep"
    ],
    "looks": [
     "Wind-Worn",
-    "Feather-Light"
+    "Feather-Light",
+    "Light",
+    "Streamlined",
+    "Wind-Swept",
+    "Breezy",
+    "Lithe",
+    "Fleet"
    ],
    "auras": [
-    "light as a feather"
+    "light as a feather",
+    "seeming to tug you forward",
+    "light as a held breath"
    ]
   },
   "flight": {
@@ -442,22 +1069,57 @@
     "Wing",
     "Sky",
     "Cloud",
-    "Hawk"
+    "Hawk",
+    "Feather",
+    "Soar",
+    "Glide",
+    "Lark",
+    "Falcon",
+    "Kestrel",
+    "Aerie",
+    "Zephyr",
+    "Swift",
+    "Gull",
+    "Talon",
+    "Plume"
    ],
    "figures": [
     "Eagle's",
-    "Roc's"
+    "Roc's",
+    "Griffon's",
+    "Pegasus's",
+    "Falcon's",
+    "Harpy's",
+    "Wyvern's",
+    "Angel's"
    ],
    "singles": [
     "Skylark",
-    "Updraft"
+    "Updraft",
+    "Soar",
+    "Plume",
+    "Glide",
+    "Kestrel",
+    "Falconry",
+    "Aerie",
+    "Skyward",
+    "Featherfall",
+    "Highwind"
    ],
    "looks": [
     "Feathered",
-    "Airy"
+    "Airy",
+    "Winged",
+    "Plumed",
+    "Sky-Blue",
+    "Feather-Trimmed",
+    "Weightless",
+    "Cloud-White"
    ],
    "auras": [
-    "trimmed with feathers that stir without a breeze"
+    "trimmed with feathers that stir without a breeze",
+    "lifting slightly in your hand, as if it wants to rise",
+    "ruffling in a wind only it can feel"
    ]
   },
   "shadow": {
@@ -465,22 +1127,57 @@
     "Shade",
     "Ghost",
     "Mist",
-    "Shadow"
+    "Shadow",
+    "Dusk",
+    "Murk",
+    "Veil",
+    "Shroud",
+    "Hush",
+    "Wraith",
+    "Phantom",
+    "Smoke",
+    "Haze",
+    "Umbra",
+    "Gloom",
+    "Silhouette"
    ],
    "figures": [
     "Phantom's",
-    "Thief's"
+    "Thief's",
+    "Shadowdancer's",
+    "Spy's",
+    "Ninja's",
+    "Cutpurse's",
+    "Ghost's",
+    "Nightstalker's"
    ],
    "singles": [
     "Wisp",
-    "Nobody"
+    "Nobody",
+    "Hush",
+    "Veil",
+    "Umbra",
+    "Smoke",
+    "Silhouette",
+    "Shroud",
+    "Murk",
+    "Haze",
+    "Whisperstep"
    ],
    "looks": [
     "Shadowy",
-    "Dim"
+    "Dim",
+    "Smoky",
+    "Muted",
+    "Unremarkable",
+    "Soot-Black",
+    "Hazy",
+    "Veiled"
    ],
    "auras": [
-    "hard to look at directly, as if it slips from sight"
+    "hard to look at directly, as if it slips from sight",
+    "casting no shadow of its own",
+    "always just where you didn't look"
    ]
   },
   "night": {
@@ -488,22 +1185,57 @@
     "Night",
     "Gloam",
     "Moon",
-    "Owl"
+    "Owl",
+    "Dark",
+    "Star",
+    "Eclipse",
+    "Midnight",
+    "Raven",
+    "Lunar",
+    "Crescent",
+    "Black",
+    "Starless",
+    "Umber",
+    "Nox",
+    "Bat"
    ],
    "figures": [
     "Moon's",
-    "Owl's"
+    "Owl's",
+    "Raven's",
+    "Vampire's",
+    "Night Hag's",
+    "Stargazer's",
+    "Wolf's",
+    "Witch's"
    ],
    "singles": [
     "Gloaming",
-    "Nightfall"
+    "Nightfall",
+    "Midnight",
+    "Eclipse",
+    "Crescent",
+    "Starless",
+    "Moonrise",
+    "Evenfall",
+    "Raven",
+    "Nocturne",
+    "Duskfall"
    ],
    "looks": [
     "Moonlit",
-    "Dusky"
+    "Dusky",
+    "Midnight-Blue",
+    "Star-Speckled",
+    "Crescent-Marked",
+    "Ink-Dark",
+    "Silvered",
+    "Shadowed"
    ],
    "auras": [
-    "catching moonlight that isn't there"
+    "catching moonlight that isn't there",
+    "darker at night than by day",
+    "speckled with points like faint stars"
    ]
   },
   "life": {
@@ -511,22 +1243,57 @@
     "Life",
     "Bloom",
     "Heart",
-    "Mend"
+    "Mend",
+    "Spring",
+    "Vine",
+    "Root",
+    "Blossom",
+    "Green",
+    "Sap",
+    "Hale",
+    "Hearth",
+    "Vital",
+    "Grace",
+    "Balm",
+    "Renew"
    ],
    "figures": [
     "Healer's",
-    "Mother's"
+    "Mother's",
+    "Druid's",
+    "Saint's",
+    "Dryad's",
+    "Midwife's",
+    "Gardener's",
+    "Phoenix's"
    ],
    "singles": [
     "Mercy",
-    "Bloom"
+    "Bloom",
+    "Spring",
+    "Blossom",
+    "Balm",
+    "Renewal",
+    "Sapling",
+    "Verdance",
+    "Lifeblood",
+    "Hearth",
+    "Solace"
    ],
    "looks": [
     "Warm",
-    "Verdant"
+    "Verdant",
+    "Living",
+    "Leaf-Twined",
+    "Blossoming",
+    "Green-Veined",
+    "Hale",
+    "Fresh"
    ],
    "auras": [
-    "faintly warm, like something living"
+    "faintly warm, like something living",
+    "putting out a tiny green shoot now and then",
+    "faintly beating, like a heart"
    ]
   },
   "strength": {
@@ -534,132 +1301,339 @@
     "Giant",
     "Titan",
     "Ox",
-    "Bull"
+    "Bull",
+    "Might",
+    "Brawn",
+    "Boulder",
+    "Hammer",
+    "Stone",
+    "Iron",
+    "Mammoth",
+    "Troll",
+    "Ogre",
+    "Colossus",
+    "Anvil",
+    "Oak"
    ],
    "figures": [
     "Giant's",
-    "Titan's"
+    "Titan's",
+    "Ogre's",
+    "Troll's",
+    "Colossus's",
+    "Smith's",
+    "Blacksmith's",
+    "Mammoth's"
    ],
    "singles": [
     "Mountain",
-    "Brawn"
+    "Brawn",
+    "Boulder",
+    "Anvil",
+    "Colossus",
+    "Juggernaut",
+    "Avalanche",
+    "Ironarm",
+    "Bedrock",
+    "Maul"
    ],
    "looks": [
     "Massive",
-    "Heavy"
+    "Heavy",
+    "Thick",
+    "Broad",
+    "Hulking",
+    "Iron-Hard",
+    "Sturdy",
+    "Stout"
    ],
    "auras": [
-    "heavier than it should be"
+    "heavier than it should be",
+    "solid enough to stop a charging bull",
+    "pressing heavily into your palm"
    ]
   },
   "grace": {
    "roots": [
     "Cat",
     "Silk",
-    "Quick"
+    "Quick",
+    "Swan",
+    "Willow",
+    "Feather",
+    "Dancer",
+    "Ribbon",
+    "Breeze",
+    "Lithe",
+    "Fawn",
+    "Velvet",
+    "Reed",
+    "Gazelle",
+    "Mist"
    ],
    "figures": [
     "Dancer's",
-    "Cat's"
+    "Cat's",
+    "Swan's",
+    "Acrobat's",
+    "Fawn's",
+    "Duelist's",
+    "Courtesan's",
+    "Gazelle's"
    ],
    "singles": [
     "Silk",
-    "Pounce"
+    "Pounce",
+    "Willow",
+    "Ribbon",
+    "Swansong",
+    "Pirouette",
+    "Arabesque",
+    "Fawn",
+    "Reed",
+    "Grace"
    ],
    "looks": [
     "Elegant",
-    "Supple"
+    "Supple",
+    "Graceful",
+    "Slender",
+    "Willowy",
+    "Lithe",
+    "Fine-Lined",
+    "Poised"
    ],
    "auras": [
-    "elegant and supple"
+    "elegant and supple",
+    "perfectly balanced, as if it moves with you",
+    "smooth as river-worn stone"
    ]
   },
   "endurance": {
    "roots": [
     "Oak",
     "Stone",
-    "Iron"
+    "Iron",
+    "Root",
+    "Rock",
+    "Granite",
+    "Anvil",
+    "Bear",
+    "Bull",
+    "Mountain",
+    "Steel",
+    "Yew",
+    "Bone",
+    "Bronze",
+    "Ox"
    ],
    "figures": [
     "Mountain's",
-    "Oak's"
+    "Oak's",
+    "Bear's",
+    "Dwarf's",
+    "Yew's",
+    "Pilgrim's",
+    "Survivor's",
+    "Ox's"
    ],
    "singles": [
     "Bedrock",
-    "Ironroot"
+    "Ironroot",
+    "Granite",
+    "Taproot",
+    "Steadfast",
+    "Ironwood",
+    "Longhaul",
+    "Yew",
+    "Anvil",
+    "Heartwood"
    ],
    "looks": [
     "Weathered",
-    "Sturdy"
+    "Sturdy",
+    "Battered",
+    "Unbroken",
+    "Time-Worn",
+    "Hard-Wearing",
+    "Rugged",
+    "Seasoned"
    ],
    "auras": [
-    "unmarked by age or wear"
+    "unmarked by age or wear",
+    "unscratched despite clear signs of hard use",
+    "heavy and dependable"
    ]
   },
   "mind": {
    "roots": [
     "Sage",
     "Lore",
-    "Rune"
+    "Rune",
+    "Wit",
+    "Thought",
+    "Quill",
+    "Ink",
+    "Scroll",
+    "Cipher",
+    "Logic",
+    "Riddle",
+    "Muse",
+    "Study",
+    "Codex",
+    "Tome"
    ],
    "figures": [
     "Sage's",
-    "Scholar's"
+    "Scholar's",
+    "Archivist's",
+    "Philosopher's",
+    "Riddler's",
+    "Librarian's",
+    "Cartographer's",
+    "Inventor's"
    ],
    "singles": [
     "Insight",
-    "Lorekeeper"
+    "Lorekeeper",
+    "Cipher",
+    "Riddle",
+    "Codex",
+    "Quill",
+    "Inkwell",
+    "Marginalia",
+    "Axiom",
+    "Treatise",
+    "Lore"
    ],
    "looks": [
     "Rune-Etched",
-    "Inscribed"
+    "Inscribed",
+    "Ink-Stained",
+    "Annotated",
+    "Scholarly",
+    "Cipher-Marked",
+    "Puzzling",
+    "Intricate"
    ],
    "auras": [
-    "covered in tiny, shifting script"
+    "covered in tiny, shifting script",
+    "inscribed with a riddle whose answer keeps changing",
+    "smelling faintly of old books"
    ]
   },
   "wisdom": {
    "roots": [
     "Owl",
     "Seer",
-    "Star"
+    "Star",
+    "Sage",
+    "Elder",
+    "Grey",
+    "Calm",
+    "Still",
+    "Deep",
+    "Root",
+    "Oracle",
+    "Path",
+    "Hearth",
+    "Hermit",
+    "Rune"
    ],
    "figures": [
     "Hermit's",
-    "Seer's"
+    "Seer's",
+    "Elder's",
+    "Abbot's",
+    "Druid's",
+    "Pilgrim's",
+    "Grandmother's",
+    "Monk's"
    ],
    "singles": [
     "Clarity",
-    "Omen"
+    "Omen",
+    "Stillness",
+    "Patience",
+    "Elder",
+    "Pathfinder",
+    "Insight",
+    "Calm",
+    "Hearthstone",
+    "Augury",
+    "Tranquil"
    ],
    "looks": [
     "Serene",
-    "Plain"
+    "Plain",
+    "Simple",
+    "Unadorned",
+    "Grey",
+    "Humble",
+    "Well-Worn",
+    "Quiet"
    ],
    "auras": [
-    "calming to hold"
+    "calming to hold",
+    "quiet in a way that makes others quiet too",
+    "smelling faintly of incense"
    ]
   },
   "presence": {
    "roots": [
     "Crown",
     "Silver",
-    "Golden"
+    "Golden",
+    "Regal",
+    "Royal",
+    "Throne",
+    "Scepter",
+    "Herald",
+    "Banner",
+    "Majesty",
+    "Glory",
+    "Laurel",
+    "Gilt",
+    "Diadem",
+    "Lion"
    ],
    "figures": [
     "Queen's",
-    "Herald's"
+    "Herald's",
+    "King's",
+    "Empress's",
+    "Envoy's",
+    "Bard's",
+    "Lion's",
+    "Ambassador's"
    ],
    "singles": [
     "Sovereign",
-    "Glamour"
+    "Glamour",
+    "Majesty",
+    "Diadem",
+    "Laurel",
+    "Scepter",
+    "Splendour",
+    "Regalia",
+    "Paragon",
+    "Charisma",
+    "Herald"
    ],
    "looks": [
     "Gilded",
-    "Ornate"
+    "Ornate",
+    "Regal",
+    "Jewelled",
+    "Lustrous",
+    "Splendid",
+    "Courtly",
+    "Polished"
    ],
    "auras": [
-    "drawing every eye in the room"
+    "drawing every eye in the room",
+    "making whoever holds it stand a little taller",
+    "catching the light like a crown"
    ]
   },
   "sea": {
@@ -667,44 +1641,113 @@
     "Tide",
     "Wave",
     "Brine",
-    "Kelp"
+    "Kelp",
+    "Surf",
+    "Deep",
+    "Shell",
+    "Coral",
+    "Pearl",
+    "Gull",
+    "Spray",
+    "Current",
+    "Fathom",
+    "Reef",
+    "Storm",
+    "Salt"
    ],
    "figures": [
     "Mariner's",
-    "Kraken's"
+    "Kraken's",
+    "Siren's",
+    "Leviathan's",
+    "Captain's",
+    "Sahuagin's",
+    "Triton's",
+    "Merrow's"
    ],
    "singles": [
     "Undertow",
-    "Riptide"
+    "Riptide",
+    "Fathom",
+    "Maelstrom",
+    "Spindrift",
+    "Seaspray",
+    "Leviathan",
+    "Coral",
+    "Shoal",
+    "Breaker",
+    "Neap"
    ],
    "looks": [
     "Salt-Stained",
-    "Pearlescent"
+    "Pearlescent",
+    "Coral-Crusted",
+    "Sea-Worn",
+    "Barnacled",
+    "Tide-Smoothed",
+    "Kelp-Wrapped",
+    "Nacreous"
    ],
    "auras": [
-    "smelling faintly of the sea"
+    "smelling faintly of the sea",
+    "always slightly damp",
+    "murmuring like a shell held to the ear"
    ]
   },
   "spider": {
    "roots": [
     "Spider",
     "Web",
-    "Silk"
+    "Silk",
+    "Weaver",
+    "Spinner",
+    "Widow",
+    "Strand",
+    "Thread",
+    "Lace",
+    "Crawl",
+    "Venom",
+    "Recluse",
+    "Tarantula",
+    "Skein",
+    "Fang"
    ],
    "figures": [
     "Spider's",
-    "Weaver's"
+    "Weaver's",
+    "Drider's",
+    "Widow's",
+    "Recluse's",
+    "Phase Spider's",
+    "Spinner's",
+    "Lolth's"
    ],
    "singles": [
     "Silkthread",
-    "Cobweb"
+    "Cobweb",
+    "Gossamer",
+    "Skein",
+    "Strand",
+    "Lacework",
+    "Tanglefoot",
+    "Recluse",
+    "Spinneret",
+    "Widowsilk"
    ],
    "looks": [
     "Web-Patterned",
-    "Clinging"
+    "Clinging",
+    "Silk-Wrapped",
+    "Many-Legged",
+    "Web-Fine",
+    "Sticky",
+    "Gossamer",
+    "Spindly"
    ],
    "auras": [
-    "tacky to the touch, like spider silk"
+    "tacky to the touch, like spider silk",
+    "trailing a single glistening thread",
+    "cool and faintly sticky to the touch"
    ]
   },
   "hero": {
@@ -713,201 +1756,513 @@
     "Fate",
     "Hope",
     "Bright",
-    "King"
+    "King",
+    "Glory",
+    "Crown",
+    "Honor",
+    "Valor",
+    "Victory",
+    "Banner",
+    "Dawn",
+    "True",
+    "Noble",
+    "Legend",
+    "Star",
+    "Lion"
    ],
    "figures": [
     "Hero's",
     "King's",
-    "Champion's"
+    "Champion's",
+    "Knight's",
+    "Queen's",
+    "Captain's",
+    "Conqueror's",
+    "Saint's",
+    "Lion's"
    ],
    "singles": [
     "Oath",
     "Valor",
-    "Resolve"
+    "Resolve",
+    "Honor",
+    "Victory",
+    "Legend",
+    "Gallant",
+    "Triumph",
+    "Courage",
+    "Destiny",
+    "Glory",
+    "Paragon"
    ],
    "looks": [
     "Fine",
     "Ornate",
-    "Engraved"
+    "Engraved",
+    "Noble",
+    "Gleaming",
+    "Heraldic",
+    "Gilded",
+    "Proud",
+    "Storied"
    ],
    "auras": [
-    "finely made, with a faint magical aura"
+    "finely made, with a faint magical aura",
+    "worn smooth by the grip of many heroes",
+    "engraved with names too faded to read"
    ]
   },
   "abj": {
    "roots": [
     "Ward",
     "Seal",
-    "Bastion"
+    "Bastion",
+    "Shield",
+    "Aegis",
+    "Bar",
+    "Lock",
+    "Circle",
+    "Rampart",
+    "Glyph",
+    "Keep",
+    "Sigil",
+    "Wall",
+    "Hallow"
    ],
    "figures": [
     "Warden's",
-    "Abjurer's"
+    "Abjurer's",
+    "Templar's",
+    "Guardian's",
+    "Exorcist's",
+    "Gatekeeper's",
+    "Protector's",
+    "Hierophant's"
    ],
    "singles": [
     "Sanctum",
-    "Bulwark"
+    "Bulwark",
+    "Sanctuary",
+    "Glyph",
+    "Aegis",
+    "Circle",
+    "Rampart",
+    "Hallow",
+    "Barrier",
+    "Ward",
+    "Bastion"
    ],
    "looks": [
     "Sigil-Carved",
-    "Warded"
+    "Warded",
+    "Glyph-Etched",
+    "Circled",
+    "Hallowed",
+    "Silver-Chased",
+    "Sealed",
+    "Banded"
    ],
    "auras": [
-    "carved with warding sigils"
+    "carved with warding sigils",
+    "warm against dark magic, cool against everything else",
+    "edged with a thin circle of silver"
    ]
   },
   "con": {
    "roots": [
     "Gate",
     "Summon",
-    "Path"
+    "Path",
+    "Door",
+    "Portal",
+    "Call",
+    "Bridge",
+    "Way",
+    "Road",
+    "Step",
+    "Rift",
+    "Pact",
+    "Arch",
+    "Key",
+    "Nexus"
    ],
    "figures": [
     "Summoner's",
-    "Traveller's"
+    "Traveller's",
+    "Planewalker's",
+    "Gatekeeper's",
+    "Conjurer's",
+    "Wanderer's",
+    "Binder's",
+    "Ferryman's"
    ],
    "singles": [
     "Threshold",
-    "Waygate"
+    "Waygate",
+    "Portal",
+    "Waystone",
+    "Nexus",
+    "Doorway",
+    "Keystone",
+    "Crossing",
+    "Passage",
+    "Summoning",
+    "Rift"
    ],
    "looks": [
     "Rune-Ringed",
-    "Strange"
+    "Strange",
+    "Displaced",
+    "Outlandish",
+    "Keyed",
+    "Arch-Carved",
+    "Starmapped",
+    "Wandering"
    ],
    "auras": [
-    "slightly out of place wherever it is"
+    "slightly out of place wherever it is",
+    "occasionally smelling of somewhere far away",
+    "cool, as if just brought in from elsewhere"
    ]
   },
   "div": {
    "roots": [
     "Seer",
     "Eye",
-    "Omen"
+    "Omen",
+    "Sight",
+    "Vision",
+    "Scry",
+    "Sign",
+    "Star",
+    "Augur",
+    "Prophet",
+    "Fate",
+    "Mirror",
+    "Lens",
+    "Orb",
+    "Crystal"
    ],
    "figures": [
     "Oracle's",
-    "Seer's"
+    "Seer's",
+    "Prophet's",
+    "Augur's",
+    "Sibyl's",
+    "Astrologer's",
+    "Diviner's",
+    "Fate's"
    ],
    "singles": [
     "Foresight",
-    "Omen"
+    "Omen",
+    "Augury",
+    "Vision",
+    "Scrying",
+    "Portent",
+    "Prophecy",
+    "Lens",
+    "Starsign",
+    "Fortune",
+    "Glimpse"
    ],
    "looks": [
     "Eye-Set",
-    "Clouded"
+    "Clouded",
+    "Crystal-Set",
+    "Far-Seeing",
+    "Starlit",
+    "Lens-Fitted",
+    "Glimmering"
    ],
    "auras": [
-    "set with a clouded crystal"
+    "set with a clouded crystal",
+    "showing brief, strange reflections",
+    "set with a crystal in which mist slowly turns"
    ]
   },
   "enc": {
    "roots": [
     "Siren",
     "Charm",
-    "Velvet"
+    "Velvet",
+    "Silk",
+    "Honey",
+    "Song",
+    "Whisper",
+    "Rose",
+    "Kiss",
+    "Dream",
+    "Lure",
+    "Sweet",
+    "Glamour",
+    "Grace",
+    "Spell"
    ],
    "figures": [
     "Siren's",
-    "Courtier's"
+    "Courtier's",
+    "Fey Queen's",
+    "Charmer's",
+    "Bard's",
+    "Nymph's",
+    "Temptress's",
+    "Minstrel's"
    ],
    "singles": [
     "Allure",
-    "Lullaby"
+    "Lullaby",
+    "Lure",
+    "Whisper",
+    "Rapture",
+    "Serenade",
+    "Rosebud",
+    "Glamour",
+    "Sweetness",
+    "Spellsong",
+    "Enthral"
    ],
    "looks": [
     "Lovely",
-    "Charming"
+    "Charming",
+    "Enchanting",
+    "Rose-Scented",
+    "Velvet-Wrapped",
+    "Alluring",
+    "Sweet-Toned",
+    "Beguiling"
    ],
    "auras": [
-    "strangely hard to put down"
+    "strangely hard to put down",
+    "pleasantly warm, and somehow reassuring",
+    "smelling faintly of roses"
    ]
   },
   "evo": {
    "roots": [
     "Storm",
     "Blaze",
-    "Star"
+    "Star",
+    "Fire",
+    "Bolt",
+    "Flare",
+    "Nova",
+    "Burst",
+    "Spark",
+    "Surge",
+    "Ray",
+    "Flash",
+    "Ruin",
+    "Comet",
+    "Pyre"
    ],
    "figures": [
     "Archmage's",
-    "Storm's"
+    "Storm's",
+    "Battlemage's",
+    "Warmage's",
+    "Sorcerer's",
+    "Comet's",
+    "Pyromancer's",
+    "Stormcaller's"
    ],
    "singles": [
     "Starfire",
-    "Cataclysm"
+    "Cataclysm",
+    "Nova",
+    "Comet",
+    "Firestorm",
+    "Starburst",
+    "Thunderbolt",
+    "Surge",
+    "Ruin",
+    "Fulmination",
+    "Blast"
    ],
    "looks": [
     "Scorched",
-    "Charged"
+    "Charged",
+    "Crackling",
+    "Rune-Burned",
+    "Glowing",
+    "Power-Scarred",
+    "Ember-Tipped"
    ],
    "auras": [
-    "scorched at the tip, and humming with power"
+    "scorched at the tip, and humming with power",
+    "warm at one end and crackling at the other",
+    "thrumming with barely held energy"
    ]
   },
   "ill": {
    "roots": [
     "Mirage",
     "Glamour",
-    "Mirror"
+    "Mirror",
+    "Phantom",
+    "Veil",
+    "Dream",
+    "Shimmer",
+    "Echo",
+    "Shadow",
+    "Mask",
+    "Trick",
+    "Riddle",
+    "Prism",
+    "Haze",
+    "Smoke"
    ],
    "figures": [
     "Trickster's",
-    "Jester's"
+    "Jester's",
+    "Illusionist's",
+    "Mime's",
+    "Masker's",
+    "Fox's",
+    "Faerie's",
+    "Puppeteer's"
    ],
    "singles": [
     "Mirage",
-    "Phantasm"
+    "Phantasm",
+    "Shimmer",
+    "Masquerade",
+    "Prism",
+    "Sleight",
+    "Dazzle",
+    "Daydream",
+    "Echo",
+    "Chimera",
+    "Trickery"
    ],
    "looks": [
     "Iridescent",
-    "Shifting"
+    "Shifting",
+    "Shimmering",
+    "Many-Hued",
+    "Ever-Changing",
+    "Masked",
+    "Glamoured",
+    "Prismatic"
    ],
    "auras": [
-    "shifting colour as you watch"
+    "shifting colour as you watch",
+    "looking slightly different each time you glance at it",
+    "seeming farther away than it is"
    ]
   },
   "nec": {
    "roots": [
     "Grave",
     "Bone",
-    "Dusk"
+    "Dusk",
+    "Crypt",
+    "Wight",
+    "Tomb",
+    "Shade",
+    "Wraith",
+    "Mourn",
+    "Rot",
+    "Ghoul",
+    "Barrow",
+    "Shroud",
+    "Ossuary",
+    "Lich"
    ],
    "figures": [
     "Lich's",
-    "Widow's"
+    "Widow's",
+    "Necromancer's",
+    "Gravedigger's",
+    "Death Knight's",
+    "Mourner's",
+    "Ghoul's",
+    "Vampire's"
    ],
    "singles": [
     "Gravesend",
-    "Requiem"
+    "Requiem",
+    "Ossuary",
+    "Crypt",
+    "Dirge",
+    "Mortis",
+    "Shroud",
+    "Barrow",
+    "Lament",
+    "Deathwatch",
+    "Grimoire"
    ],
    "looks": [
     "Bone-Carved",
-    "Grave-Cold"
+    "Grave-Cold",
+    "Bone-Inlaid",
+    "Skull-Capped",
+    "Death-Pale",
+    "Tomb-Dusty",
+    "Grim",
+    "Rotted"
    ],
    "auras": [
-    "carved from something that was once alive"
+    "carved from something that was once alive",
+    "cold as a grave-stone in winter",
+    "whispering of things best left buried"
    ]
   },
   "trs": {
    "roots": [
     "Quicksilver",
     "Change",
-    "Alchemy"
+    "Alchemy",
+    "Shift",
+    "Morph",
+    "Flux",
+    "Mercury",
+    "Turn",
+    "Brass",
+    "Philosopher",
+    "Gold",
+    "Elixir",
+    "Shape",
+    "Form",
+    "Copper"
    ],
    "figures": [
     "Alchemist's",
-    "Shaper's"
+    "Shaper's",
+    "Transmuter's",
+    "Changeling's",
+    "Druid's",
+    "Philosopher's",
+    "Tinker's",
+    "Artificer's"
    ],
    "singles": [
     "Quicksilver",
-    "Metamorph"
+    "Metamorph",
+    "Flux",
+    "Elixir",
+    "Mercury",
+    "Philtre",
+    "Catalyst",
+    "Chrysalis",
+    "Shapeshift",
+    "Turncoat",
+    "Alloy"
    ],
    "looks": [
     "Mercurial",
-    "Shimmering"
+    "Shimmering",
+    "Brass-Bound",
+    "Shifting",
+    "Alloyed",
+    "Copper-Green",
+    "Changeable",
+    "Liquid-Sheened"
    ],
    "auras": [
-    "never quite the same shape twice"
+    "never quite the same shape twice",
+    "very slightly warmer or cooler every time you touch it",
+    "changing its colour with your mood"
    ]
   },
   "word": {
@@ -915,23 +2270,57 @@
     "Word",
     "Rune",
     "Spell",
-    "Star"
+    "Star",
+    "Sigil",
+    "Glyph",
+    "Verse",
+    "Hex",
+    "Charm",
+    "Chant",
+    "Incant",
+    "Mystic",
+    "Arcane",
+    "Eldritch",
+    "Lore"
    ],
    "figures": [
     "Archmage's",
     "Witch's",
-    "Wizard's"
+    "Wizard's",
+    "Sorcerer's",
+    "Hedge Wizard's",
+    "Warlock's",
+    "Enchanter's",
+    "Sage's",
+    "Magister's"
    ],
    "singles": [
     "Cantrip",
-    "Starlight"
+    "Starlight",
+    "Incantation",
+    "Hex",
+    "Sigil",
+    "Glyph",
+    "Verse",
+    "Grimoire",
+    "Mystery",
+    "Arcana",
+    "Spellwright"
    ],
    "looks": [
     "Rune-Etched",
-    "Arcane"
+    "Arcane",
+    "Mystic",
+    "Glyph-Carved",
+    "Spell-Worn",
+    "Star-Marked",
+    "Sigiled",
+    "Enchanted"
    ],
    "auras": [
-    "humming with arcane power"
+    "humming with arcane power",
+    "covered in faint glyphs that glow when spells are near",
+    "warm with stored magic"
    ]
   }
  },
@@ -943,7 +2332,19 @@
     "edge",
     "bite",
     "song",
-    "thorn"
+    "thorn",
+    "blade",
+    "tongue",
+    "fury",
+    "cutter",
+    "kiss",
+    "razor",
+    "tooth",
+    "sliver",
+    "claw",
+    "shard",
+    "wrath",
+    "glaive"
    ],
    "nouns": [
     "Edge",
@@ -951,7 +2352,19 @@
     "Bite",
     "Kiss",
     "Thorn",
-    "Song"
+    "Song",
+    "Tongue",
+    "Fury",
+    "Claw",
+    "Sting",
+    "Mercy",
+    "Promise",
+    "Answer",
+    "Wrath",
+    "Lament",
+    "Shard",
+    "Sliver",
+    "Razor"
    ]
   },
   "axe": {
@@ -960,13 +2373,34 @@
     "bite",
     "reaver",
     "hewer",
-    "splitter"
+    "splitter",
+    "axe",
+    "feller",
+    "chopper",
+    "cleft",
+    "cutter",
+    "render",
+    "sunder",
+    "hatchet",
+    "harrow",
+    "gnaw"
    ],
    "nouns": [
     "Bite",
     "Cleaver",
     "Hunger",
-    "Harvest"
+    "Harvest",
+    "Axe",
+    "Feller",
+    "Sunder",
+    "Wrath",
+    "Ruin",
+    "Toll",
+    "Verdict",
+    "Tithe",
+    "Gnaw",
+    "Cleft",
+    "Fall"
    ]
   },
   "blunt": {
@@ -975,13 +2409,34 @@
     "hammer",
     "fist",
     "crusher",
-    "maul"
+    "maul",
+    "smasher",
+    "pounder",
+    "mallet",
+    "knell",
+    "anvil",
+    "club",
+    "sledge",
+    "thump",
+    "bane",
+    "hewer"
    ],
    "nouns": [
     "Fist",
     "Wrath",
     "Knell",
-    "Judgement"
+    "Judgement",
+    "Hammer",
+    "Anvil",
+    "Toll",
+    "Verdict",
+    "Thunder",
+    "Answer",
+    "Mallet",
+    "Doom",
+    "Ruin",
+    "Weight",
+    "Fall"
    ]
   },
   "polearm": {
@@ -990,13 +2445,33 @@
     "reach",
     "lance",
     "tooth",
-    "sting"
+    "sting",
+    "spear",
+    "pike",
+    "spike",
+    "needle",
+    "point",
+    "lash",
+    "prong",
+    "spur",
+    "fork",
+    "talon"
    ],
    "nouns": [
     "Reach",
     "Thorn",
     "Tooth",
-    "Spite"
+    "Spite",
+    "Spear",
+    "Pike",
+    "Point",
+    "Needle",
+    "Talon",
+    "Lash",
+    "Spur",
+    "Prong",
+    "Answer",
+    "Vigil"
    ]
   },
   "bow": {
@@ -1005,13 +2480,34 @@
     "flight",
     "shot",
     "song",
-    "wing"
+    "wing",
+    "arrow",
+    "dart",
+    "bolt",
+    "fletch",
+    "whistle",
+    "sight",
+    "hawk",
+    "sparrow",
+    "strike",
+    "reach"
    ],
    "nouns": [
     "Reach",
     "Whistle",
     "Aim",
-    "Flight"
+    "Flight",
+    "Arrow",
+    "Dart",
+    "Bolt",
+    "Whisper",
+    "Song",
+    "Sight",
+    "Wing",
+    "Promise",
+    "Answer",
+    "Mark",
+    "Fletch"
    ]
   },
   "armor": {
@@ -1020,27 +2516,68 @@
     "mail",
     "shell",
     "hide",
-    "coat"
+    "coat",
+    "plate",
+    "scale",
+    "guard",
+    "skin",
+    "hauberk",
+    "aegis",
+    "carapace",
+    "husk",
+    "vest",
+    "harness"
    ],
    "nouns": [
     "Ward",
     "Embrace",
     "Bulwark",
     "Shell",
-    "Coat"
+    "Coat",
+    "Skin",
+    "Scale",
+    "Guard",
+    "Aegis",
+    "Carapace",
+    "Husk",
+    "Mail",
+    "Plate",
+    "Oath",
+    "Vow"
    ]
   },
   "shield": {
    "suffixes": [
     "wall",
     "ward",
-    "guard"
+    "guard",
+    "bulwark",
+    "aegis",
+    "rampart",
+    "bastion",
+    "buckler",
+    "keep",
+    "tower",
+    "hold",
+    "door"
    ],
    "nouns": [
     "Wall",
     "Bulwark",
     "Ward",
-    "Promise"
+    "Promise",
+    "Aegis",
+    "Rampart",
+    "Bastion",
+    "Buckler",
+    "Gate",
+    "Door",
+    "Tower",
+    "Keep",
+    "Answer",
+    "Refuge",
+    "Oath",
+    "Shelter"
    ]
   },
   "staff": {
@@ -1048,13 +2585,32 @@
     "staff",
     "weaver",
     "caller",
-    "root"
+    "root",
+    "rod",
+    "stave",
+    "branch",
+    "bough",
+    "wood",
+    "binder",
+    "spire",
+    "keeper",
+    "speaker",
+    "shaper"
    ],
    "nouns": [
     "Staff",
     "Word",
     "Will",
-    "Root"
+    "Root",
+    "Stave",
+    "Bough",
+    "Branch",
+    "Voice",
+    "Spire",
+    "Wisdom",
+    "Path",
+    "Keeper",
+    "Pillar"
    ]
   },
   "wand": {
@@ -1062,38 +2618,96 @@
     "spark",
     "caller",
     "whisper",
-    "weaver"
+    "weaver",
+    "twig",
+    "stick",
+    "flick",
+    "wisp",
+    "ember",
+    "thread",
+    "point",
+    "mote",
+    "glint",
+    "flash"
    ],
    "nouns": [
     "Word",
     "Spark",
     "Whisper",
-    "Finger"
+    "Finger",
+    "Twig",
+    "Flick",
+    "Wisp",
+    "Point",
+    "Glint",
+    "Thread",
+    "Mote",
+    "Gesture",
+    "Charm",
+    "Flash"
    ]
   },
   "rod": {
    "suffixes": [
     "scepter",
     "rule",
-    "caller"
+    "caller",
+    "rod",
+    "sceptre",
+    "mace",
+    "bar",
+    "warden",
+    "wand",
+    "staff",
+    "law",
+    "keeper"
    ],
    "nouns": [
     "Rule",
     "Scepter",
-    "Command"
+    "Command",
+    "Rod",
+    "Sceptre",
+    "Law",
+    "Will",
+    "Dominion",
+    "Writ",
+    "Edict",
+    "Mandate",
+    "Reign",
+    "Authority"
    ]
   },
   "ring": {
    "suffixes": [
     "band",
     "loop",
-    "seal"
+    "seal",
+    "ring",
+    "coil",
+    "knot",
+    "circle",
+    "bond",
+    "signet",
+    "twist",
+    "link",
+    "spiral"
    ],
    "nouns": [
     "Promise",
     "Seal",
     "Circle",
-    "Oath"
+    "Oath",
+    "Ring",
+    "Bond",
+    "Signet",
+    "Knot",
+    "Coil",
+    "Vow",
+    "Pledge",
+    "Covenant",
+    "Halo",
+    "Eternity"
    ]
   },
   "neck": {
@@ -1101,13 +2715,32 @@
     "heart",
     "eye",
     "tear",
-    "star"
+    "star",
+    "stone",
+    "gem",
+    "drop",
+    "locket",
+    "charm",
+    "pendant",
+    "torc",
+    "light",
+    "flame",
+    "shard"
    ],
    "nouns": [
     "Heart",
     "Tear",
     "Eye",
-    "Star"
+    "Star",
+    "Stone",
+    "Gem",
+    "Locket",
+    "Charm",
+    "Pendant",
+    "Torc",
+    "Light",
+    "Flame",
+    "Ember"
    ]
   },
   "cloak": {
@@ -1116,13 +2749,33 @@
     "shroud",
     "mantle",
     "wing",
-    "cowl"
+    "cowl",
+    "cloak",
+    "cape",
+    "hood",
+    "wrap",
+    "mist",
+    "shade",
+    "drape",
+    "fold",
+    "feather",
+    "shadow"
    ],
    "nouns": [
     "Mantle",
     "Veil",
     "Shroud",
-    "Embrace"
+    "Embrace",
+    "Cloak",
+    "Cape",
+    "Hood",
+    "Wrap",
+    "Fold",
+    "Mist",
+    "Shade",
+    "Drape",
+    "Cover",
+    "Wing"
    ]
   },
   "feet": {
@@ -1130,13 +2783,33 @@
     "strider",
     "step",
     "walker",
-    "runner"
+    "runner",
+    "foot",
+    "tread",
+    "stride",
+    "trail",
+    "road",
+    "path",
+    "boot",
+    "pace",
+    "dancer",
+    "stalker"
    ],
    "nouns": [
     "Stride",
     "Path",
     "Step",
-    "Road"
+    "Road",
+    "Tread",
+    "Trail",
+    "Pace",
+    "Way",
+    "Journey",
+    "March",
+    "Dance",
+    "Footfall",
+    "Wander",
+    "Errand"
    ]
   },
   "hands": {
@@ -1145,36 +2818,94 @@
     "hand",
     "fist",
     "touch",
-    "grasp"
+    "grasp",
+    "fingers",
+    "palm",
+    "glove",
+    "gauntlet",
+    "hold",
+    "clasp",
+    "clutch",
+    "reach",
+    "mitt",
+    "knuckle"
    ],
    "nouns": [
     "Grasp",
     "Touch",
-    "Hand"
+    "Hand",
+    "Fist",
+    "Hold",
+    "Clasp",
+    "Clutch",
+    "Palm",
+    "Reach",
+    "Gift",
+    "Craft",
+    "Glove",
+    "Gauntlet"
    ]
   },
   "waist": {
    "suffixes": [
     "girdle",
     "cinch",
-    "belt"
+    "belt",
+    "sash",
+    "band",
+    "cord",
+    "binding",
+    "buckle",
+    "clasp",
+    "hold",
+    "strap",
+    "ring",
+    "link"
    ],
    "nouns": [
     "Girdle",
     "Cinch",
-    "Strength"
+    "Strength",
+    "Sash",
+    "Band",
+    "Cord",
+    "Binding",
+    "Buckle",
+    "Belt",
+    "Might",
+    "Clasp",
+    "Truth",
+    "Resolve"
    ]
   },
   "wrists": {
    "suffixes": [
     "guard",
     "bracer",
-    "band"
+    "band",
+    "cuff",
+    "ward",
+    "shackle",
+    "clasp",
+    "ring",
+    "coil",
+    "vambrace",
+    "brace",
+    "bind"
    ],
    "nouns": [
     "Guard",
     "Bracers",
-    "Vow"
+    "Vow",
+    "Cuffs",
+    "Wards",
+    "Bands",
+    "Clasps",
+    "Oaths",
+    "Vambraces",
+    "Promise",
+    "Bond",
+    "Pledge"
    ]
   },
   "head": {
@@ -1182,13 +2913,33 @@
     "crown",
     "halo",
     "brow",
-    "diadem"
+    "diadem",
+    "helm",
+    "circlet",
+    "mind",
+    "thought",
+    "sight",
+    "crest",
+    "coronet",
+    "wreath",
+    "gaze",
+    "eye"
    ],
    "nouns": [
     "Crown",
     "Halo",
     "Sight",
-    "Thought"
+    "Thought",
+    "Helm",
+    "Circlet",
+    "Mind",
+    "Gaze",
+    "Wreath",
+    "Coronet",
+    "Crest",
+    "Vision",
+    "Laurel",
+    "Insight"
    ]
   }
  },
@@ -1218,7 +2969,39 @@
     "Cel",
     "Naur",
     "Aeg",
-    "Faen"
+    "Faen",
+    "Ael",
+    "Ara",
+    "Bel",
+    "Cir",
+    "Ered",
+    "Find",
+    "Gwae",
+    "Ilm",
+    "Lor",
+    "Mel",
+    "Nen",
+    "Orn",
+    "Quel",
+    "Rin",
+    "Sael",
+    "Tir",
+    "Uial",
+    "Vala",
+    "Eru",
+    "Ost",
+    "Ann",
+    "Ber",
+    "Calen",
+    "Ior",
+    "Lae",
+    "Mae",
+    "Taur",
+    "Gwin",
+    "Hal",
+    "Sin",
+    "Thand",
+    "Amrod"
    ],
    "middles": [
     "an",
@@ -1231,7 +3014,19 @@
     "ia",
     "ad",
     "ol",
-    "e"
+    "e",
+    "ae",
+    "al",
+    "ar",
+    "el",
+    "il",
+    "in",
+    "on",
+    "ira",
+    "ele",
+    "ana",
+    "oth",
+    "iel"
    ],
    "ends": [
     "dil",
@@ -1251,7 +3046,27 @@
     "ring",
     "los",
     "dhel",
-    "vain"
+    "vain",
+    "riel",
+    "ndil",
+    "lion",
+    "lad",
+    "nor",
+    "thir",
+    "ndor",
+    "gil",
+    "wing",
+    "lith",
+    "dain",
+    "naith",
+    "vir",
+    "mar",
+    "sul",
+    "thar",
+    "rond",
+    "andil",
+    "quen",
+    "dir"
    ]
   },
   "dwarvish": {
@@ -1272,7 +3087,31 @@
     "Brok",
     "Khel",
     "Rag",
-    "Thun"
+    "Thun",
+    "Bor",
+    "Dwal",
+    "Gim",
+    "Hrod",
+    "Kaz",
+    "Nal",
+    "Orm",
+    "Skar",
+    "Thol",
+    "Ulf",
+    "Vond",
+    "Zar",
+    "Brun",
+    "Dorn",
+    "Fund",
+    "Grun",
+    "Hak",
+    "Tor",
+    "Krag",
+    "Mund",
+    "Ruk",
+    "Bael",
+    "Durn",
+    "Thak"
    ],
    "middles": [
     "ak",
@@ -1281,7 +3120,16 @@
     "ar",
     "un",
     "ek",
-    "ad"
+    "ad",
+    "ok",
+    "ur",
+    "og",
+    "ir",
+    "ab",
+    "ag",
+    "ul",
+    "ez",
+    "in"
    ],
    "ends": [
     "dun",
@@ -1296,7 +3144,23 @@
     "dek",
     "mok",
     "barak",
-    "zan"
+    "zan",
+    "dur",
+    "rim",
+    "gar",
+    "mund",
+    "bor",
+    "thak",
+    "kar",
+    "hold",
+    "zad",
+    "ruk",
+    "vald",
+    "din",
+    "ruhm",
+    "gund",
+    "drim",
+    "kal"
    ]
   },
   "draconic": {
@@ -1313,7 +3177,28 @@
     "Sar",
     "Xal",
     "Ghor",
-    "Rha"
+    "Rha",
+    "Ash",
+    "Bahr",
+    "Cyr",
+    "Dra",
+    "Esh",
+    "Gry",
+    "Hax",
+    "Ky",
+    "Mor",
+    "Nyx",
+    "Ort",
+    "Pyr",
+    "Qeth",
+    "Rax",
+    "Syl",
+    "Tiam",
+    "Vex",
+    "Wyr",
+    "Yth",
+    "Zar",
+    "Ixa"
    ],
    "middles": [
     "a",
@@ -1321,7 +3206,15 @@
     "or",
     "ae",
     "yr",
-    "os"
+    "os",
+    "ar",
+    "ax",
+    "ir",
+    "yx",
+    "on",
+    "ur",
+    "ess",
+    "ith"
    ],
    "ends": [
     "ax",
@@ -1333,7 +3226,21 @@
     "ix",
     "ul",
     "esh",
-    "iros"
+    "iros",
+    "ath",
+    "ryx",
+    "thyss",
+    "vex",
+    "rath",
+    "ophis",
+    "yrth",
+    "iax",
+    "enth",
+    "umbra",
+    "okk",
+    "sith",
+    "arax",
+    "yx"
    ]
   },
   "heroic": {
@@ -1351,7 +3258,32 @@
     "Hal",
     "Bel",
     "Cor",
-    "Gal"
+    "Gal",
+    "Ald",
+    "Bran",
+    "Cad",
+    "Dan",
+    "Ed",
+    "Fal",
+    "Gar",
+    "Hel",
+    "Is",
+    "Jor",
+    "Kal",
+    "Leo",
+    "Mar",
+    "Nor",
+    "Ost",
+    "Per",
+    "Rho",
+    "Tor",
+    "Ul",
+    "Val",
+    "Wil",
+    "Ysol",
+    "Eld",
+    "Ard",
+    "Bri"
    ],
    "middles": [
     "en",
@@ -1359,7 +3291,15 @@
     "or",
     "i",
     "a",
-    "on"
+    "on",
+    "ar",
+    "el",
+    "in",
+    "ond",
+    "ul",
+    "ia",
+    "er",
+    "al"
    ],
    "ends": [
     "endal",
@@ -1373,7 +3313,23 @@
     "ellan",
     "ador",
     "ithe",
-    "iel"
+    "iel",
+    "orn",
+    "ard",
+    "ane",
+    "eric",
+    "ielle",
+    "wyn",
+    "ric",
+    "mond",
+    "itar",
+    "onis",
+    "ander",
+    "athor",
+    "esse",
+    "an",
+    "olin",
+    "aris"
    ]
   }
  },

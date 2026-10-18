@@ -84,12 +84,17 @@
       "Identified": "Created identified",
       "Unidentified": "Created unidentified",
       "MakeUnidentified": "Click to create it unidentified: players see only its plain look until it's identified",
-      "MakeIdentified": "Click to create it identified"
+      "MakeIdentified": "Click to create it identified",
+      "Refund": "drawbacks",
+      "AddCurse": "Drawback",
+      "AddCurseHint": "Add a random drawback. Drawbacks give budget back, so the item can carry more or stronger properties.",
+      "NoCurse": "No other drawback fits this item."
     },
     "Folder": {
       "Name": "Procedural Magic Items"
     },
     "Slot": {
+      "curse": "Drawback",
       "enhancement": "Enhancement",
       "prefix": "Prefix",
       "suffix": "Suffix",
@@ -107,7 +112,8 @@
       "budget": "Over budget.",
       "unknown": "Unknown property (its module may be disabled).",
       "noSpells": "No matching spell in the chosen spell sources.",
-      "requires": "Needs a spell on the item first."
+      "requires": "Needs another property on the item first.",
+      "powerCap": "Stronger than the power limits in the module settings."
     },
     "Errors": {
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
@@ -134,6 +140,26 @@
         "Name": "Magic Item Builder",
         "Label": "Open Magic Item Builder",
         "Hint": "Opens the builder. The same as the button at the top of the Items sidebar."
+      },
+      "PowerTier": {
+        "Name": "Strongest effects",
+        "Hint": "Numbers that grow with rarity (ability scores, bonuses, healing and damage dice, ranges) stop growing at this rarity. Rarer items still get a bigger budget and more properties. Applies to new rolls; items you've created keep their numbers.",
+        "uncommon": "Uncommon",
+        "rare": "Rare",
+        "veryRare": "Very rare",
+        "legendary": "Legendary (no limit)"
+      },
+      "MaxAbilityScore": {
+        "Name": "Highest ability score",
+        "Hint": "The highest score a property that sets an ability score (like a belt of giant strength) may give."
+      },
+      "MaxBonus": {
+        "Name": "Highest flat bonus",
+        "Hint": "The highest +N a property may give to AC, saving throws, attack rolls, spell attacks and save DCs, including +1/+2/+3 enhancements. Stronger properties are left out of rolls and marked on existing drafts."
+      },
+      "CurseChance": {
+        "Name": "Drawback chance (%)",
+        "Hint": "How often a random roll adds a drawback, such as a lowered ability score or spines that bite the wielder. Each drawback gives budget back, so the item can carry more. The builder can always add one by hand."
       }
     },
     "Triggers": {

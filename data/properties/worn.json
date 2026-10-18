@@ -22,109 +22,181 @@
      "pick": [
       {
        "value": "acr",
-       "name": "Agile",
+       "name": [
+        "Agile",
+        "Tumbling",
+        "Lithe"
+       ],
        "label": "Acrobatics",
        "theme": "grace"
       },
       {
        "value": "ani",
-       "name": "Soothing",
+       "name": [
+        "Soothing",
+        "Calming",
+        "Gentle"
+       ],
        "label": "Animal Handling",
        "theme": "wisdom"
       },
       {
        "value": "arc",
-       "name": "Mystic",
+       "name": [
+        "Mystic",
+        "Arcane",
+        "Eldritch"
+       ],
        "label": "Arcana",
        "theme": "mind"
       },
       {
        "value": "ath",
-       "name": "Athletic",
+       "name": [
+        "Athletic",
+        "Mighty-Thewed",
+        "Vigorous"
+       ],
        "label": "Athletics",
        "theme": "strength"
       },
       {
        "value": "dec",
-       "name": "Beguiling",
+       "name": [
+        "Beguiling",
+        "Glib",
+        "Two-Faced"
+       ],
        "label": "Deception",
        "theme": "presence"
       },
       {
        "value": "his",
-       "name": "Learned",
+       "name": [
+        "Learned",
+        "Scholarly",
+        "Lettered"
+       ],
        "label": "History",
        "theme": "mind"
       },
       {
        "value": "ins",
-       "name": "Insightful",
+       "name": [
+        "Insightful",
+        "Perceptive",
+        "Discerning"
+       ],
        "label": "Insight",
        "theme": "wisdom"
       },
       {
        "value": "itm",
-       "name": "Menacing",
+       "name": [
+        "Menacing",
+        "Threatening",
+        "Glowering"
+       ],
        "label": "Intimidation",
        "theme": "fear"
       },
       {
        "value": "inv",
-       "name": "Searching",
+       "name": [
+        "Searching",
+        "Probing",
+        "Inquisitive"
+       ],
        "label": "Investigation",
        "theme": "mind"
       },
       {
        "value": "med",
-       "name": "Steady-Handed",
+       "name": [
+        "Steady-Handed",
+        "Surgeon-Handed",
+        "Mending"
+       ],
        "label": "Medicine",
        "theme": "life"
       },
       {
        "value": "nat",
-       "name": "Verdant",
+       "name": [
+        "Verdant",
+        "Wildwise",
+        "Green"
+       ],
        "label": "Nature",
        "theme": "wisdom"
       },
       {
        "value": "prc",
-       "name": "Watchful",
+       "name": [
+        "Watchful",
+        "Wary",
+        "Sharp-Eyed"
+       ],
        "label": "Perception",
        "theme": "watch"
       },
       {
        "value": "prf",
-       "name": "Dazzling",
+       "name": [
+        "Dazzling",
+        "Captivating",
+        "Showstopping"
+       ],
        "label": "Performance",
        "theme": "presence"
       },
       {
        "value": "per",
-       "name": "Silver-Tongued",
+       "name": [
+        "Silver-Tongued",
+        "Honeyed",
+        "Persuasive"
+       ],
        "label": "Persuasion",
        "theme": "presence"
       },
       {
        "value": "rel",
-       "name": "Pious",
+       "name": [
+        "Pious",
+        "Devout",
+        "Hallowed"
+       ],
        "label": "Religion",
        "theme": "radiant"
       },
       {
        "value": "slt",
-       "name": "Deft",
+       "name": [
+        "Deft",
+        "Nimble-Fingered",
+        "Light-Fingered"
+       ],
        "label": "Sleight of Hand",
        "theme": "grace"
       },
       {
        "value": "ste",
-       "name": "Silent",
+       "name": [
+        "Silent",
+        "Hushed",
+        "Soundless"
+       ],
        "label": "Stealth",
        "theme": "shadow"
       },
       {
        "value": "sur",
-       "name": "Trailwise",
+       "name": [
+        "Trailwise",
+        "Pathfinding",
+        "Wayfaring"
+       ],
        "label": "Survival",
        "theme": "swift"
       }
@@ -145,7 +217,10 @@
    ],
    "text": "While you wear this item, you have advantage on {skill.label} checks.",
    "theme": "{skill.theme}",
-   "menuLabel": "Skill advantage"
+   "menuLabel": "Skill advantage",
+   "tags": [
+    "rollMode"
+   ]
   },
   {
    "id": "ability-score",
@@ -171,37 +246,61 @@
      "pick": [
       {
        "value": "str",
-       "name": "Might",
+       "name": [
+        "Might",
+        "Strength",
+        "Titans"
+       ],
        "label": "Strength",
        "theme": "strength"
       },
       {
        "value": "dex",
-       "name": "Grace",
+       "name": [
+        "Grace",
+        "Agility",
+        "Finesse"
+       ],
        "label": "Dexterity",
        "theme": "grace"
       },
       {
        "value": "con",
-       "name": "Fortitude",
+       "name": [
+        "Fortitude",
+        "Stamina",
+        "Hardihood"
+       ],
        "label": "Constitution",
        "theme": "endurance"
       },
       {
        "value": "int",
-       "name": "Brilliance",
+       "name": [
+        "Brilliance",
+        "Intellect",
+        "Genius"
+       ],
        "label": "Intelligence",
        "theme": "mind"
       },
       {
        "value": "wis",
-       "name": "Wisdom",
+       "name": [
+        "Wisdom",
+        "Sagacity",
+        "Insight"
+       ],
        "label": "Wisdom",
        "theme": "wisdom"
       },
       {
        "value": "cha",
-       "name": "Presence",
+       "name": [
+        "Presence",
+        "Majesty",
+        "Command"
+       ],
        "label": "Charisma",
        "theme": "presence"
       }
@@ -213,7 +312,8 @@
       "rare": 21,
       "veryRare": 23,
       "legendary": 25
-     }
+     },
+     "cap": "abilityScore"
     }
    },
    "changes": [
@@ -237,7 +337,11 @@
    "id": "winged",
    "slot": "prefix",
    "label": "Winged (fly @speed ft., 10 minutes)",
-   "name": "Winged",
+   "name": [
+    "Winged",
+    "Soaring",
+    "Skyborne"
+   ],
    "cost": 3,
    "weight": 5,
    "appliesTo": [
@@ -284,7 +388,11 @@
    "id": "vanishing",
    "slot": "prefix",
    "label": "Vanishing (invisible, 1 minute)",
-   "name": "Vanishing",
+   "name": [
+    "Vanishing",
+    "Fading",
+    "Unseen"
+   ],
    "cost": 4,
    "weight": 4,
    "appliesTo": [
@@ -320,7 +428,11 @@
    "id": "warding",
    "slot": "prefix",
    "label": "Warding (+@ac AC, 1 minute)",
-   "name": "Warding",
+   "name": [
+    "Warding",
+    "Shielding",
+    "Sheltering"
+   ],
    "cost": 2,
    "weight": 5,
    "appliesTo": [
@@ -365,7 +477,11 @@
    "id": "striding",
    "slot": "prefix",
    "label": "Striding (+@speed ft. speed)",
-   "name": "Striding",
+   "name": [
+    "Striding",
+    "Long-Striding",
+    "Fleet-Footed"
+   ],
    "cost": 2,
    "weight": 4,
    "appliesTo": [
@@ -397,13 +513,20 @@
    ],
    "text": "While you wear this item, your walking speed increases by @speed feet.",
    "nameOrder": 2,
-   "theme": "swift"
+   "theme": "swift",
+   "tags": [
+    "walkSpeed"
+   ]
   },
   {
    "id": "of-tongues",
    "slot": "suffix",
    "label": "of Tongues ({lang.label})",
-   "name": "of Tongues",
+   "name": [
+    "of Tongues",
+    "of Speech",
+    "of Babel"
+   ],
    "cost": 1,
    "weight": 4,
    "appliesTo": [
@@ -494,7 +617,11 @@
    "id": "of-the-bat",
    "slot": "suffix",
    "label": "of the Bat (blindsight @range ft.)",
-   "name": "of the Bat",
+   "name": [
+    "of the Bat",
+    "of Echoes",
+    "of the Blind Hunter"
+   ],
    "cost": 3,
    "weight": 3,
    "attunement": true,
@@ -530,7 +657,11 @@
    "id": "of-purity",
    "slot": "suffix",
    "label": "of Purity (poison immunity)",
-   "name": "of Purity",
+   "name": [
+    "of Purity",
+    "of Cleansing",
+    "of the Pure"
+   ],
    "cost": 4,
    "weight": 3,
    "appliesTo": [
@@ -563,7 +694,11 @@
    "id": "amphibious",
    "slot": "prefix",
    "label": "Amphibious (swim @speed ft.)",
-   "name": "Amphibious",
+   "name": [
+    "Amphibious",
+    "Tidal",
+    "Seaborne"
+   ],
    "cost": 1,
    "weight": 4,
    "appliesTo": [
@@ -603,7 +738,11 @@
    "id": "clinging",
    "slot": "prefix",
    "label": "Clinging (climb @speed ft.)",
-   "name": "Clinging",
+   "name": [
+    "Clinging",
+    "Climbing",
+    "Gecko-Footed"
+   ],
    "cost": 2,
    "weight": 4,
    "appliesTo": [

@@ -1,5 +1,25 @@
 // Property parameters: rolling them, and substituting them into changes, names and text. Pure.
 import { RARITIES } from "../config.mjs";
+import { Rng } from "./rng.mjs";
+
+const rank = (r) => RARITIES.indexOf(r);
+
+/**
+ * The rarity a { byRarity } table is read at: the item's rarity, but no higher than the power limit's tier,
+ * so a legendary item's numbers stop growing where the GM wants them to.
+ */
+export function cappedRarity(rarity, limits) {
+  const tier = limits?.tier;
+  if (!tier || rank(tier) < 0 || rank(rarity) <= rank(tier)) return rarity;
+  return tier;
+}
+
+/** A rolled number held to a power limit: `cap` names the limit ("abilityScore", "bonus"). */
+function applyCap(value, cap, limits) {
+  const max = cap ? Number(limits?.[cap]) : NaN;
+  if (!Number.isFinite(max) || typeof value !== "number") return value;
+  return Math.min(value, max);
+}
 
 /** A number, or a { byRarity } table of numbers, for this rarity. */
 function numberFor(v, rarity) {
@@ -58,7 +78,8 @@ function fillPlaceholders(entry, fill, rng) {
 }
 
 /**
- * Resolve one parameter spec for a rarity.
+ * Resolve one parameter spec for a rarity. With `ctx.limits`, byRarity tables stop at `limits.tier` and a
+ * spec with `cap: "abilityScore" | "bonus"` is held to that limit.
  *   { pick: [a, b, …] }               one entry, uniformly (entries may be values or objects with `value`)
  *   { pick: [...], weights: [...] }   one entry, weighted
  *   { pick: [...], fill: { key: [...] } }  then fill "[key]" placeholders in the entry's label from those lists
@@ -92,14 +113,14 @@ export function resolveParam(spec, rarity, rng, ctx = {}) {
     return spec.fill ? fillPlaceholders(picked, spec.fill, rng) : picked;
   }
   if (spec.byRarity && typeof spec.byRarity === "object") {
-    const idx = RARITIES.indexOf(rarity);
-    for (let i = idx; i >= 0; i--) if (RARITIES[i] in spec.byRarity) return spec.byRarity[RARITIES[i]];
+    const idx = RARITIES.indexOf(cappedRarity(rarity, ctx.limits));
+    for (let i = idx; i >= 0; i--) if (RARITIES[i] in spec.byRarity) return applyCap(spec.byRarity[RARITIES[i]], spec.cap, ctx.limits);
     // Nothing at or below this rarity: use the lowest one defined.
     const first = RARITIES.find((r) => r in spec.byRarity);
-    if (first) return spec.byRarity[first];
+    if (first) return applyCap(spec.byRarity[first], spec.cap, ctx.limits);
     throw new Error("byRarity has no recognised rarities");
   }
-  if (Array.isArray(spec.range) && spec.range.length === 2) return rng.int(spec.range[0], spec.range[1]);
+  if (Array.isArray(spec.range) && spec.range.length === 2) return applyCap(rng.int(spec.range[0], spec.range[1]), spec.cap, ctx.limits);
   throw new Error(`Unknown parameter spec: ${JSON.stringify(spec)}`);
 }
 
@@ -161,4 +182,30 @@ export function substitute(value, vars, missing = new Set()) {
     return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, substitute(v, vars, missing)]));
   }
   return value;
+}
+
+/**
+ * Properties may offer several name words so items don't all sound alike: a property's `name`, and the `name`
+ * of a picked parameter entry, can each be a list ("Flaming", "Blazing", "Burning"). This chooses one of each,
+ * from a stream keyed by the pick and the recipe's name rerolls, so the words are stable until the DM rerolls
+ * the name. Returns the parameters with chosen names, and the chosen property name.
+ * @param {object} def
+ * @param {object} pick
+ * @param {string} key  Seed for the choice (the recipe's seed and name rerolls).
+ */
+export function chooseNames(def, pick, key) {
+  const rng = new Rng(`${key}/${pick.seed ?? pick.id}`);
+  const params = {};
+  for (const [k, v] of Object.entries(pick.params ?? {})) {
+    params[k] = v && typeof v === "object" && Array.isArray(v.name)
+      ? { ...v, name: v.name.length ? rng.fork(`param:${k}`).pick(v.name) : "" }
+      : v;
+  }
+  const name = Array.isArray(def.name) ? (def.name.length ? rng.fork("name").pick(def.name) : "") : def.name;
+  // A label written with the first word ("Keen (crit 19–20)") follows the chosen one ("Honed (crit 19–20)").
+  let label = def.label;
+  if (typeof label === "string" && Array.isArray(def.name) && def.name[0] && name !== def.name[0] && label.includes(def.name[0])) {
+    label = label.replace(def.name[0], name);
+  }
+  return { params, name, label };
 }

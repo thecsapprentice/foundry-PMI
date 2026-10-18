@@ -1,7 +1,12 @@
 // Tier 3 triggers: things a PMI item does by itself when something happens in play.
 //
-//   crit  dnd5e announces every attack roll (dnd5e.rollAttackV2). When a PMI item with a "crit" trigger
-//         rolls a critical hit, PMI uses the trigger's activity, on the client that rolled.
+//   crit    dnd5e announces every attack roll (dnd5e.rollAttackV2). When a PMI item with a "crit" trigger
+//           rolls a critical hit, PMI uses the trigger's activity, on the client that rolled.
+//   fumble  the same, for a natural 1.
+//   hit     dnd5e announces every damage roll (dnd5e.rollDamageV2). Damage from a PMI item's *attack* activity
+//           means it hit; other damage (a save, the trigger's own damage card) is ignored.
+//   dawn    dnd5e announces finished rests (dnd5e.restCompleted). After a rest that starts a new day, each PMI
+//           item the resting actor carries with a "dawn" trigger fires, on the client that rested.
 //   kill  dnd5e doesn't say where damage came from, but its "apply damage" tray belongs to a chat message
 //         that knows its item. PMI wraps the tray's apply button: while a PMI item's damage is applied, it
 //         notes each target's hit points before and after, and a drop from above 0 to 0 is a kill.
@@ -24,6 +29,8 @@ let applying = null;
 
 export function registerTriggers() {
   Hooks.on("dnd5e.rollAttackV2", onAttackRoll);
+  Hooks.on("dnd5e.rollDamageV2", onDamageRoll);
+  Hooks.on("dnd5e.restCompleted", onRestCompleted);
   Hooks.on("dnd5e.preApplyDamage", onPreApplyDamage);
   Hooks.on("dnd5e.applyDamage", onApplyDamage);
   if (game.modules.get("lib-wrapper")?.active && globalThis.libWrapper) {
@@ -36,13 +43,32 @@ export function registerTriggers() {
   }
 }
 
-/** Crit: on the client that rolled. */
+/** Crit and fumble: on the client that rolled. */
 export async function onAttackRoll(rolls, data = {}) {
   const item = data?.subject?.item;
-  const triggers = triggersOf(item, "crit");
+  if (!isPmiItem(item)) return;
+  const list = Array.isArray(rolls) ? rolls : [];
+  if (list.some((r) => r?.isCritical)) await fire(item, triggersOf(item, "crit"), 1);
+  if (list.some((r) => r?.isFumble)) await fire(item, triggersOf(item, "fumble"), 1);
+}
+
+/** Hit: damage rolled by the item's attack activity. On the client that rolled. */
+export async function onDamageRoll(rolls, data = {}) {
+  const activity = data?.subject;
+  if (activity?.type !== "attack") return;
+  const item = activity.item;
+  const triggers = triggersOf(item, "hit");
   if (!triggers.length) return;
-  if (!(rolls ?? []).some((r) => r?.isCritical)) return;
   await fire(item, triggers, 1);
+}
+
+/** Dawn: a rest that starts a new day, for the PMI items the resting actor carries. */
+export async function onRestCompleted(actor, result = {}) {
+  if (!result?.newDay || !actor?.items) return;
+  for (const item of actor.items) {
+    const triggers = triggersOf(item, "dawn");
+    if (triggers.length) await fire(item, triggers, 1);
+  }
 }
 
 /**
@@ -80,7 +106,7 @@ export function onApplyDamage(actor) {
  * and skipped, never "repaired" (rule 12).
  */
 export async function fire(item, triggers, times = 1) {
-  if (!isPmiItem(item) || !item.isOwner) return;
+  if (!triggers?.length || !isPmiItem(item) || !item.isOwner) return;
   for (const t of triggers) {
     for (let n = 0; n < times; n++) {
       try {

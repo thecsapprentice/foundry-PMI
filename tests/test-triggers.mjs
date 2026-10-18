@@ -97,3 +97,39 @@ const warn = console.warn; let warned = false; console.warn = () => { warned = t
 await T.fire(makeItem({ triggers: [] }), [{ on: "kill", activity: "gone" }], 1);
 console.warn = warn;
 check("a missing activity is skipped with a warning", warned && uses.length === 0);
+
+// Fumbles, hits and dawn.
+check("damage and rest hooks registered", ["dnd5e.rollDamageV2", "dnd5e.restCompleted"].every((h) => hooks.some(([n]) => n === h)));
+uses.length = 0;
+const clumsy = makeItem({ triggers: [{ on: "fumble", activity: "act1" }] });
+await T.onAttackRoll([{ isFumble: false }], { subject: { item: clumsy } });
+check("a normal attack roll doesn't fire a fumble trigger", uses.length === 0);
+await T.onAttackRoll([{ isFumble: true }], { subject: { item: clumsy } });
+check("a natural 1 fires the fumble trigger", uses.length === 1);
+await T.onAttackRoll([{ isCritical: true }], { subject: { item: clumsy } });
+check("a crit doesn't fire the fumble trigger", uses.length === 1);
+
+const spiny = makeItem({ triggers: [{ on: "hit", activity: "act1" }] });
+await T.onDamageRoll([{}], { subject: { type: "attack", item: spiny } });
+check("damage from the item's attack fires the hit trigger", uses.length === 2);
+await T.onDamageRoll([{}], { subject: { type: "damage", item: spiny } });
+await T.onDamageRoll([{}], { subject: { type: "save", item: spiny } });
+check("other damage from the item (its own spine card, a save) doesn't", uses.length === 2);
+await T.onDamageRoll([{}], { subject: { type: "attack", item: makeItem({ triggers: [{ on: "hit", activity: "act1" }], pmi: false }) } });
+await T.onDamageRoll([{}], {});
+await T.onDamageRoll([{}], undefined);
+check("non-PMI items and enricher rolls are ignored", uses.length === 2);
+
+const sulky = makeItem({ triggers: [{ on: "dawn", activity: "act1" }] });
+const other = makeItem({ triggers: [{ on: "dawn", activity: "act1" }], pmi: false });
+const actor = { items: [sulky, other, makeItem({ triggers: [{ on: "hit", activity: "act1" }] })] };
+await T.onRestCompleted(actor, { newDay: false });
+check("a short rest isn't dawn", uses.length === 2);
+await T.onRestCompleted(actor, { newDay: true });
+check("a rest into a new day fires the dawn trigger once, for PMI items only", uses.length === 3);
+await T.onRestCompleted(null, { newDay: true });
+await T.onRestCompleted({}, undefined);
+check("rests without an actor or result do nothing", uses.length === 3);
+const notMine = makeItem({ triggers: [{ on: "dawn", activity: "act1" }], owner: false });
+await T.onRestCompleted({ items: [notMine] }, { newDay: true });
+check("dawn triggers fire only for the item's owner", uses.length === 3);

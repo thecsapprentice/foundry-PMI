@@ -1,6 +1,6 @@
 // Registries for change types (translators) and property definitions. Pure: no Foundry globals,
 // so other modules, world scripts and the Node tests can all use the same code.
-import { RARITIES, SLOTS } from "./config.mjs";
+import { RARITIES, SLOTS, CURSE_SLOT } from "./config.mjs";
 
 const changeTypes = new Map();
 const properties = new Map();
@@ -30,7 +30,16 @@ export function validateProperty(def) {
   const id = def?.id ?? "(no id)";
   if (typeof def?.id !== "string" || !/^[a-z0-9][\w.-]*$/i.test(def.id)) errors.push(`${id}: id must be a simple string`);
   if (!SLOTS.includes(def?.slot)) errors.push(`${id}: slot must be one of ${SLOTS.join(", ")}`);
-  if (!Number.isFinite(def?.cost) || def.cost < 0) errors.push(`${id}: cost must be a number ≥ 0`);
+  // Drawbacks (the curse slot) give budget back, so their cost is ≤ 0; every other property costs ≥ 0.
+  if (def?.slot === CURSE_SLOT) {
+    if (!Number.isFinite(def?.cost) || def.cost > 0) errors.push(`${id}: a drawback's cost must be a number ≤ 0`);
+  } else if (!Number.isFinite(def?.cost) || def.cost < 0) errors.push(`${id}: cost must be a number ≥ 0`);
+  if (def?.caps !== undefined && (typeof def.caps !== "object" || Object.values(def.caps).some((v) => !Number.isFinite(v)))) {
+    errors.push(`${id}: caps must map limit names to numbers`);
+  }
+  if (def?.name !== undefined && !(typeof def.name === "string" || (Array.isArray(def.name) && def.name.length && def.name.every((n) => typeof n === "string")))) {
+    errors.push(`${id}: name must be a string or a list of strings`);
+  }
   if (def?.weight !== undefined && (!Number.isFinite(def.weight) || def.weight < 0)) errors.push(`${id}: weight must be a number ≥ 0`);
   if (def?.minRarity !== undefined && !RARITIES.includes(def.minRarity)) errors.push(`${id}: unknown minRarity ${def.minRarity}`);
   if (def?.maxRarity !== undefined && !RARITIES.includes(def.maxRarity)) errors.push(`${id}: unknown maxRarity ${def.maxRarity}`);

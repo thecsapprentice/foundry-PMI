@@ -5,7 +5,11 @@
    "id": "of-staggering",
    "slot": "suffix",
    "label": "of Staggering (crit: stun)",
-   "name": "of Staggering",
+   "name": [
+    "of Staggering",
+    "of Stunning",
+    "of the Hammerblow"
+   ],
    "menuLabel": "of Staggering (on a crit)",
    "cost": 3,
    "weight": 3,
@@ -50,7 +54,11 @@
    "id": "blinding",
    "slot": "prefix",
    "label": "Blinding (crit: blind)",
-   "name": "Blinding",
+   "name": [
+    "Blinding",
+    "Dazzling",
+    "Searing"
+   ],
    "menuLabel": "Blinding (on a crit)",
    "cost": 2,
    "weight": 3,
@@ -96,7 +104,11 @@
    "id": "bloodthirsty",
    "slot": "prefix",
    "label": "Bloodthirsty (crit: @thp temp HP)",
-   "name": "Bloodthirsty",
+   "name": [
+    "Bloodthirsty",
+    "Sanguine",
+    "Gore-Drinking"
+   ],
    "menuLabel": "Bloodthirsty (on a crit)",
    "cost": 2,
    "weight": 4,
@@ -133,7 +145,11 @@
    "id": "reaping",
    "slot": "prefix",
    "label": "Reaping (kill: heal @heal)",
-   "name": "Reaping",
+   "name": [
+    "Reaping",
+    "Harvesting",
+    "Culling"
+   ],
    "menuLabel": "Reaping (on a kill)",
    "cost": 3,
    "weight": 3,
@@ -170,7 +186,11 @@
    "id": "exultant",
    "slot": "prefix",
    "label": "Exultant (kill: +2 to hit, +10 ft.)",
-   "name": "Exultant",
+   "name": [
+    "Exultant",
+    "Triumphant",
+    "Jubilant"
+   ],
    "menuLabel": "Exultant (on a kill)",
    "cost": 2,
    "weight": 3,
@@ -211,13 +231,20 @@
      }
     }
    ],
-   "text": "When you reduce a creature to 0 hit points with this weapon, you gain a +2 bonus to weapon attack rolls and your walking speed increases by 10 feet until the end of your next turn."
+   "text": "When you reduce a creature to 0 hit points with this weapon, you gain a +2 bonus to weapon attack rolls and your walking speed increases by 10 feet until the end of your next turn.",
+   "tags": [
+    "rollMode"
+   ]
   },
   {
    "id": "hungering",
    "slot": "prefix",
    "label": "Hungering (kill: regain a charge)",
-   "name": "Hungering",
+   "name": [
+    "Hungering",
+    "Ravenous",
+    "Devouring"
+   ],
    "menuLabel": "Hungering (on a kill, regain a charge)",
    "cost": 1,
    "weight": 4,

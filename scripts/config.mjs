@@ -22,8 +22,26 @@ export const RARITY_RULES = {
 };
 
 /** Property slots, in the order names are built, with how many of each one item may have. */
-export const SLOTS = ["enhancement", "prefix", "suffix", "spell", "persona"];
-export const SLOT_LIMITS = { enhancement: 1, prefix: 2, suffix: 1, spell: 3, persona: 1 };
+export const SLOTS = ["enhancement", "prefix", "suffix", "spell", "persona", "curse"];
+export const SLOT_LIMITS = { curse: 2, enhancement: 1, prefix: 2, suffix: 1, spell: 3, persona: 1 };
+
+/**
+ * Drawbacks live in the "curse" slot. Their cost is zero or negative: each one gives budget back, so a cursed
+ * item can carry a stronger blessing. They don't count towards the rarity's property cap, and the random roll
+ * only adds one by chance (the "drawback chance" setting), never by weight alongside the other properties.
+ */
+export const CURSE_SLOT = "curse";
+
+/**
+ * Power limits, unless a GM sets their own in the module settings:
+ *   tier          numbers that grow with rarity ({ byRarity }) stop growing at this rarity
+ *   abilityScore  the highest score an ability-score property may set
+ *   bonus         the highest flat bonus (+N to AC, saves, attacks, spell DCs, enhancement)
+ */
+export const DEFAULT_LIMITS = { tier: "veryRare", abilityScore: 23, bonus: 3 };
+
+/** How likely a random roll is to add one drawback, unless a GM sets their own chance. */
+export const DEFAULT_CURSE_CHANCE = 0.15;
 
 /** Item types the generator supports so far. */
 export const SUPPORTED_ITEM_TYPES = ["weapon", "equipment"];

@@ -17,7 +17,9 @@ export function buildDescription(resolved, baseDescription = "", attunement = fa
   const entries = resolved.filter((r) => r.text);
   if (entries.length) {
     // Labels are escaped; text is trusted HTML from property files, which the DM installs.
-    lines.push("<ul>", ...entries.map((r) => `<li><p><strong>${escape(r.label)}.</strong> ${r.text}</p></li>`), "</ul>");
+    // Drawbacks come last (their slot is last) and say what they are.
+    const head = (r) => (r.def?.slot === "curse" ? `Drawback: ${escape(r.label)}` : escape(r.label));
+    lines.push("<ul>", ...entries.map((r) => `<li><p><strong>${head(r)}.</strong> ${r.text}</p></li>`), "</ul>");
   }
   if (baseDescription?.trim()) lines.push("<hr>", baseDescription);
   return lines.join("\n");

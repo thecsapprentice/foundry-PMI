@@ -1,12 +1,15 @@
 // Recipe + base item → plain dnd5e item data. Pure: no Foundry globals.
 import { MODULE_ID, RARITY_RULES, SLOTS } from "../config.mjs";
 import { stableId } from "../generator/rng.mjs";
-import { substitute } from "../generator/params.mjs";
+import { substitute, chooseNames } from "../generator/params.mjs";
 import { categorize, kindOf } from "../generator/categories.mjs";
 import { CHANGE_ORDER, castCharges } from "./translators.mjs";
 import { buildName } from "./naming.mjs";
 import { nameItem } from "./truename.mjs";
 import { buildDescription } from "./description.mjs";
+
+/** Seed for a recipe's name words: changes only when the DM rerolls the name. */
+export const nameKey = (recipe) => `${recipe.seed}/words/${recipe.naming?.rerolls ?? 0}`;
 
 /** Top-level fields of the base item's source that a new item must not inherit. */
 const DROP = ["_id", "folder", "sort", "ownership", "_stats", "flags"];
@@ -45,8 +48,10 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
   const resolved = [];
   for (const { pick, def } of ordered) {
     if (!def) { errors.push(`Unknown property "${pick.id}"`); continue; }
+    // Name words: where a property offers several, one is chosen per pick (stable until the name is rerolled).
+    const chosen = chooseNames(def, pick, nameKey(recipe));
     // Item-wide variables: the rarity's save DC and the matching spell attack bonus (DC − 8).
-    const vars = { ...pick.params, dc: rules.saveDC, attack: rules.saveDC - 8, rarity: recipe.rarity };
+    const vars = { ...chosen.params, dc: rules.saveDC, attack: rules.saveDC - 8, rarity: recipe.rarity };
     const missing = new Set();
     const changes = substitute(def.changes ?? [], vars, missing);
     if (missing.size) { errors.push(`${def.id}: unknown variables ${[...missing].map((m) => `@${m}`).join(", ")}`); continue; }
@@ -57,9 +62,9 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
       vars.chargeWord = vars.charges === 1 ? "charge" : "charges";
     }
     const textMissing = new Set();
-    const label = substitute(def.label ?? def.name ?? def.id, vars, textMissing);
+    const label = substitute(chosen.label ?? chosen.name ?? def.id, vars, textMissing);
     const text = substitute(def.text ?? "", vars, textMissing);
-    const nameFragment = substitute(def.name ?? "", vars, textMissing);
+    const nameFragment = substitute(chosen.name ?? "", vars, textMissing);
     if (textMissing.size) warnings.push(`${def.id}: text uses unknown variables ${[...textMissing].join(", ")}`);
     resolved.push({ pick, def, changes, label: localize(label), text, nameFragment });
   }

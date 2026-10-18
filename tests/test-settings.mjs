@@ -158,3 +158,42 @@ let fellBack = null;
 try { fellBack = chosenSpellPackIds(); } catch { fellBack = "threw"; }
 game.settings.get = realGet;
 check("an unregistered setting falls back to defaults", JSON.stringify(fellBack) === JSON.stringify(["dnd5e.spells", "dnd5e.spells24"]));
+
+// Power limits and drawback chance.
+settings.clear();
+let regenerated = 0;
+registerSettings({ onGenerationChange: () => regenerated++ });
+const { powerLimits, curseChance } = await import("../scripts/settings.mjs");
+const gen = ["powerTier", "maxAbilityScore", "maxBonus", "curseChance"].map((k) => settings.get(`foundry-pmi.${k}`));
+check("generation settings register as world settings in the config list", gen.every((s) => s && s.cfg.scope === "world" && s.cfg.config === true));
+check("power limits default to very rare, 23 and +3", JSON.stringify(powerLimits()) === '{"tier":"veryRare","abilityScore":23,"bonus":3}');
+check("drawback chance defaults to 15%", curseChance() === 0.15);
+await game.settings.set("foundry-pmi", "maxAbilityScore", 21);
+await game.settings.set("foundry-pmi", "powerTier", "rare");
+await game.settings.set("foundry-pmi", "curseChance", 50);
+check("saved limits are read back", JSON.stringify(powerLimits()) === '{"tier":"rare","abilityScore":21,"bonus":3}' && curseChance() === 0.5);
+check("changing them refreshes the builder", regenerated === 3);
+settings.get("foundry-pmi.maxBonus").value = 9;
+settings.get("foundry-pmi.powerTier").value = "artifact";
+check("out-of-range values fall back to the defaults", powerLimits().bonus === 3 && powerLimits().tier === "veryRare");
+settings.delete("foundry-pmi.curseChance");
+game.settings.get = (scope, key) => { if (!settings.has(`${scope}.${key}`)) throw new Error("not registered"); return realGet(scope, key); };
+check("an unregistered chance falls back to the default", curseChance() === 0.15);
+game.settings.get = realGet;
+
+// The builder's Drawback button.
+registerSettings({});
+await game.settings.set("foundry-pmi", "basePacks", ["dnd5e.items", "dnd5e.equipment24"]);
+PmiBuilder.invalidateBases();
+const b = await PmiBuilder.open();
+await A.randomBase.call(b, null, { dataset: { kind: "weapon" } });
+b.recipe.rarity = "rare";
+b.recipe.picks = []; // the builder is a singleton: start from an empty draft
+writes.length = 0;
+await A.addCurse.call(b);
+const { getProperty } = await import("../scripts/api.mjs");
+check("the Drawback button adds a drawback to the draft", b.recipe.picks.length === 1 && getProperty(b.recipe.picks[0].id).slot === "curse");
+check("…and writes nothing", writes.length === 0);
+const bctx = await b._prepareContext();
+check("the card is marked as a drawback", bctx.picks[0].curse === true);
+check("the budget shows the refund", bctx.tally.refund > 0 && bctx.tally.budget === 6 + bctx.tally.refund);

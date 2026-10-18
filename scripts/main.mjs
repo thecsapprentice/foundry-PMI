@@ -21,6 +21,7 @@ Hooks.once("init", () => {
   step("settings", () => registerSettings({
     onBasePacksChange: () => PmiBuilder.invalidateBases(),
     onSpellPacksChange: () => PmiBuilder.invalidateSpells(),
+    onGenerationChange: () => PmiBuilder.refresh(),
     openBuilder: () => PmiBuilder.open(),
   }));
   step("change types", () => registerBuiltinChangeTypes());

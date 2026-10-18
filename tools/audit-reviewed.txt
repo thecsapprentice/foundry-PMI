@@ -13,6 +13,10 @@ SETTING	settings.mjs	attempt("menu basePacksMenu", () => game.settings.registerM
 SETTING	settings.mjs	attempt("menu openBuilder", () => game.settings.registerMenu(MODULE_ID, "openBuilder", {
 SETTING	settings.mjs	attempt("menu spellPacksMenu", () => game.settings.registerMenu(MODULE_ID, "spellPacksMenu", {
 SETTING	settings.mjs	attempt("setting basePacks", () => game.settings.register(MODULE_ID, "basePacks", {
+SETTING	settings.mjs	attempt("setting curseChance", () => game.settings.register(MODULE_ID, "curseChance", {
+SETTING	settings.mjs	attempt("setting maxAbilityScore", () => game.settings.register(MODULE_ID, "maxAbilityScore", {
+SETTING	settings.mjs	attempt("setting maxBonus", () => game.settings.register(MODULE_ID, "maxBonus", {
+SETTING	settings.mjs	attempt("setting powerTier", () => game.settings.register(MODULE_ID, "powerTier", {
 SETTING	settings.mjs	attempt("setting spellPacks", () => game.settings.register(MODULE_ID, "spellPacks", {
 SETTING	settings.mjs	await game.settings.set(MODULE_ID, this.constructor.SETTING, ids);
 UPDATE	runtime/triggers.mjs	await item.update({ "system.uses.spent": spent });
@@ -22,5 +26,7 @@ WRAP/HOOK	main.mjs	Hooks.once("init", () => {
 WRAP/HOOK	main.mjs	Hooks.once("ready", async () => {
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.applyDamage", onApplyDamage);
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.preApplyDamage", onPreApplyDamage);
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.restCompleted", onRestCompleted);
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.rollAttackV2", onAttackRoll);
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.rollDamageV2", onDamageRoll);
 WRAP/HOOK	runtime/triggers.mjs	libWrapper.register(

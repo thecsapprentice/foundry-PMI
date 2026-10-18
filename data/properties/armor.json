@@ -19,7 +19,10 @@
      "value": 1
     }
    ],
-   "text": "You have a +1 bonus to AC while wearing this armor."
+   "text": "You have a +1 bonus to AC while wearing this armor.",
+   "caps": {
+    "bonus": 1
+   }
   },
   {
    "id": "armor-plus-2",
@@ -39,7 +42,10 @@
      "value": 2
     }
    ],
-   "text": "You have a +2 bonus to AC while wearing this armor."
+   "text": "You have a +2 bonus to AC while wearing this armor.",
+   "caps": {
+    "bonus": 2
+   }
   },
   {
    "id": "armor-plus-3",
@@ -59,7 +65,10 @@
      "value": 3
     }
    ],
-   "text": "You have a +3 bonus to AC while wearing this armor."
+   "text": "You have a +3 bonus to AC while wearing this armor.",
+   "caps": {
+    "bonus": 3
+   }
   },
   {
    "id": "shield-plus-1",
@@ -79,7 +88,10 @@
      "value": 1
     }
    ],
-   "text": "While holding this shield, you have a +1 bonus to AC in addition to the shield's normal bonus."
+   "text": "While holding this shield, you have a +1 bonus to AC in addition to the shield's normal bonus.",
+   "caps": {
+    "bonus": 1
+   }
   },
   {
    "id": "shield-plus-2",
@@ -99,7 +111,10 @@
      "value": 2
     }
    ],
-   "text": "While holding this shield, you have a +2 bonus to AC in addition to the shield's normal bonus."
+   "text": "While holding this shield, you have a +2 bonus to AC in addition to the shield's normal bonus.",
+   "caps": {
+    "bonus": 2
+   }
   },
   {
    "id": "shield-plus-3",
@@ -119,7 +134,10 @@
      "value": 3
     }
    ],
-   "text": "While holding this shield, you have a +3 bonus to AC in addition to the shield's normal bonus."
+   "text": "While holding this shield, you have a +3 bonus to AC in addition to the shield's normal bonus.",
+   "caps": {
+    "bonus": 3
+   }
   },
   {
    "id": "of-resistance",
@@ -202,7 +220,11 @@
    "id": "featherlight",
    "slot": "prefix",
    "label": "Featherlight",
-   "name": "Featherlight",
+   "name": [
+    "Featherlight",
+    "Gossamer",
+    "Weightless"
+   ],
    "cost": 2,
    "weight": 6,
    "appliesTo": [
@@ -232,7 +254,11 @@
    ],
    "text": "This armor is unusually light. It doesn't impose disadvantage on Dexterity (Stealth) checks or have a Strength requirement, and weighs half as much.",
    "nameOrder": 2,
-   "theme": "grace"
+   "theme": "grace",
+   "tags": [
+    "stealth",
+    "weight"
+   ]
   }
  ]
 }

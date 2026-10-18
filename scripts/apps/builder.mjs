@@ -1,16 +1,16 @@
 // The DM-guided builder. Drafts live only in this window until the DM clicks Create.
-import { MODULE_ID, RARITIES, SLOTS, BUILTIN_BASE_PREFIX, TRUE_NAME_MIN_RARITY } from "../config.mjs";
+import { MODULE_ID, RARITIES, SLOTS, BUILTIN_BASE_PREFIX, TRUE_NAME_MIN_RARITY, CURSE_SLOT } from "../config.mjs";
 import { newSeed, Rng } from "../generator/rng.mjs";
 import { randomBase, randomRarity } from "../generator/random.mjs";
 import { categorize, isMundane, appliesTo, kindOf } from "../generator/categories.mjs";
 import {
-  newRecipe, roll, rerollPick, rerollParams, addPick, removePick, toggleLock, tally, invalidPicks, blockReason,
+  newRecipe, roll, rerollPick, rerollParams, addPick, addRandomCurse, removePick, toggleLock, tally, invalidPicks, blockReason,
 } from "../generator/roller.mjs";
-import { substitute, plain, spellSpecs } from "../generator/params.mjs";
-import { compile } from "../compiler/index.mjs";
+import { substitute, plain, chooseNames } from "../generator/params.mjs";
+import { compile, nameKey } from "../compiler/index.mjs";
 import { getChangeType, getProperty, listProperties, getBase, listBases, getNames } from "../api.mjs";
 import { basePacks, ensurePmiFolder, recipeOf } from "../util.mjs";
-import { BASE_INDEX_FIELDS, loadSpellPool, isBase } from "../settings.mjs";
+import { BASE_INDEX_FIELDS, loadSpellPool, isBase, powerLimits, curseChance } from "../settings.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -50,6 +50,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       rerollParams: PmiBuilder.#onRerollParams,
       remove: PmiBuilder.#onRemove,
       add: PmiBuilder.#onAdd,
+      addCurse: PmiBuilder.#onAddCurse,
       create: PmiBuilder.#onCreate,
       clearBase: PmiBuilder.#onClearBase,
     },
@@ -104,6 +105,12 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!app) return;
     app.#baseIndex = null;
     if (app.rendered) app.render();
+  }
+
+  /** Re-render after the GM changed a generation setting (power limits, drawback chance). */
+  static refresh() {
+    const app = PmiBuilder.#instance;
+    if (app?.rendered) app.render();
   }
 
   /** Forget the cached spell list (the GM changed which compendiums to use). */
@@ -180,8 +187,10 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
+  /** A pick's card title, with the same name words the item preview uses. */
   #label(def, pick) {
-    return substitute(def.label ?? def.name ?? def.id, { ...pick.params, rarity: this.recipe.rarity });
+    const { params, name, label } = chooseNames(def, pick, nameKey(this.recipe));
+    return substitute(label ?? name ?? def.id, { ...params, rarity: this.recipe.rarity });
   }
 
   async _prepareContext() {
@@ -190,7 +199,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     const props = this.#properties;
     const cats = this.#categories;
     const t = tally(this.recipe, getProperty);
-    const invalid = new Map(invalidPicks(this.recipe, { properties: props, categories: cats }).map((x) => [x.index, x.reason]));
+    const limits = powerLimits();
+    const invalid = new Map(invalidPicks(this.recipe, { properties: props, categories: cats, limits }).map((x) => [x.index, x.reason]));
 
     const picks = this.recipe.picks.map((pick, index) => {
       const def = getProperty(pick.id);
@@ -201,6 +211,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
         label,
         slot: def ? L(`PMI.Slot.${def.slot}`) : "?",
         slotKey: def?.slot ?? "unknown",
+        curse: def?.slot === CURSE_SLOT,
         cost: def?.cost ?? 0,
         hasParams: !!def && Object.keys(def.params ?? {}).length > 0,
         // Details not already shown in the card's title (a spell's name is, so it isn't repeated).
@@ -215,10 +226,10 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     // Properties the DM can add by hand: those that fit the base and rarity, budget aside.
     const addable = this.#base ? props
       .filter((d) => appliesTo(d, cats))
-      .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells }) }))
+      .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells, limits }) }))
       .filter((x) => !x.reason)
       .sort((a, b) => SLOTS.indexOf(a.d.slot) - SLOTS.indexOf(b.d.slot) || a.d.id.localeCompare(b.d.id))
-      .map(({ d }) => ({ id: d.id, label: `${d.menuLabel ?? String(d.label ?? d.name ?? d.id).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
+      .map(({ d }) => ({ id: d.id, label: `${d.menuLabel ?? String(d.label ?? [].concat(d.name ?? d.id)[0]).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
       : [];
 
     // Nothing to preview or create until the item has at least one property.
@@ -255,6 +266,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       picks,
       addable,
       tally: { ...t, over: t.remaining < 0, percent: Math.min(100, Math.round((t.spent / Math.max(1, t.budget)) * 100)) },
+      canCurse: !!this.#base && props.some((d) => d.slot === CURSE_SLOT
+        && !blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells, limits })),
       preview,
       errors: compiled.errors,
       warnings: compiled.warnings,
@@ -314,7 +327,10 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   #ctx() {
-    return { properties: this.#properties, categories: this.#categories, spells: this.#spellPool ?? [] };
+    return {
+      properties: this.#properties, categories: this.#categories, spells: this.#spellPool ?? [],
+      limits: powerLimits(), curseChance: curseChance(),
+    };
   }
 
   static async #onRoll() {
@@ -411,11 +427,21 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     const def = id && getProperty(id);
     if (!def) return;
     try {
-      this.recipe = addPick(this.recipe, def, { spells: await this.#loadSpells() });
+      this.recipe = addPick(this.recipe, def, { spells: await this.#loadSpells(), limits: powerLimits() });
     } catch (err) {
       ui.notifications.warn(err.message);
       return;
     }
+    this.render();
+  }
+
+  /** Add a random drawback (it gives budget back). */
+  static async #onAddCurse() {
+    if (!this.#needBase()) return;
+    await this.#loadSpells();
+    const next = addRandomCurse(this.recipe, this.#ctx());
+    if (!next) { ui.notifications.info(game.i18n.localize("PMI.Builder.NoCurse")); return; }
+    this.recipe = next;
     this.render();
   }
 

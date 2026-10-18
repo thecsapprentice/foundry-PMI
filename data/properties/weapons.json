@@ -1,5 +1,5 @@
 {
- "$comment": "Weapon properties. See README \u2192 Property files for the format.",
+ "$comment": "Weapon properties. See README → Property files for the format.",
  "properties": [
   {
    "id": "weapon-plus-1",
@@ -19,7 +19,10 @@
      "value": 1
     }
    ],
-   "text": "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+   "text": "You have a +1 bonus to attack and damage rolls made with this magic weapon.",
+   "caps": {
+    "bonus": 1
+   }
   },
   {
    "id": "weapon-plus-2",
@@ -39,7 +42,10 @@
      "value": 2
     }
    ],
-   "text": "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+   "text": "You have a +2 bonus to attack and damage rolls made with this magic weapon.",
+   "caps": {
+    "bonus": 2
+   }
   },
   {
    "id": "weapon-plus-3",
@@ -59,7 +65,10 @@
      "value": 3
     }
    ],
-   "text": "You have a +3 bonus to attack and damage rolls made with this magic weapon."
+   "text": "You have a +3 bonus to attack and damage rolls made with this magic weapon.",
+   "caps": {
+    "bonus": 3
+   }
   },
   {
    "id": "elemental",
@@ -79,52 +88,92 @@
      "pick": [
       {
        "value": "fire",
-       "name": "Flaming",
+       "name": [
+        "Flaming",
+        "Blazing",
+        "Burning"
+       ],
        "label": "Fire"
       },
       {
        "value": "cold",
-       "name": "Icy",
+       "name": [
+        "Icy",
+        "Frosty",
+        "Rime-Touched"
+       ],
        "label": "Cold"
       },
       {
        "value": "lightning",
-       "name": "Shocking",
+       "name": [
+        "Shocking",
+        "Crackling",
+        "Sparking"
+       ],
        "label": "Lightning"
       },
       {
        "value": "acid",
-       "name": "Corrosive",
+       "name": [
+        "Corrosive",
+        "Caustic",
+        "Acidic"
+       ],
        "label": "Acid"
       },
       {
        "value": "thunder",
-       "name": "Thundering",
+       "name": [
+        "Thundering",
+        "Booming",
+        "Rumbling"
+       ],
        "label": "Thunder"
       },
       {
        "value": "radiant",
-       "name": "Radiant",
+       "name": [
+        "Radiant",
+        "Shining",
+        "Gleaming"
+       ],
        "label": "Radiant"
       },
       {
        "value": "necrotic",
-       "name": "Withering",
+       "name": [
+        "Withering",
+        "Blighted",
+        "Deathly"
+       ],
        "label": "Necrotic"
       },
       {
        "value": "poison",
-       "name": "Venomous",
+       "name": [
+        "Venomous",
+        "Toxic",
+        "Envenomed"
+       ],
        "label": "Poison"
       },
       {
        "value": "psychic",
-       "name": "Maddening",
+       "name": [
+        "Maddening",
+        "Mind-Rending",
+        "Dreadful"
+       ],
        "label": "Psychic"
       },
       {
        "value": "force",
-       "name": "Forceful",
+       "name": [
+        "Forceful",
+        "Pounding",
+        "Crushing"
+       ],
        "label": "Force"
       }
      ]
@@ -156,7 +205,11 @@
    "id": "keen",
    "slot": "prefix",
    "label": "Keen",
-   "name": "Keen",
+   "name": [
+    "Keen",
+    "Honed",
+    "Razor-Edged"
+   ],
    "cost": 2,
    "weight": 6,
    "appliesTo": [
@@ -185,7 +238,11 @@
    "id": "vicious",
    "slot": "prefix",
    "label": "Vicious",
-   "name": "Vicious",
+   "name": [
+    "Vicious",
+    "Savage",
+    "Brutal"
+   ],
    "cost": 2,
    "weight": 6,
    "appliesTo": [
@@ -215,7 +272,11 @@
    "id": "of-warning",
    "slot": "suffix",
    "label": "of Warning",
-   "name": "of Warning",
+   "name": [
+    "of Warning",
+    "of Foresight",
+    "of the Sentinel"
+   ],
    "cost": 3,
    "weight": 4,
    "attunement": true,
@@ -238,13 +299,20 @@
     }
    ],
    "text": "While this item is on your person, you have advantage on initiative rolls.",
-   "theme": "watch"
+   "theme": "watch",
+   "tags": [
+    "rollMode"
+   ]
   },
   {
    "id": "of-thunder",
    "slot": "suffix",
    "label": "of Thunder",
-   "name": "of Thunder",
+   "name": [
+    "of Thunder",
+    "of the Storm",
+    "of Rolling Thunder"
+   ],
    "cost": 3,
    "weight": 4,
    "exclusive": "charges",
@@ -311,7 +379,11 @@
    "id": "precise",
    "slot": "prefix",
    "label": "Precise (+@bonus to hit)",
-   "name": "Precise",
+   "name": [
+    "Precise",
+    "Unerring",
+    "True"
+   ],
    "cost": 2,
    "weight": 5,
    "appliesTo": [
@@ -340,7 +412,11 @@
    "id": "balanced",
    "slot": "prefix",
    "label": "Balanced (finesse)",
-   "name": "Balanced",
+   "name": [
+    "Balanced",
+    "Poised",
+    "Well-Weighted"
+   ],
    "cost": 1,
    "weight": 4,
    "appliesTo": [
@@ -368,7 +444,11 @@
    "id": "throwing",
    "slot": "prefix",
    "label": "Throwing (thrown, 20/60 ft.)",
-   "name": "Throwing",
+   "name": [
+    "Throwing",
+    "Returning",
+    "Hurling"
+   ],
    "cost": 1,
    "weight": 4,
    "appliesTo": [
@@ -408,7 +488,11 @@
    "id": "far-reaching",
    "slot": "prefix",
    "label": "Far-Reaching (+@near/+@far ft. range)",
-   "name": "Far-Reaching",
+   "name": [
+    "Far-Reaching",
+    "Long-Reaching",
+    "Distant"
+   ],
    "cost": 1,
    "weight": 5,
    "appliesTo": [
@@ -453,7 +537,11 @@
    "id": "of-terror",
    "slot": "suffix",
    "label": "of Terror (frighten, 1/day)",
-   "name": "of Terror",
+   "name": [
+    "of Terror",
+    "of Dread",
+    "of Fright"
+   ],
    "cost": 3,
    "weight": 3,
    "appliesTo": [
@@ -497,7 +585,11 @@
    "id": "of-binding",
    "slot": "suffix",
    "label": "of Binding (restrain, 1/day)",
-   "name": "of Binding",
+   "name": [
+    "of Binding",
+    "of Shackles",
+    "of Holding"
+   ],
    "cost": 3,
    "weight": 3,
    "appliesTo": [

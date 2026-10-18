@@ -30,7 +30,9 @@ for (const def of properties) {
     if (!def.appliesTo.some((c) => categorize(baseData(base)).includes(c))) continue;
     for (const rarity of RARITIES.slice(RARITIES.indexOf(def.minRarity ?? "common"), RARITIES.indexOf(def.maxRarity ?? "artifact") + 1)) {
       // Properties that need another slot filled (Abundant needs a spell) get a level-1 spell first.
-      const ids = def.requiresSlot || def.requiresCharges ? ["spell-1", def.id] : [def.id];
+      // Bound needs another drawback.
+      const ids = def.requiresSlot === "curse" ? ["curse-ill-omened", def.id]
+        : def.requiresSlot || def.requiresCharges ? ["spell-1", def.id] : [def.id];
       const { data, errors, warnings } = build(base, rarity, ids);
       if (!data || errors.length || warnings.length) { all = false; why = `${def.id} on ${base} at ${rarity}: ${[...errors, ...warnings].join("; ")}`; }
       if (data && /@\w|\{\w+(\.\w+)?\}/.test(JSON.stringify(data).replace(/@UUID\[[^\]]*\]\{[^}]*\}/g, "").replace(/@UUID|@Embed|@scale|@item|@prof|@mod/g, ""))) { all = false; why = `${def.id} on ${base}: unsubstituted variable left in data`; }
@@ -249,7 +251,7 @@ const keenFlaming = compile({ ...newRecipe({ seed: "nm", rarity: "rare", baseUui
   pick("elemental", { element: { value: "fire", name: "Flaming", label: "Fire" }, die: "1d6" }), pick("keen", { threshold: 19 })] }, fixture("longsword"), opts).data;
 check("quality prefixes come before elemental ones", keenFlaming.name === "Keen Flaming Longsword", keenFlaming.name);
 check("no possessive prefixes", properties.filter((d) => d.slot === "prefix").every((d) => !String(d.name).includes("'s")) && properties.filter((d) => d.slot === "prefix").flatMap((d) => Object.values(d.params ?? {}).flatMap((sp) => (sp.pick ?? []).map((e) => e?.name))).every((n) => !String(n ?? "").includes("'s")));
-check("cold weapons are Icy", getDef("elemental").params.element.pick.find((e) => e.value === "cold").name === "Icy");
+check("cold weapons are Icy (or a synonym), never Frost's", [].concat(getDef("elemental").params.element.pick.find((e) => e.value === "cold").name)[0] === "Icy");
 
 // ---- Tier 3 triggers and sapience (0.9)
 const stag = one("longsword", "rare", pick("of-staggering")).data;

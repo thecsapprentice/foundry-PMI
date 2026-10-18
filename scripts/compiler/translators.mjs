@@ -27,6 +27,7 @@ export const EFFECT_KEYS = [
   // Advantage: dnd5e counts sources of advantage with mode "add" and value 1.
   new RegExp(`^system\\.skills\\.${SKILL}\\.roll\\.mode$`),
   new RegExp(`^system\\.abilities\\.${ABILITY}\\.(check|save)\\.roll\\.mode$`),
+  /^system\.attributes\.(init|concentration|death)\.roll\.mode$/,
   /^flags\.dnd5e\.initiativeAdv$/,
 ];
 
@@ -59,8 +60,13 @@ function attackActivities(data) {
 export const TRIGGER_EVENTS = {
   crit: "When you score a critical hit with this weapon",
   kill: "When you reduce a creature to 0 hit points with this weapon",
+  hit: "When you hit with this weapon and roll its damage",
+  fumble: "When you roll a 1 on the d20 for an attack with this weapon",
+  dawn: "At dawn, when you finish a long rest",
 };
-const TRIGGERABLE = ["saveActivity", "healActivity", "activate"];
+/** Events that come from this item's own attacks, so the item needs an attack. */
+const ATTACK_EVENTS = ["crit", "kill", "hit", "fumble"];
+const TRIGGERABLE = ["saveActivity", "healActivity", "activate", "damageActivity", "checkActivity"];
 
 /** Order change types run in: charge pools first, then things that spend them, then changes to the pool. */
 export const CHANGE_ORDER = { uses: 0, usesBonus: 2, trigger: 3 };
@@ -272,6 +278,7 @@ export const BUILTIN_TRANSLATORS = {
    */
   trigger(data, change, ctx) {
     if (!TRIGGER_EVENTS[change.on]) throw new Error(`trigger "on" must be one of ${Object.keys(TRIGGER_EVENTS).join(", ")}`);
+    if (ATTACK_EVENTS.includes(change.on)) attackActivities(data);
     const record = { on: change.on, property: ctx.pick.id };
     if (change.restoreCharges != null) {
       const n = Number(change.restoreCharges);
@@ -418,6 +425,60 @@ export const BUILTIN_TRANSLATORS = {
     const cur = data.system.uses?.max;
     if (!cur) throw new Error("the item has no charges to add to");
     data.system.uses.max = /^\d+$/.test(cur) ? String(Number(cur) + add) : `${cur} + ${add}`;
+  },
+
+  /**
+   * A Damage activity, by default aimed at the user themselves (drawbacks such as spines that bite the wielder):
+   *   { name, formula, types: ["piercing"], target: "self" | "creature", activation, perDay | charges }
+   * Using it posts dnd5e's normal card; a person applies the damage with the card's own buttons.
+   */
+  damageActivity(data, change, ctx) {
+    if (!change.formula) throw new Error("damageActivity needs a formula");
+    const types = [].concat(change.types ?? []);
+    if (!types.length) throw new Error("damageActivity needs a damage type");
+    const aim = change.target ?? "self";
+    if (!["self", "creature"].includes(aim)) throw new Error(`damageActivity target must be self or creature, got ${aim}`);
+    const { uses, targets } = limits(change, data, ctx, { required: false });
+    const id = ctx.id("damage");
+    data.system.activities ??= {};
+    data.system.activities[id] = baseActivity(id, "damage", ctx, change, data, {
+      consumption: { targets, scaling: { allowed: false, max: "" }, spellSlot: false },
+      uses,
+      ...(aim === "creature" ? {
+        range: { value: "5", units: "ft", special: "", override: false },
+        target: {
+          template: { count: "", contiguous: false, type: "", size: "", width: "", height: "", units: "" },
+          affects: { count: "1", type: "creature", choice: false, special: "" },
+          prompt: true,
+          override: false,
+        },
+      } : {}),
+      damage: { critical: { allow: false, bonus: "" }, parts: [damagePart(change.formula, types)] },
+    });
+  },
+
+  /**
+   * A Check activity: the card asks for an ability or skill check against a DC.
+   *   { name, skills: ["per", "itm"], ability: "" | "cha", dc, activation, perDay | charges }
+   * With skills and no ability, each skill uses its own ability.
+   */
+  checkActivity(data, change, ctx) {
+    const skills = [].concat(change.skills ?? []);
+    const skillRe = new RegExp(`^${SKILL}$`);
+    if (skills.some((sk) => !skillRe.test(sk))) throw new Error(`checkActivity skills must be skill ids, got ${skills.join(", ")}`);
+    const ability = change.ability ?? "";
+    if (ability && !new RegExp(`^${ABILITY}$`).test(ability)) throw new Error(`checkActivity ability must be an ability id, got ${ability}`);
+    if (!skills.length && !ability) throw new Error("checkActivity needs skills or an ability");
+    const dc = Number(change.dc);
+    if (!Number.isInteger(dc) || dc < 1) throw new Error(`checkActivity needs a whole-number DC, got ${change.dc}`);
+    const { uses, targets } = limits(change, data, ctx, { required: false });
+    const id = ctx.id("check");
+    data.system.activities ??= {};
+    data.system.activities[id] = baseActivity(id, "check", ctx, change, data, {
+      consumption: { targets, scaling: { allowed: false, max: "" }, spellSlot: false },
+      uses,
+      check: { ability, associated: skills, dc: { calculation: "", formula: String(dc) } },
+    });
   },
 
   /**

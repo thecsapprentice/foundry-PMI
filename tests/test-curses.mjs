@@ -186,3 +186,24 @@ const lead = getDef("curse-leaden");
 check("…for drawbacks too", [...Array(20).keys()].every((i) => { const c = chooseNames(lead, { id: lead.id, seed: "z" }, `w${i}`); return c.label.startsWith(c.name); }));
 check("Clanking can't undo Featherlight", blockReason(getDef("curse-clanking"), recipeWith("rare", ["featherlight"]), cats("chain-mail"), getDef) === "exclusive");
 check("Ponderous can't join Featherlight", blockReason(getDef("curse-ponderous"), recipeWith("rare", ["featherlight"]), cats("chain-mail"), getDef) === "exclusive");
+
+// Tomes: a wand in book form.
+const { kindOf } = await import("../scripts/generator/categories.mjs");
+const tome = getBase("tome");
+check("the built-in tome is a tome and a wand", JSON.stringify(categorize(tome)) === '["tome","wand"]' && kindOf(categorize(tome)) === "tome");
+check("it's a spellcasting focus", tome.system.properties.includes("foc"));
+let tr = newRecipe({ seed: "tome", rarity: "rare" });
+tr = addPick(tr, getDef("spell-3"), { spells });
+const tomeItem = compile(tr, tome, { ...opts, names: (await import("../scripts/api.mjs")).getNames() }).data;
+const tomeCast = Object.values(tomeItem.system.activities).find((a) => a.type === "cast");
+check("a tome's spells cost what a wand's do (1 charge)", tomeCast.consumption.targets[0].value === "1");
+check("a tome gets a wand's charge pool (7, 1d6 + 1 at dawn)", tomeItem.system.uses.max === "7" && tomeItem.system.uses.recovery[0].formula === "1d6 + 1");
+const tomeNames = new Set();
+for (let i = 0; i < 25; i++) {
+  const r2 = structuredClone(tr); r2.naming.rerolls = i; r2.naming.mode = "true";
+  tomeNames.add(compile(r2, tome, { ...opts, names: (await import("../scripts/api.mjs")).getNames() }).data.name);
+}
+const bookish = /(tome|book|page|leaf|script|quill|codex|verse|scroll|rune|ink|word|lore|folio|grimoire|pages|litany|testament|treatise|chronicle|canticle|lexicon|almanac|psalter)/i;
+check("tomes get bookish true names", [...tomeNames].filter((n) => bookish.test(n)).length >= 10, [...tomeNames].join(" | "));
+const wandRolls = roll(newRecipe({ seed: "tr", rarity: "rare" }), { properties, categories: categorize(tome), spells });
+check("tomes roll wand properties", wandRolls.picks.some((p) => getDef(p.id).appliesTo.includes("wand")));

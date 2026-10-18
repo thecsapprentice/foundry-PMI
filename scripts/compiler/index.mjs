@@ -1,5 +1,5 @@
 // Recipe + base item → plain dnd5e item data. Pure: no Foundry globals.
-import { MODULE_ID, RARITY_RULES, SLOTS } from "../config.mjs";
+import { MODULE_ID, RARITY_RULES, SLOTS, KIND_PARENT } from "../config.mjs";
 import { stableId } from "../generator/rng.mjs";
 import { substitute, chooseNames } from "../generator/params.mjs";
 import { categorize, kindOf } from "../generator/categories.mjs";
@@ -44,7 +44,9 @@ export function compile(recipe, base, { getDef, getTranslator, localize = (k) =>
     .map((pick, index) => ({ pick, index, def: getDef(pick.id) }))
     .sort((a, b) => SLOTS.indexOf(a.def?.slot) - SLOTS.indexOf(b.def?.slot) || a.index - b.index);
 
-  const kind = kindOf(categorize(base));
+  // Charge pools and spell costs follow the parent kind (a tome spends charges like a wand).
+  const ownKind = kindOf(categorize(base));
+  const kind = KIND_PARENT[ownKind] ?? ownKind;
   const resolved = [];
   for (const { pick, def } of ordered) {
     if (!def) { errors.push(`Unknown property "${pick.id}"`); continue; }

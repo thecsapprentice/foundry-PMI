@@ -31,7 +31,7 @@ const GENERIC_WEAPON_CATS = ["weapon.melee", "weapon.ranged", "weapon.simple", "
 
 /** What the item is, for naming: a key into the vocabulary's forms. */
 export function formOf(categories) {
-  for (const slot of ["staff", "wand", "rod", "ring", "neck", "cloak", "feet", "hands", "waist", "wrists", "head", "shield", "armor"]) {
+  for (const slot of ["staff", "tome", "wand", "rod", "ring", "neck", "cloak", "feet", "hands", "waist", "wrists", "head", "shield", "armor"]) {
     if (categories.includes(slot)) return slot;
   }
   const baseItem = (categories.find((c) => /^weapon\.[a-z]+$/.test(c) && !GENERIC_WEAPON_CATS.includes(c)) ?? "").slice(7);

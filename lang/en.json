@@ -8,7 +8,7 @@
       "NotPmi": "That item wasn't made by the Magic Item Builder.",
       "Base": "Base item",
       "ChooseBaseOption": "Choose a base item…",
-      "DropHint": "Or drop any mundane weapon, armor, shield, wand, staff, rod or worn item here from the sidebar or a compendium.",
+      "DropHint": "Or drop any mundane weapon, armor, shield, wand, tome, staff, rod or worn item here from the sidebar or a compendium.",
       "ChooseBase": "Choose a base item first.",
       "BaseMissing": "That base item can't be found.",
       "BaseUnsupported": "That item can't be used as a base. Use a weapon, armor, shield, wand, staff, rod, or a worn item such as a ring or cloak.",
@@ -41,7 +41,8 @@
         "staff": "Staff",
         "wand": "Wand",
         "rod": "Rod",
-        "worn": "Wondrous"
+        "worn": "Wondrous",
+        "tome": "Tome"
       },
       "NoBaseOfKind": {
         "any": "No base items are available. Check the base item sources in the module settings.",
@@ -51,7 +52,8 @@
         "staff": "No staves are available from the chosen sources.",
         "wand": "No wands are available from the chosen sources.",
         "rod": "No rods are available from the chosen sources.",
-        "worn": "No wondrous items are available."
+        "worn": "No wondrous items are available.",
+        "tome": "No tomes are available."
       },
       "NoBases": "No base items available. Choose compendiums in Configure Settings → Procedural Magic Items → Base item sources, or drop an item here.",
       "SpellMissing": "Can't find these spells, so nothing was created: {names}. Check the spell sources in the module settings, or reroll those properties.",
@@ -64,7 +66,8 @@
         "staff": "Random staff",
         "wand": "Random wand",
         "rod": "Random rod",
-        "worn": "Random wondrous item (ring, amulet, cloak, boots…)"
+        "worn": "Random wondrous item (ring, amulet, cloak, boots…)",
+        "tome": "Random tome"
       },
       "BudgetUsed": "Budget",
       "PropertiesWord": "properties",

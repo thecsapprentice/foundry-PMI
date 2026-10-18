@@ -409,6 +409,53 @@
    }
   },
   {
+   "id": "tome",
+   "name": "Tome",
+   "type": "equipment",
+   "img": "icons/sundries/books/book-worn-brown.webp",
+   "system": {
+    "description": {
+     "value": "<p>A heavy, leather-bound book of vellum pages, its spine reinforced with brass.</p>",
+     "chat": ""
+    },
+    "identifier": "tome",
+    "quantity": 1,
+    "weight": {
+     "value": 3,
+     "units": "lb"
+    },
+    "price": {
+     "value": 25,
+     "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "identified": true,
+    "type": {
+     "value": "wondrous",
+     "baseItem": ""
+    },
+    "properties": [
+     "foc"
+    ],
+    "activities": {},
+    "uses": {
+     "max": "",
+     "spent": 0,
+     "recovery": []
+    },
+    "armor": {
+     "value": null,
+     "dex": null,
+     "magicalBonus": null
+    },
+    "strength": null,
+    "proficient": null
+   }
+  },
+  {
    "id": "rod",
    "name": "Rod",
    "type": "equipment",

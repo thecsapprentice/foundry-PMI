@@ -2941,6 +2941,40 @@
     "Laurel",
     "Insight"
    ]
+  },
+  "tome": {
+   "suffixes": [
+    "tome",
+    "book",
+    "page",
+    "leaf",
+    "script",
+    "quill",
+    "codex",
+    "verse",
+    "scroll",
+    "rune",
+    "ink",
+    "word",
+    "lore",
+    "folio"
+   ],
+   "nouns": [
+    "Codex",
+    "Grimoire",
+    "Folio",
+    "Book",
+    "Tome",
+    "Pages",
+    "Litany",
+    "Testament",
+    "Treatise",
+    "Chronicle",
+    "Canticle",
+    "Lexicon",
+    "Almanac",
+    "Psalter"
+   ]
   }
  },
  "tongues": {
@@ -3375,6 +3409,12 @@
    "dwarvish": 2,
    "elvish": 2,
    "heroic": 2
+  },
+  "tome": {
+   "elvish": 4,
+   "heroic": 3,
+   "draconic": 2,
+   "dwarvish": 1
   }
  }
 }

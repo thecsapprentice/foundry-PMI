@@ -20,7 +20,7 @@ import { MODULE_ID } from "../config.mjs";
 import { isPmiItem } from "../util.mjs";
 
 /** Written by tools/build.py. main.mjs compares it with the module version to spot stale cached scripts. */
-export const RUNTIME_VERSION = "0.10.2";
+export const RUNTIME_VERSION = "0.10.3";
 
 /** Console tracing for triggers, switched on by the "Log triggers" client setting (see settings.mjs). */
 let tracing = () => false;

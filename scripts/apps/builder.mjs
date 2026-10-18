@@ -25,6 +25,7 @@ const KIND_ICONS = {
   shield: "fa-solid fa-shield-halved",
   worn: "fa-solid fa-ring",
   staff: "fa-solid fa-staff",
+  tome: "fa-solid fa-book",
   wand: "fa-solid fa-wand-magic-sparkles",
   rod: "fa-solid fa-wand",
 };
@@ -270,7 +271,7 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       recipe: this.recipe,
       rarities: RARITIES.map((key) => ({ key, label: sentenceCase(L(CONFIG.DND5E?.itemRarity?.[key] ?? key)), selected: key === this.recipe.rarity })),
       bases: bases.map((b) => ({ ...b, selected: b.uuid === this.recipe.baseUuid })),
-      baseKinds: ["any", "weapon", "armor", "shield", "worn", "staff", "wand", "rod"].map((kind) => ({
+      baseKinds: ["any", "weapon", "armor", "shield", "worn", "staff", "wand", "tome", "rod"].map((kind) => ({
         kind,
         icon: KIND_ICONS[kind],
         label: L(`PMI.Builder.Kind.${kind}`),

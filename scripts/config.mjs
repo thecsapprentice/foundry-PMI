@@ -67,7 +67,13 @@ export const DEFAULT_BASE_PACKS = ["dnd5e.items", "dnd5e.equipment24"];
 export const DEFAULT_SPELL_PACKS = ["dnd5e.spells", "dnd5e.spells24"];
 
 /** Kinds of base item, most specific first (a staff is also a weapon). The random-base buttons use these. */
-export const BASE_KINDS = ["staff", "wand", "rod", "worn", "shield", "armor", "weapon"];
+export const BASE_KINDS = ["staff", "tome", "wand", "rod", "worn", "shield", "armor", "weapon"];
+
+/**
+ * Kinds that are a reskin of another: a tome is a wand in book form. It has its own button and names, but
+ * takes the same properties (it is also categorised "wand"), charge pool and spell costs.
+ */
+export const KIND_PARENT = { tome: "wand" };
 
 /** Equipment types a worn wondrous item can have. */
 export const WORN_TYPES = ["ring", "trinket", "clothing", "wondrous"];
@@ -79,6 +85,7 @@ export const WORN_TYPES = ["ring", "trinket", "clothing", "wondrous"];
  */
 export const IDENTIFIER_CATEGORIES = {
   wand: ["wand"],
+  tome: ["tome", "wand"], grimoire: ["tome", "wand"], spellbook: ["tome", "wand"],
   rod: ["rod"],
   ring: ["worn", "ring"],
   amulet: ["worn", "neck"], necklace: ["worn", "neck"], pendant: ["worn", "neck"],

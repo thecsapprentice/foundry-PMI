@@ -155,7 +155,7 @@ const badSpell = pinned("wand", "rare", [{ ...spellPick("spell-3", fireball), pa
 check("a malformed spell UUID fails safely", badSpell.data === null && /UUID/.test(badSpell.errors[0]));
 
 // Worn items on PMI's built-in bases.
-check("ten built-in bases", listBases().length === 10);
+check("eleven built-in bases", listBases().length === 11);
 for (const b of listBases()) check(`built-in ${b.id} is a usable mundane base`, categorize(getBase(b.id)).length > 0);
 check("built-in bases are copies", (getBase("ring").name = "X", getBase("ring").name === "Ring"));
 

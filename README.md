@@ -57,6 +57,7 @@ PMI only changes what's listed here. It uses Foundry's normal document API, so e
 | **World setting** `foundry-pmi.basePacks` | A GM saves *Base item sources* | The list of compendium ids the builder offers bases from. |
 | **World setting** `foundry-pmi.spellPacks` | A GM saves *Spell sources* | The list of compendium ids spell properties pick from. |
 | **World settings** `foundry-pmi.powerTier`, `maxAbilityScore`, `maxBonus`, `curseChance` | A GM changes them in *Configure Settings* | How strong rolled properties can be, and how often a roll adds a drawback. |
+| **Client setting** `foundry-pmi.traceTriggers` | A user ticks *Log automatic triggers* | Only that browser's console logging; nothing in the world changes. |
 | **Chat messages** | A trigger fires in play | PMI's own message when *Hungering* restores charges. Other triggers (including a drawback's self-damage or its dawn check) use dnd5e's own chat cards; people apply the results with dnd5e's buttons. |
 | **A PMI item's charges** | A *Hungering* weapon gets a kill | That item's own spent charges go down. PMI never applies damage, healing or conditions itself: people do, with dnd5e's buttons. |
 | **PMI's folder** | The first *Create item* | One Item folder, *Procedural Magic Items*, marked with `flags.foundry-pmi.generated`. PMI finds it by that flag, never by name, so renaming it is fine. |

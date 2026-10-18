@@ -3,8 +3,10 @@
 //   crit    dnd5e announces every attack roll (dnd5e.rollAttackV2). When a PMI item with a "crit" trigger
 //           rolls a critical hit, PMI uses the trigger's activity, on the client that rolled.
 //   fumble  the same, for a natural 1.
-//   hit     dnd5e announces every damage roll (dnd5e.rollDamageV2). Damage from a PMI item's *attack* activity
-//           means it hit; other damage (a save, the trigger's own damage card) is ignored.
+//   hit     Damage rolled by a PMI item's *attack* activity means it hit; other damage (a save, the trigger's
+//           own damage card) is ignored. PMI listens for both dnd5e's damage-roll hook (dnd5e.rollDamageV2) and
+//           the damage roll's chat message, since roll-automation modules may skip one or the other, and fires
+//           once per roll whichever it sees first.
 //   dawn    dnd5e announces finished rests (dnd5e.restCompleted). After a rest that starts a new day, each PMI
 //           item the resting actor carries with a "dawn" trigger fires, on the client that rested.
 //   kill  dnd5e doesn't say where damage came from, but its "apply damage" tray belongs to a chat message
@@ -16,6 +18,16 @@
 // dnd5e's normal chat card, and a person applies the result with dnd5e's own buttons.
 import { MODULE_ID } from "../config.mjs";
 import { isPmiItem } from "../util.mjs";
+
+/** Written by tools/build.py. main.mjs compares it with the module version to spot stale cached scripts. */
+export const RUNTIME_VERSION = "0.10.2";
+
+/** Console tracing for triggers, switched on by the "Log triggers" client setting (see settings.mjs). */
+let tracing = () => false;
+export function setTracing(fn) { tracing = fn; }
+function trace(...args) {
+  try { if (tracing()) console.log(`${MODULE_ID} | trigger:`, ...args); } catch { /* never let logging break play */ }
+}
 
 /** The PMI triggers on an item for one event (a copy; empty for anything else). */
 export function triggersOf(item, on) {
@@ -30,6 +42,7 @@ let applying = null;
 export function registerTriggers() {
   Hooks.on("dnd5e.rollAttackV2", onAttackRoll);
   Hooks.on("dnd5e.rollDamageV2", onDamageRoll);
+  Hooks.on("createChatMessage", onChatMessage);
   Hooks.on("dnd5e.restCompleted", onRestCompleted);
   Hooks.on("dnd5e.preApplyDamage", onPreApplyDamage);
   Hooks.on("dnd5e.applyDamage", onApplyDamage);
@@ -52,14 +65,45 @@ export async function onAttackRoll(rolls, data = {}) {
   if (list.some((r) => r?.isFumble)) await fire(item, triggersOf(item, "fumble"), 1);
 }
 
-/** Hit: damage rolled by the item's attack activity. On the client that rolled. */
-export async function onDamageRoll(rolls, data = {}) {
-  const activity = data?.subject;
-  if (activity?.type !== "attack") return;
-  const item = activity.item;
+/**
+ * One damage roll can be seen twice (its chat message, then dnd5e's hook). Remember recent rolls by item and
+ * result for a few seconds so each fires once.
+ */
+const recentHits = new Map();
+export function claimHit(item, rolls, now = Date.now()) {
+  for (const [k, t] of recentHits) if (now - t > 5000) recentHits.delete(k);
+  const sig = (Array.isArray(rolls) ? rolls : []).map((r) => `${r?.formula ?? ""}=${r?.total ?? ""}`).join(";");
+  const key = `${item?.uuid ?? ""}|${sig}`;
+  if (recentHits.has(key)) return false;
+  recentHits.set(key, now);
+  return true;
+}
+
+async function onHit(item, rolls, source) {
   const triggers = triggersOf(item, "hit");
   if (!triggers.length) return;
+  if (!claimHit(item, rolls)) { trace(`hit on ${item.name} already handled (${source})`); return; }
+  trace(`hit on ${item.name} (${source}): firing ${triggers.length} trigger(s)`);
   await fire(item, triggers, 1);
+}
+
+/** Hit, from dnd5e's damage-roll hook: damage rolled by the item's attack activity. On the client that rolled. */
+export async function onDamageRoll(rolls, data = {}) {
+  const activity = data?.subject;
+  if (isPmiItem(activity?.item)) trace(`damage roll by ${activity.item.name}, activity type ${activity?.type}`);
+  if (activity?.type !== "attack") return;
+  await onHit(activity.item, rolls, "damage hook");
+}
+
+/** Hit, from the damage roll's chat message. Only the user who rolled it acts. */
+export async function onChatMessage(message, options, userId) {
+  if (userId !== game.user?.id) return;
+  const flag = (k) => message?.getFlag?.("dnd5e", k);
+  if (flag("roll.type") !== "damage" || flag("activity.type") !== "attack") return;
+  const item = message.getAssociatedItem?.();
+  if (!isPmiItem(item)) return;
+  trace(`damage message for ${item.name}`);
+  await onHit(item, message.rolls, "chat message");
 }
 
 /** Dawn: a rest that starts a new day, for the PMI items the resting actor carries. */
@@ -106,7 +150,8 @@ export function onApplyDamage(actor) {
  * and skipped, never "repaired" (rule 12).
  */
 export async function fire(item, triggers, times = 1) {
-  if (!triggers?.length || !isPmiItem(item) || !item.isOwner) return;
+  if (!triggers?.length || !isPmiItem(item)) return;
+  if (!item.isOwner) { trace(`${item.name}: not the owner, so not firing`); return; }
   for (const t of triggers) {
     for (let n = 0; n < times; n++) {
       try {
@@ -114,7 +159,9 @@ export async function fire(item, triggers, times = 1) {
         else {
           const activity = item.system.activities?.get(t.activity);
           if (!activity) { console.warn(`${MODULE_ID} | ${item.name}: trigger activity ${t.activity} is missing`); continue; }
-          await useActivity(item, activity);
+          trace(`${item.name}: using "${activity.name}" (${activity.type}) for ${t.on}`);
+          const result = await useActivity(item, activity);
+          if (!result) console.warn(`${MODULE_ID} | ${item.name}: dnd5e didn't use "${activity.name}" (another module may have stopped it)`);
         }
       } catch (err) {
         console.error(`${MODULE_ID} | Trigger failed on ${item.name}`, err);

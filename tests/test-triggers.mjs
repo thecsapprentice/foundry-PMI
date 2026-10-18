@@ -20,9 +20,10 @@ check("hooks registered", ["dnd5e.rollAttackV2", "dnd5e.preApplyDamage", "dnd5e.
 check("one WRAPPER on the apply-damage button", registered.length === 1 && registered[0][1] === "dnd5e.applications.components.DamageApplicationElement.prototype._onApplyDamage" && registered[0][3] === "WRAPPER");
 
 const uses = [];
+let itemCount = 0;
 function makeItem({ triggers, pmi = true, owner = true, spent = 0 } = {}) {
   const item = {
-    name: "Emberfang", uuid: "Item.ember", isOwner: owner, actor: { name: "Hero" },
+    name: "Emberfang", uuid: `Item.ember${++itemCount}`, isOwner: owner, actor: { name: "Hero" },
     flags: pmi ? { "foundry-pmi": { recipe: { picks: [] }, triggers } } : {},
     getFlag(scope, key) { return this.flags?.[scope]?.[key]; },
     system: { uses: { max: "3", spent }, activities: new Map([["act1", { use: async (...a) => uses.push(["act1", a]) }]]) },
@@ -160,3 +161,32 @@ check("if the card isn't posted, no damage is rolled", calls.length === 0);
 uses.length = 0;
 await T.fire(makeItem({ triggers: [] }), [{ on: "crit", activity: "act1" }], 1);
 check("other activities are used the usual way", uses.length === 1 && uses[0][1][1]?.configure === false);
+
+// Hits seen through the damage roll's chat message (for roll-automation modules that skip dnd5e's hook),
+// fired once even when both the message and the hook arrive.
+game.user = { id: "me" };
+uses.length = 0;
+const msgItem = makeItem({ triggers: [{ on: "hit", activity: "act1" }] });
+const damageMsg = (item, { roll = "damage", act = "attack", total = 7 } = {}) => ({
+  rolls: [{ formula: "1d8+3", total }],
+  getFlag: (scope, key) => ({ "roll.type": roll, "activity.type": act })[key],
+  getAssociatedItem: () => item,
+});
+let m = damageMsg(msgItem, { total: 7 });
+await T.onChatMessage(m, {}, "someone-else");
+check("other users' damage messages are ignored", uses.length === 0);
+await T.onChatMessage(m, {}, "me");
+check("my attack's damage message fires the hit trigger", uses.length === 1);
+await T.onDamageRoll(m.rolls, { subject: { type: "attack", item: msgItem } });
+check("…and dnd5e's hook for the same roll doesn't fire it again", uses.length === 1);
+m = damageMsg(msgItem, { total: 9 });
+await T.onDamageRoll(m.rolls, { subject: { type: "attack", item: msgItem } });
+await T.onChatMessage(m, {}, "me");
+check("a second hit fires once more, whichever arrives first", uses.length === 2);
+await T.onChatMessage(damageMsg(msgItem, { act: "damage", total: 3 }), {}, "me");
+await T.onChatMessage(damageMsg(msgItem, { roll: "attack", total: 4 }), {}, "me");
+await T.onChatMessage(damageMsg(makeItem({ triggers: [{ on: "hit", activity: "act1" }], pmi: false }), { total: 5 }), {}, "me");
+check("self-damage cards, attack rolls and non-PMI items don't count as hits", uses.length === 2);
+check("the same roll is claimed once", T.claimHit({ uuid: "X" }, [{ formula: "1d4", total: 2 }], 1000) && !T.claimHit({ uuid: "X" }, [{ formula: "1d4", total: 2 }], 2000));
+check("…but can count again later", T.claimHit({ uuid: "X" }, [{ formula: "1d4", total: 2 }], 9000));
+check("the chat-message hook is registered", hooks.some(([n]) => n === "createChatMessage"));

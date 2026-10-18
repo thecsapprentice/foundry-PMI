@@ -77,6 +77,14 @@ def main():
         sys.exit("styles/pmi.css must contain exactly one --pmi-css-version declaration")
     css_path.write_text(stamped, encoding="utf-8")
 
+    # And into the trigger runtime: a browser can cache old scripts too, and stale triggers fail silently.
+    rt_path = ROOT / "scripts" / "runtime" / "triggers.mjs"
+    rt = rt_path.read_text(encoding="utf-8")
+    stamped, n = re.subn(r'export const RUNTIME_VERSION = "[^"]*";', f'export const RUNTIME_VERSION = "{version}";', rt)
+    if n != 1:
+        sys.exit("scripts/runtime/triggers.mjs must contain exactly one RUNTIME_VERSION declaration")
+    rt_path.write_text(stamped, encoding="utf-8")
+
     # Release zip: only what Foundry needs, with module.json at the top level.
     dist = ROOT / "dist"
     dist.mkdir(exist_ok=True)

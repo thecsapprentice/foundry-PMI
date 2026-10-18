@@ -94,6 +94,12 @@ export function registerSettings({ onBasePacksChange, onSpellPacksChange, onGene
     range: { min: 0, max: 100, step: 5 }, onChange: () => onGenerationChange?.(),
   }));
 
+  // Per-user console tracing for automatic triggers, to diagnose a trigger that doesn't fire.
+  attempt("setting traceTriggers", () => game.settings.register(MODULE_ID, "traceTriggers", {
+    name: "PMI.Settings.TraceTriggers.Name", hint: "PMI.Settings.TraceTriggers.Hint",
+    scope: "client", config: true, type: Boolean, default: false,
+  }));
+
   attempt("menu openBuilder", () => game.settings.registerMenu(MODULE_ID, "openBuilder", {
     name: "PMI.Settings.OpenBuilder.Name", label: "PMI.Settings.OpenBuilder.Label", hint: "PMI.Settings.OpenBuilder.Hint",
     icon: "fa-solid fa-wand-sparkles", type: PmiBuilderLauncher, restricted: true,
@@ -130,6 +136,11 @@ export function powerLimits() {
     abilityScore: read("maxAbilityScore", DEFAULT_LIMITS.abilityScore, whole(19, 30)),
     bonus: read("maxBonus", DEFAULT_LIMITS.bonus, whole(1, 3)),
   };
+}
+
+/** Is trigger tracing on for this user? */
+export function traceTriggers() {
+  return read("traceTriggers", false, (v) => typeof v === "boolean");
 }
 
 /** The chance (0–1) that a random roll adds a drawback. */

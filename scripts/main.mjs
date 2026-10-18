@@ -5,7 +5,9 @@ import { PmiBuilder } from "./apps/builder.mjs";
 import { registerBuiltinChangeTypes, loadBuiltinProperties } from "./registry/load.mjs";
 import { isPmiItem } from "./util.mjs";
 import { registerSettings } from "./settings.mjs";
-import { registerTriggers } from "./runtime/triggers.mjs";
+// A namespace import, so a stale cached copy of the runtime (missing newer exports) can't stop PMI loading.
+import * as runtime from "./runtime/triggers.mjs";
+import * as settingsModule from "./settings.mjs";
 
 // Each start-up step runs on its own: one failing must never stop the others.
 function step(label, fn) {
@@ -47,8 +49,14 @@ Hooks.once("ready", async () => {
       ui.notifications.warn(game.i18n.localize("PMI.Errors.StaleStyles"), { permanent: true });
     }
   }
+  // Scripts can be cached too: if the trigger runtime is older than the module, triggers silently misbehave.
+  if (runtime.RUNTIME_VERSION !== game.modules.get(MODULE_ID).version) {
+    console.warn(`${MODULE_ID} | Trigger scripts are version "${runtime.RUNTIME_VERSION ?? "old"}", module is ${game.modules.get(MODULE_ID).version}`);
+    if (game.user.isGM) ui.notifications.warn(game.i18n.localize("PMI.Errors.StaleScripts"), { permanent: true });
+  }
   try {
-    registerTriggers();
+    runtime.setTracing?.(() => settingsModule.traceTriggers?.() ?? false);
+    runtime.registerTriggers();
   } catch (err) {
     console.error(`${MODULE_ID} | Couldn't start automatic triggers; items still work, triggers won't fire automatically`, err);
   }

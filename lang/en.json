@@ -120,7 +120,8 @@
       "WrongSystem": "Procedural Magic Items needs the dnd5e system.",
       "NoLibWrapper": "Procedural Magic Items: libWrapper is not active. Some automated item effects will not work.",
       "PropertyLoad": "Procedural Magic Items: some property definitions couldn't be loaded. See the console (F12).",
-      "StaleStyles": "Procedural Magic Items was updated, but your browser is still using its old stylesheet, so the builder will look wrong. Reload with the cache cleared: Ctrl+Shift+R (Cmd+Shift+R on Mac), or Ctrl+F5 in the Foundry app."
+      "StaleStyles": "Procedural Magic Items was updated, but your browser is still using its old stylesheet, so the builder will look wrong. Reload with the cache cleared: Ctrl+Shift+R (Cmd+Shift+R on Mac), or Ctrl+F5 in the Foundry app.",
+      "StaleScripts": "Procedural Magic Items was updated, but your browser is still running some of its old scripts, so automatic triggers may not work. Reload with the cache cleared: Ctrl+Shift+R (Cmd+Shift+R on Mac), or Ctrl+F5 in the Foundry app."
     },
     "Settings": {
       "BasePacks": {
@@ -161,6 +162,10 @@
       "CurseChance": {
         "Name": "Drawback chance (%)",
         "Hint": "How often a random roll adds a drawback, such as a lowered ability score or spines that bite the wielder. Each drawback gives budget back, so the item can carry more. The builder can always add one by hand."
+      },
+      "TraceTriggers": {
+        "Name": "Log automatic triggers",
+        "Hint": "Writes each step of PMI's automatic triggers (hits, crits, kills, dawn) to the browser console (F12), to find out why one didn't fire. Only affects this browser."
       }
     },
     "Triggers": {

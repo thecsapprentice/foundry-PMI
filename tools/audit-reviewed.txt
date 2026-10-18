@@ -4,6 +4,7 @@
 CREATE	apps/builder.mjs	const item = await Item.implementation.create({
 CREATE	runtime/triggers.mjs	await ChatMessage.implementation.create({
 CREATE	util.mjs	return findPmiFolder() ?? Folder.implementation.create({
+DELETE	runtime/triggers.mjs	for (const [k, t] of recentHits) if (now - t > 5000) recentHits.delete(k);
 FILE/NET	registry/load.mjs	const res = await fetch(`modules/${MODULE_ID}/data/${path}`, { cache: "no-cache" });
 GLOBAL	runtime/triggers.mjs	if (game.modules.get("lib-wrapper")?.active && globalThis.libWrapper) {
 GLOBAL	settings.mjs	const lists = globalThis.dnd5e?.registry?.spellLists;
@@ -18,12 +19,14 @@ SETTING	settings.mjs	attempt("setting maxAbilityScore", () => game.settings.regi
 SETTING	settings.mjs	attempt("setting maxBonus", () => game.settings.register(MODULE_ID, "maxBonus", {
 SETTING	settings.mjs	attempt("setting powerTier", () => game.settings.register(MODULE_ID, "powerTier", {
 SETTING	settings.mjs	attempt("setting spellPacks", () => game.settings.register(MODULE_ID, "spellPacks", {
+SETTING	settings.mjs	attempt("setting traceTriggers", () => game.settings.register(MODULE_ID, "traceTriggers", {
 SETTING	settings.mjs	await game.settings.set(MODULE_ID, this.constructor.SETTING, ids);
 UPDATE	runtime/triggers.mjs	await item.update({ "system.uses.spent": spent });
 WRAP/HOOK	main.mjs	Hooks.on("getItemDirectoryEntryContext", (html, options) => {
 WRAP/HOOK	main.mjs	Hooks.on("renderItemDirectory", (app, html) => {
 WRAP/HOOK	main.mjs	Hooks.once("init", () => {
 WRAP/HOOK	main.mjs	Hooks.once("ready", async () => {
+WRAP/HOOK	runtime/triggers.mjs	Hooks.on("createChatMessage", onChatMessage);
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.applyDamage", onApplyDamage);
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.preApplyDamage", onPreApplyDamage);
 WRAP/HOOK	runtime/triggers.mjs	Hooks.on("dnd5e.restCompleted", onRestCompleted);

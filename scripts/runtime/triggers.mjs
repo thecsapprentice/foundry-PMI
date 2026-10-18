@@ -20,7 +20,7 @@ import { MODULE_ID } from "../config.mjs";
 import { isPmiItem } from "../util.mjs";
 
 /** Written by tools/build.py. main.mjs compares it with the module version to spot stale cached scripts. */
-export const RUNTIME_VERSION = "0.10.4";
+export const RUNTIME_VERSION = "0.10.5";
 
 /** Console tracing for triggers, switched on by the "Log triggers" client setting (see settings.mjs). */
 let tracing = () => false;
@@ -181,31 +181,47 @@ export function selfTargets(actor) {
 }
 
 /**
- * Use a triggered activity without its configuration dialog.
+ * Use a triggered activity without its configuration dialog, leaving the player's targets as they were.
  *
- * Self-damage (a drawback's spines) skips the activity's usage card and goes straight to one damage roll aimed
- * at the wielder: no second copy of the item's description in chat, and nothing that would ask other modules
- * to retarget. dnd5e would otherwise write the player's current targets (the enemy) onto the card. Only
- * activities that spend nothing take this path; anything with uses or charges goes through dnd5e's normal use.
- * The player's own targets are left as they were (and put back if another module changed them meanwhile).
+ * Activities aimed at the wielder (a drawback's spines, Bloodthirsty's temporary hit points, Reaping's healing,
+ * Exultant's boost) have their cards aimed at the wielder too. dnd5e would otherwise write the player's current
+ * targets (the enemy) onto them, so the apply buttons would hurt or heal the wrong creature.
+ *   - Damage or healing that spends nothing skips the usage card (which only repeats the item's description)
+ *     and goes straight to one roll card aimed at the wielder.
+ *   - Anything else aimed at the wielder posts its usage card aimed at the wielder, then PMI rolls any damage
+ *     or healing itself, aimed the same way.
+ *   - Activities aimed at other creatures (a stunning save) are used normally, at the player's targets.
+ * Some modules auto-target the user for self-aimed activities; whatever happens, the player's targets are put
+ * back afterwards, so their next attack still points at the enemy.
  */
 export async function useActivity(item, activity) {
-  const spends = (activity.consumption?.targets?.length ?? 0) > 0 || !!activity.uses?.max;
-  const self = activity.type === "damage" && activity.target?.affects?.type === "self"
-    && typeof activity.rollDamage === "function" && !spends;
-  if (!self) return activity.use({}, { configure: false });
   const keep = currentTargetIds();
   try {
-    const rolls = await activity.rollDamage({}, { configure: false }, {
-      data: {
-        "flags.dnd5e.targets": selfTargets(item.actor),
-        flavor: `${item.name}: ${activity.name}`,
-      },
-    });
-    return rolls ?? null;
+    return await useActivityInner(item, activity);
   } finally {
-    restoreTargets(keep);
+    restoreTargets(keep, item.actor);
   }
+}
+
+async function useActivityInner(item, activity) {
+  const self = activity.target?.affects?.type === "self";
+  if (!self) return activity.use({}, { configure: false });
+  const targets = selfTargets(item.actor);
+  const rolls = typeof activity.rollDamage === "function" && ["damage", "heal"].includes(activity.type);
+  const spends = (activity.consumption?.targets?.length ?? 0) > 0 || !!activity.uses?.max;
+  if (rolls && !spends) {
+    const result = await activity.rollDamage({}, { configure: false }, {
+      data: { "flags.dnd5e.targets": targets, flavor: `${item.name}: ${activity.name}` },
+    });
+    return result ?? null;
+  }
+  const results = await activity.use({ subsequentActions: false }, { configure: false }, { data: { "flags.dnd5e.targets": targets } });
+  if (results && rolls) {
+    await activity.rollDamage({}, { configure: false }, {
+      data: { "flags.dnd5e.targets": targets, "flags.dnd5e.originatingMessage": results.message?.id },
+    });
+  }
+  return results;
 }
 
 /** The ids of the tokens this user has targeted, or null if targeting isn't available. */
@@ -216,17 +232,38 @@ function currentTargetIds() {
   } catch { return null; }
 }
 
-/** Put this user's targets back if something changed them. Client-side only: no document changes. */
-function restoreTargets(ids) {
+const sameIds = (a, b) => a.length === b.length && a.every((id) => b.includes(id));
+
+/**
+ * Put this user's targets back if something changed them. Client-side only: no document changes.
+ * Some modules retarget a moment after the activity finishes, so PMI looks once more shortly afterwards, and
+ * then only undoes a change to exactly the wielder's own tokens (what an auto-target module does), so a
+ * player choosing a new target in the meantime is never overruled.
+ */
+export function restoreTargets(ids, actor, { delay = 400 } = {}) {
   if (!ids) return;
-  try {
-    const now = currentTargetIds() ?? [];
-    if (now.length === ids.length && now.every((id) => ids.includes(id))) return;
-    trace(`targets changed during the trigger; restoring ${ids.length} target(s)`);
+  const put = (why) => {
+    trace(`targets changed ${why}; restoring ${ids.length} target(s)`);
     game.user.updateTokenTargets?.(ids);
+  };
+  try {
+    if (!sameIds(currentTargetIds() ?? [], ids)) put("during the trigger");
   } catch (err) {
     console.warn(`${MODULE_ID} | Couldn't restore your targets`, err);
   }
+  if (!delay) return;
+  const own = () => {
+    try { return (actor?.getActiveTokens?.() ?? []).map((t) => t.id); } catch { return []; }
+  };
+  setTimeout(() => {
+    try {
+      const now = currentTargetIds() ?? [];
+      const mine = own();
+      if (!sameIds(now, ids) && now.length && mine.length && now.every((id) => mine.includes(id))) put("just after the trigger");
+    } catch (err) {
+      console.warn(`${MODULE_ID} | Couldn't restore your targets`, err);
+    }
+  }, delay);
 }
 
 /** Give back charges on the PMI item itself, and say so in chat. */

@@ -164,7 +164,54 @@ check("targets nobody changed are left alone", restored === null && calls.length
 calls.length = 0;
 spineAct.consumption = { targets: [{ type: "itemUses" }] };
 await T.onDamageRoll([{ formula: "1d8", total: 7 }], { subject: { type: "attack", item: spined } });
-check("self-damage that spends charges goes through dnd5e's normal use", calls.length === 1 && calls[0][0] === "use");
+check("self-damage that spends charges goes through dnd5e's use, then one roll at the wielder",
+  calls.length === 2 && calls[0][0] === "use" && calls[0][1][0].subsequentActions === false
+  && JSON.stringify(calls[0][1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self)
+  && JSON.stringify(calls[1][1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self));
+
+// Healing and boosts aimed at the wielder (Bloodthirsty / Gore-Drinking, Reaping, Exultant) on a crit or kill.
+calls.length = 0;
+const healAct = {
+  type: "heal", name: "Blood Rush", target: { affects: { type: "self" } }, consumption: { targets: [] }, uses: { max: "" },
+  use: async (...a) => { calls.push(["use", a]); return { message: { id: "m" } }; },
+  rollDamage: async (...a) => { calls.push(["rollDamage", a]); game.user.targets = new Set([{ id: "heroToken" }]); return [{}]; },
+};
+const gore = makeItem({ triggers: [{ on: "crit", activity: "heal" }] });
+gore.actor = wielder;
+gore.system.activities.set("heal", healAct);
+restored = null;
+game.user = { id: "me", targets: new Set([{ id: "goblin" }]), updateTokenTargets: (ids) => { restored = ids; } };
+await T.onAttackRoll([{ isCritical: true }], { subject: { item: gore } });
+check("Gore-Drinking's healing is one card aimed at the wielder", calls.length === 1 && calls[0][0] === "rollDamage"
+  && JSON.stringify(calls[0][1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self));
+check("…and the crit's target stays on the enemy for the damage roll", JSON.stringify(restored) === '["goblin"]');
+
+calls.length = 0;
+const boostAct = { type: "utility", name: "Exultation", target: { affects: { type: "self" } },
+  use: async (...a) => { calls.push(["use", a]); return { message: { id: "m2" } }; } };
+const exult = makeItem({ triggers: [{ on: "crit", activity: "boost" }] });
+exult.actor = wielder;
+exult.system.activities.set("boost", boostAct);
+game.user.targets = new Set([{ id: "goblin" }]);
+await T.onAttackRoll([{ isCritical: true }], { subject: { item: exult } });
+check("a self boost posts its card aimed at the wielder", calls.length === 1 && calls[0][0] === "use"
+  && JSON.stringify(calls[0][1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self));
+
+// A module that retargets the wielder a moment later is undone; a player's own new target is not.
+const { restoreTargets } = T;
+restored = null;
+game.user.targets = new Set([{ id: "goblin" }]);
+wielder.getActiveTokens = () => [{ id: "heroToken", name: "Hero (token)" }];
+restoreTargets(["goblin"], wielder, { delay: 20 });
+game.user.targets = new Set([{ id: "heroToken" }]); // an auto-target module, just after
+await new Promise((r) => setTimeout(r, 40));
+check("a late auto-target onto the wielder is undone", JSON.stringify(restored) === '["goblin"]');
+restored = null;
+game.user.targets = new Set([{ id: "goblin" }]);
+restoreTargets(["goblin"], wielder, { delay: 20 });
+game.user.targets = new Set([{ id: "orc" }]); // the player picks a new enemy
+await new Promise((r) => setTimeout(r, 40));
+check("a player's own new target is never overruled", restored === null);
 uses.length = 0;
 await T.fire(makeItem({ triggers: [] }), [{ on: "crit", activity: "act1" }], 1);
 check("other activities are used the usual way", uses.length === 1 && uses[0][1][1]?.configure === false);

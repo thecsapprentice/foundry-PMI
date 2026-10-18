@@ -29,6 +29,19 @@ const KIND_ICONS = {
   rod: "fa-solid fa-wand",
 };
 
+/**
+ * How a property reads in the Add menu: its menuLabel or label, with parameters shown as "…", and every name
+ * word it may use ("Keen / Honed / Razor-Edged"), so the card it adds is recognisably the one chosen.
+ */
+export function menuLabel(def) {
+  let text = String(def.menuLabel ?? def.label ?? [].concat(def.name ?? def.id)[0])
+    .replace(/\{[^}]+\}/g, "…")
+    .replace(/@[a-z]\w*/g, "…");
+  const words = Array.isArray(def.name) ? def.name : [];
+  if (words.length > 1 && text.includes(words[0])) text = text.replace(words[0], words.join(" / "));
+  return text;
+}
+
 export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: "pmi-builder",
@@ -74,6 +87,8 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
   #editingName = false;
   #nameBeforeEdit = "";
   #dropBound = false;
+  /** The property chosen in the Add menu. Kept here so a re-render never quietly changes the choice. */
+  #addChoice = "";
 
   /**
    * Open the builder. GM only: players never see drafts.
@@ -229,8 +244,11 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       .map((d) => ({ d, reason: blockReason(d, this.recipe, cats, getProperty, { ignoreBudget: true, spells, limits }) }))
       .filter((x) => !x.reason)
       .sort((a, b) => SLOTS.indexOf(a.d.slot) - SLOTS.indexOf(b.d.slot) || a.d.id.localeCompare(b.d.id))
-      .map(({ d }) => ({ id: d.id, label: `${d.menuLabel ?? String(d.label ?? [].concat(d.name ?? d.id)[0]).replace(/\{[^}]+\}/g, "…")} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
+      .map(({ d }) => ({ id: d.id, label: `${menuLabel(d)} (${L(`PMI.Slot.${d.slot}`)}, ${d.cost})`, over: d.cost > t.remaining }))
       : [];
+    // A choice that no longer fits (already added, wrong slot now) is forgotten rather than swapped for another.
+    if (!addable.some((a) => a.id === this.#addChoice)) this.#addChoice = "";
+    for (const a of addable) a.selected = a.id === this.#addChoice;
 
     // Nothing to preview or create until the item has at least one property.
     const compiled = this.recipe.picks.length ? this.#compile() : { data: null, errors: [], warnings: [] };
@@ -301,6 +319,9 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
       });
       nameInput.addEventListener("blur", commit);
     }
+    el.querySelector("select[name=addProperty]")?.addEventListener("change", (ev) => {
+      this.#addChoice = ev.currentTarget.value;
+    });
     el.querySelector("select[name=base]")?.addEventListener("change", async (ev) => {
       await this.#setBase(ev.currentTarget.value || null, { quiet: false });
       this.render();
@@ -421,17 +442,22 @@ export class PmiBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
+  /**
+   * Add the property chosen in the menu, and only that one. The menu starts on a blank "choose…" entry and
+   * remembers the DM's choice across re-renders, so Add can never fall back to whatever happens to be first.
+   */
   static async #onAdd() {
     if (!this.#needBase()) return;
-    const id = this.element.querySelector("select[name=addProperty]")?.value;
+    const id = this.#addChoice || this.element.querySelector("select[name=addProperty]")?.value;
     const def = id && getProperty(id);
-    if (!def) return;
+    if (!def) { ui.notifications.info(game.i18n.localize("PMI.Builder.ChooseProperty")); return; }
     try {
       this.recipe = addPick(this.recipe, def, { spells: await this.#loadSpells(), limits: powerLimits() });
     } catch (err) {
       ui.notifications.warn(err.message);
       return;
     }
+    this.#addChoice = "";
     this.render();
   }
 

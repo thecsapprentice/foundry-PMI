@@ -72,7 +72,8 @@
           {{#if addable.length}}
           <label class="pmi-card-slot" for="pmi-add-property">{{localize "PMI.Builder.AddProperty"}}</label>
           <select id="pmi-add-property" name="addProperty">
-            {{#each addable}}<option value="{{id}}">{{label}}{{#if over}} ⚠{{/if}}</option>{{/each}}
+            <option value="">{{localize "PMI.Builder.ChooseProperty"}}</option>
+            {{#each addable}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}{{#if over}} ⚠{{/if}}</option>{{/each}}
           </select>
           <div class="pmi-add-buttons">
             <button type="button" data-action="add"><i class="fa-solid fa-plus"></i> {{localize "PMI.Builder.Add"}}</button>

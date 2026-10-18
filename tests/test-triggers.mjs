@@ -133,3 +133,30 @@ check("rests without an actor or result do nothing", uses.length === 3);
 const notMine = makeItem({ triggers: [{ on: "dawn", activity: "act1" }], owner: false });
 await T.onRestCompleted({ items: [notMine] }, { newDay: true });
 check("dawn triggers fire only for the item's owner", uses.length === 3);
+
+// Self-aimed damage (Spined, Treacherous): the card and its damage roll target the wielder, not the enemy.
+const calls = [];
+const spineAct = {
+  type: "damage", target: { affects: { type: "self" } },
+  use: async (...a) => { calls.push(["use", a]); return { message: { id: "msg1" } }; },
+  rollDamage: async (...a) => { calls.push(["rollDamage", a]); },
+};
+const wielder = { uuid: "Actor.hero", name: "Hero", img: "hero.png", system: { attributes: { ac: { value: 16 } } }, getActiveTokens: () => [{ name: "Hero (token)" }] };
+const spined = makeItem({ triggers: [{ on: "hit", activity: "spine" }] });
+spined.actor = wielder;
+spined.system.activities.set("spine", spineAct);
+await T.onDamageRoll([{}], { subject: { type: "attack", item: spined } });
+const [useCall, rollCall] = calls;
+const self = [{ name: "Hero (token)", img: "hero.png", uuid: "Actor.hero", ac: 16 }];
+check("the self-damage card targets the wielder", useCall?.[0] === "use" && JSON.stringify(useCall[1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self));
+check("…without its usual automatic roll (which would target the enemy)", useCall[1][0].subsequentActions === false && useCall[1][1].configure === false);
+check("PMI rolls the damage itself, aimed at the wielder, with no dialog", rollCall?.[0] === "rollDamage"
+  && JSON.stringify(rollCall[1][2].data["flags.dnd5e.targets"]) === JSON.stringify(self)
+  && rollCall[1][2].data["flags.dnd5e.originatingMessage"] === "msg1" && rollCall[1][1].configure === false);
+calls.length = 0;
+spineAct.use = async () => undefined;
+await T.onDamageRoll([{}], { subject: { type: "attack", item: spined } });
+check("if the card isn't posted, no damage is rolled", calls.length === 0);
+uses.length = 0;
+await T.fire(makeItem({ triggers: [] }), [{ on: "crit", activity: "act1" }], 1);
+check("other activities are used the usual way", uses.length === 1 && uses[0][1][1]?.configure === false);

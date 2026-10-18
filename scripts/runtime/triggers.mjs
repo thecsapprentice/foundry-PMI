@@ -114,13 +114,41 @@ export async function fire(item, triggers, times = 1) {
         else {
           const activity = item.system.activities?.get(t.activity);
           if (!activity) { console.warn(`${MODULE_ID} | ${item.name}: trigger activity ${t.activity} is missing`); continue; }
-          await activity.use({}, { configure: false });
+          await useActivity(item, activity);
         }
       } catch (err) {
         console.error(`${MODULE_ID} | Trigger failed on ${item.name}`, err);
       }
     }
   }
+}
+
+/**
+ * The wielder as a dnd5e target descriptor, for activities aimed at the user themselves.
+ * dnd5e otherwise records the user's current targets on the card, which during an attack is the enemy.
+ */
+export function selfTargets(actor) {
+  if (!actor?.uuid) return [];
+  const token = actor.getActiveTokens?.()[0];
+  return [{ name: token?.name ?? actor.name, img: actor.img, uuid: actor.uuid, ac: actor.system?.attributes?.ac?.value ?? null }];
+}
+
+/**
+ * Use a triggered activity without its configuration dialog. An activity aimed at the user (a drawback's
+ * self-damage) has its card, and the damage roll that follows, aimed at the wielder instead of whatever the
+ * player has targeted, so dnd5e's apply-damage tray lists the wielder.
+ */
+export async function useActivity(item, activity) {
+  const self = activity.target?.affects?.type === "self" && typeof activity.rollDamage === "function"
+    && activity.type === "damage";
+  if (!self) return activity.use({}, { configure: false });
+  const targets = selfTargets(item.actor);
+  const results = await activity.use({ subsequentActions: false }, { configure: false }, { data: { "flags.dnd5e.targets": targets } });
+  if (!results) return results;
+  await activity.rollDamage({}, { configure: false }, {
+    data: { "flags.dnd5e.targets": targets, "flags.dnd5e.originatingMessage": results.message?.id },
+  });
+  return results;
 }
 
 /** Give back charges on the PMI item itself, and say so in chat. */

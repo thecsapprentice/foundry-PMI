@@ -197,3 +197,27 @@ check("…and writes nothing", writes.length === 0);
 const bctx = await b._prepareContext();
 check("the card is marked as a drawback", bctx.picks[0].curse === true);
 check("the budget shows the refund", bctx.tally.refund > 0 && bctx.tally.budget === 6 + bctx.tally.refund);
+
+// The Add menu: remembers the DM's choice across re-renders, starts blank, shows every name word.
+const { menuLabel } = await import("../scripts/apps/builder.mjs");
+check("the menu shows all of a property's name words", menuLabel(getProperty("keen")).startsWith("Keen / Honed / Razor-Edged"));
+check("parameters show as …", !/@\w/.test(menuLabel(getProperty("curse-leaden"))) && menuLabel(getProperty("curse-leaden")).includes("…"));
+b.recipe.picks = [];
+let actx = await b._prepareContext();
+check("nothing is chosen at first", actx.addable.every((a) => !a.selected));
+await A.add.call(b);
+check("Add with nothing chosen adds nothing", b.recipe.picks.length === 0 && notes.at(-1)[1] === "PMI.Builder.ChooseProperty");
+// Choose the last entry, then let the builder re-render (as finishing a name edit or a settings change does).
+const wanted = actx.addable.at(-1).id;
+let changeHandler = null;
+const fakeSelect = { value: actx.addable[0].id, addEventListener: (ev, fn) => { if (ev === "change") changeHandler = fn; } };
+Object.defineProperty(b, "element", { configurable: true, value: { querySelector: (sel) => (sel === "select[name=addProperty]" ? fakeSelect : null), addEventListener: () => {} } });
+b._onRender({}, {});
+changeHandler({ currentTarget: { value: wanted } });
+actx = await b._prepareContext(); // a re-render
+check("a re-render keeps the chosen property selected", actx.addable.find((a) => a.selected)?.id === wanted);
+fakeSelect.value = actx.addable[0].id; // even if the menu element shows something else
+await A.add.call(b);
+check("Add adds exactly the chosen property", b.recipe.picks.length === 1 && b.recipe.picks[0].id === wanted);
+actx = await b._prepareContext();
+check("after adding, the menu goes back to blank", actx.addable.every((a) => !a.selected));

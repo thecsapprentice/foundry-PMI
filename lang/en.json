@@ -88,7 +88,8 @@
       "Refund": "drawbacks",
       "AddCurse": "Drawback",
       "AddCurseHint": "Add a random drawback. Drawbacks give budget back, so the item can carry more or stronger properties.",
-      "NoCurse": "No other drawback fits this item."
+      "NoCurse": "No other drawback fits this item.",
+      "ChooseProperty": "Choose a property…"
     },
     "Folder": {
       "Name": "Procedural Magic Items"
